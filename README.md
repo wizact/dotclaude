@@ -49,11 +49,11 @@ cd /path/to/your/project
 mkdir -p .claude/skills
 
 # Create symbolic links for each skill you want to use
-ln -s ~/wizact-skills/src/skill-name-1 .claude/skills/skill-name-1
-ln -s ~/wizact-skills/src/skill-name-2 .claude/skills/skill-name-2
+ln -s ~/wizact-skills/.claude/skills/skill-name-1 .claude/skills/skill-name-1
+ln -s ~/wizact-skills/.claude/skills/skill-name-2 .claude/skills/skill-name-2
 
 # Or link all skills at once
-for skill in ~/wizact-skills/src/*/; do
+for skill in ~/wizact-skills/.claude/skills/*/; do
     skill_name=$(basename "$skill")
     ln -s "$skill" ".claude/skills/$skill_name"
 done
@@ -67,11 +67,11 @@ To make skills available across all your projects:
 mkdir -p ~/.claude/skills
 
 # Create symbolic links for each skill you want to use
-ln -s ~/wizact-skills/src/skill-name-1 ~/.claude/skills/skill-name-1
-ln -s ~/wizact-skills/src/skill-name-2 ~/.claude/skills/skill-name-2
+ln -s ~/wizact-skills/.claude/skills/skill-name-1 ~/.claude/skills/skill-name-1
+ln -s ~/wizact-skills/.claude/skills/skill-name-2 ~/.claude/skills/skill-name-2
 
 # Or link all skills at once
-for skill in ~/wizact-skills/src/*/; do
+for skill in ~/wizact-skills/.claude/skills/*/; do
     skill_name=$(basename "$skill")
     ln -s "$skill" "$HOME/.claude/skills/$skill_name"
 done
@@ -110,18 +110,18 @@ rm -rf ~/wizact-skills
 
 You can also manually copy individual skills:
 
-1. Browse the `src/` directory to find the skill you need
-2. Copy the entire skill folder (e.g., `src/my-skill-name/`)
+1. Browse the `.claude/skills/` directory to find the skill you need
+2. Copy the entire skill folder (e.g., `.claude/skills/my-skill-name/`)
 3. Paste it into your local skills directory:
    - Project-level: `.claude/skills/`
    - User-level: `~/.claude/skills/`
 
 ## Repository Structure
 
-Skills are organized under the `src/` directory, with each skill in its own subfolder:
+Skills are organized under the `.claude/skills/` directory, with each skill in its own subfolder:
 
 ```
-src/
+.claude/skills/
 ├── skill-name-1/
 │   ├── SKILL.md          # Main skill definition (required)
 │   ├── FORMS.md          # Optional forms definition
@@ -138,6 +138,35 @@ src/
 Each skill follows the Claude Skills standard structure:
 - **SKILL.md**: Contains the skill instructions and YAML frontmatter with name and description
 - **Supporting files**: Optional scripts, forms, and reference materials as needed
+
+## Using Skills in This Repository
+
+This repository follows Claude Code guidelines by storing its own skills in the `.claude/skills/` directory. This means:
+
+### ✅ Self-Hosting Benefits
+- **Test skills during development**: Use skills while building and improving them
+- **Dogfooding**: Experience the skills as end users would
+- **Live testing**: Verify skills work correctly in a real environment
+- **Continuous improvement**: Iterate on skills based on actual usage
+
+### 🎯 Available Skills
+Currently available skills in this repository:
+
+#### commit-message-generator
+Generate meaningful commit messages following Conventional Commits and git best practices.
+- **Use case**: Creating well-structured commit messages for this repository
+- **Skill location**: [.claude/skills/commit-message-generator/](.claude/skills/commit-message-generator/)
+- **Reference guide**: [REFERENCE.md](.claude/skills/commit-message-generator/REFERENCE.md)
+
+### 🔄 Development Workflow
+When developing new skills:
+1. Create the skill in `.claude/skills/new-skill-name/`
+2. Test the skill immediately in this repository
+3. Iterate and improve based on real usage
+4. Document any issues or improvements needed
+5. Commit changes using the `commit-message-generator` skill itself!
+
+This approach ensures that all skills are battle-tested and provide real value before being shared with the community.
 
 ## Technologies Used
 
