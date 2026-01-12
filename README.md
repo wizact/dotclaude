@@ -1,59 +1,138 @@
 # Claude Code Extensions
 
-A collection of reusable agents, skills, and commands for Claude Code to automate workflows and extend capabilities.
+A marketplace-based collection of reusable plugins providing agents, skills, and commands for Claude Code.
 
 ## Purpose
 
-This repository provides pre-built Claude Code extensions that can be integrated into any project. These extensions help avoid recreating the same functionality across different repositories by offering ready-to-use automation tools.
+This repository provides a structured marketplace for Claude Code extensions that can be integrated into any project. Organized as a proper marketplace with plugins, templates, and conventions to standardize development workflows.
+
+## Repository Structure
+
+```
+dotclaude/
+├── wizact-marketplace/           # Plugin marketplace
+│   └── plugins/
+│       └── wizact-dev-essentials/  # Core development plugin
+│           ├── agents/              # Specialized agents
+│           ├── commands/            # Slash commands
+│           ├── skills/              # Reusable skills
+│           └── README.md
+├── TEMPLATES/                    # Reusable templates
+│   ├── context-docs/            # Context documentation templates
+│   └── conventions/             # Language conventions
+│       ├── go/                  # Go coding standards
+│       └── python/              # Python coding standards
+└── README.md
+```
 
 ## Installation
 
+### Prerequisites
+
+Install required system tools:
+
 ```bash
-# Clone the repository
-git clone https://github.com/wizact/dotclaude.git ~/dotclaude
+# macOS
+brew install fd ripgrep
 
-# Navigate to the project directory
-cd ~/dotclaude/
-
-# Run the setup script to create symlinks
-./setup.sh
+# Linux (Debian/Ubuntu)
+apt install fd-find ripgrep
 ```
 
-The setup script automatically creates symlinks in your global Claude directories:
-- `~/.claude/agents/`
-- `~/.claude/skills/`
-- `~/.claude/commands/`
+### Setup
+
+```bash
+# Clone the repository
+git clone --bare https://github.com/wizact/dotclaude.git ~/dev/github.com/wizact/dotclaude
+cd ~/dev/github.com/wizact/dotclaude
+
+# For machine-specific configurations (recommended)
+git worktree add <your-machine-name> main
+cd <your-machine-name>
+```
+
+### Plugin Installation
+
+```
+/plugin 
+```
+
+Install the `wizact-marketplace` on your machine.
+Install the `wizact-dev-essentials` plugin.
+
+See [wizact-dev-essentials/README.md](wizact-marketplace/plugins/wizact-dev-essentials/README.md) for detailed plugin documentation.
 
 ## What's Included
 
-### Agents
+### Plugins
 
-**specbuilder**
-- Creates complete feature/bug specifications from GitHub issues, PRs, or user prompts
-- Generates three documents: requirements.md (user stories + EARS notation), design.md (technical architecture), and tasks.md (trackable work items)
-- Use when planning features or need detailed specifications
-- Dependencies: github mcp, context7 mcp, and the folder structure that can be set up using `/setup-context-docs`
+#### wizact-dev-essentials
 
-### Skills
+Essential development tools plugin providing:
 
-**ripgrep-search**
-- Ultra-fast text search using ripgrep with advanced regex, multiline, and filtering capabilities
-- Provides commands for code search, multiline search, context search, log search, search & replace, and search statistics
+**Commands** (3):
+- `/commit-message` - Generate Conventional Commits formatted messages
+- `/search-code` - Smart code pattern search
+- `/setup-context-docs` - Context-driven development documentation setup
 
-**fd-search**
-- Fast file system search using fd as a replacement for find command
-- Includes commands for finding by extension, large files, recent files, empty files, and temp files
+**Skills** (2):
+- `fd-search` - Lightning-fast file system search using `fd`
+- `ripgrep-search` - Blazing-fast code search using `ripgrep`
 
-### Commands
+**Agents** (3):
+- `go-developer` - Comprehensive Go development with best practices
+- `go-reviewer` - Proactive code review for Go projects
+- `specbuilder` - Feature specification builder from issues/PRs
 
-**commit-message**
-- Generates meaningful git commit messages following Conventional Commits and best practices
-- Analyzes staged changes and creates structured commit messages
+### Templates
 
-**search-code**
-- Smart code pattern search with automatic filtering
-- Wraps ripgrep-search skill for convenient code exploration
+#### Context Documentation (`TEMPLATES/context-docs/`)
+- Feature specification templates (requirements, design, tasks)
+- Example feature structure (f002-uuid-multi-repo)
+- Setup via `/setup-context-docs` command
 
-**setup-context-docs**
-- Sets up Context-Driven Development documentation structure
-- Creates standard directories and templates for project documentation
+#### Language Conventions (`TEMPLATES/conventions/`)
+- **Go** (`go/conventions.md`) - Go coding standards and patterns
+- **Python** (`python/conventions.md`) - Python coding standards and patterns
+
+## Usage
+
+### Quick Start
+
+```bash
+# Generate commit message
+/commit-message
+
+# Search code
+/search-code "pattern"
+
+# Setup project documentation
+/setup-context-docs
+```
+
+### Using Agents
+
+Agents are available via Claude Code's Task tool:
+
+```python
+# Use go-developer agent
+Task(subagent_type="wizact-dev-essentials:go-developer", prompt="Implement feature X")
+
+# Use specbuilder agent
+Task(subagent_type="wizact-dev-essentials:specbuilder", prompt="Create spec for issue #123")
+```
+
+See individual component documentation for detailed usage:
+- [Plugin README](wizact-marketplace/plugins/wizact-dev-essentials/README.md)
+- [fd-search](wizact-marketplace/plugins/wizact-dev-essentials/skills/fd-search/SKILL.md)
+- [ripgrep-search](wizact-marketplace/plugins/wizact-dev-essentials/skills/ripgrep-search/skill.md)
+
+## License
+
+MIT - See [LICENSE](LICENSE)
+
+## Links
+
+- **Repository**: https://github.com/wizact/dotclaude
+- **Issues**: https://github.com/wizact/dotclaude/issues
+- **Author**: [wizact](https://github.com/wizact)

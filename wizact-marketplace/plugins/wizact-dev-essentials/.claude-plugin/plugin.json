@@ -1,0 +1,13 @@
+{
+  "name": "wizact-dev-essentials",
+  "version": "1.0.0",
+  "description": "Essential development tools: fast search (fd/ripgrep), git commit helpers, Go development agents, and context documentation setup",
+  "author": { "name": "wizact", "email": "amir.mohtasebi@gmail.com" },
+  "repository": "https://github.com/wizact/dotclaude",
+  "keywords": ["search", "git", "go", "productivity", "developer-tools"],
+  "commands": [
+    "./commands/"
+  ],
+  "skills": "./skills/",
+  "agents": ["./agents/go-developer.md", "./agents/go-reviewer.md", "./agents/specbuilder.md"]
+}

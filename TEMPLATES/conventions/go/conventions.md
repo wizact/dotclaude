@@ -7,10 +7,11 @@ This document outlines Go-specific coding standards, testing practices, and patt
 1. [Go Code Conventions](#go-code-conventions)
 2. [Testing Conventions](#testing-conventions)
 3. [Error Handling](#error-handling)
-4. [Package Organization](#package-organization)
-5. [Interface Design](#interface-design)
-6. [Git Workflow](#git-workflow)
-7. [Extending Languages](#extending-languages)
+4. [Logging](#logging)
+5. [Package Organization](#package-organization)
+6. [Interface Design](#interface-design)
+7. [Git Workflow](#git-workflow)
+8. [Extending Languages](#extending-languages)
 
 ---
 
@@ -295,27 +296,346 @@ text := cc.getNodeText(node)  // Panics if node is nil
 
 ---
 
+## Logging
+
+### Standard: Structured Logging with slog
+
+**All Go applications in this project MUST use `log/slog`** for structured JSON logging. This provides:
+- **Queryable logs**: JSON fields enable filtering and searching in log aggregation tools
+- **Consistent format**: Uniform log structure across all services
+- **Type safety**: Automatic value formatting without manual string concatenation
+- **Performance**: Efficient structured logging with minimal allocations
+
+### Setup: Centralized Configuration
+
+**All logging configuration MUST go through `pkg/logging` package**:
+
+### Log Levels
+
+Use the appropriate level for each message:
+
+| Level | When to Use | Example |
+|-------|-------------|---------|
+| `DEBUG` | Detailed diagnostic information for troubleshooting | Variable values, loop iterations, detailed state |
+| `INFO` | Normal operational messages | Service started, request processed, event received |
+| `WARN` | Recoverable issues or degraded operation | Retry attempted, fallback used, deprecated API called |
+| `ERROR` | Failures requiring attention | Database connection failed, request failed, validation error |
+
+### Structured Fields (Always)
+
+**NEVER use string formatting** - always use structured key-value pairs:
+
+```go
+// ❌ BAD: String formatting (unstructured, hard to query)
+slog.Info(fmt.Sprintf("Received event: request_id=%s, count=%d", requestID, count))
+slog.Error(fmt.Sprintf("Failed to save: %v", err))
+
+// ✅ GOOD: Structured fields (queryable, parseable)
+slog.Info("Received event",
+	"request_id", requestID,
+	"count", count)
+
+slog.Error("Failed to save embeddings",
+	"request_id", requestID,
+	"error", err)
+```
+
+### Standard Field Names
+
+**Use consistent field names** across the codebase:
+
+| Field Name | Type | Purpose | Example |
+|------------|------|---------|---------|
+| `request_id` | uuid.UUID | Correlation ID for tracing | `"request_id", event.RequestID` |
+| `error` | error | Error objects (auto-formatted) | `"error", err` |
+| `timestamp` | timestamp | UTC timestamp of when the event occured | `2026/01/11 14:44:02` |
+
+### Common Logging Patterns
+
+#### 1. Service Lifecycle Events
+
+```go
+// Service starting
+slog.Info("Starting embeddings coordinator service",
+	"health_port", 8081,
+	"shutdown_timeout", "30s")
+
+// Service ready
+slog.Info("Service ready",
+	"subscriber_active", true)
+
+// Graceful shutdown
+slog.Info("Shutting down embeddings service",
+	"timeout", cfg.ShutdownTimeout)
+
+// Shutdown complete
+slog.Info("Shutdown complete")
+```
+
+#### 2. Request/Event Processing
+
+```go
+// Event received
+slog.Info("Received embeddings.generated event",
+	"request_id", event.RequestID,
+	"model", event.Model,
+	"count", event.EmbeddingCount)
+
+// Processing step completed
+slog.Info("Fetched embeddings",
+	"count", len(embeddings),
+	"request_id", requestID)
+
+// Processing complete
+slog.Info("Saved embeddings to database",
+	"count", len(embeddings),
+	"request_id", requestID)
+```
+
+#### 3. Error Handling
+
+```go
+// Recoverable error (WARN)
+slog.Warn("Failed to delete embeddings from embedder",
+	"request_id", requestID,
+	"error", err)
+
+// Critical error (ERROR)
+slog.Error("Failed to save embeddings",
+	"request_id", requestID,
+	"error", err)
+
+// Error with context
+slog.Error("Database connection failed",
+	"database_url", maskDatabaseURL(dbURL),  // Mask credentials!
+	"retry_count", retries,
+	"error", err)
+```
+
+### Security: Never Log Credentials
+
+**ALWAYS mask sensitive information** before logging:
+
+```go
+// ❌ BAD: Logs password in database URL
+slog.Info("Connected to database",
+	"url", "postgres://user:secret123@localhost/db")
+
+// ✅ GOOD: Mask credentials
+func maskDatabaseURL(rawURL string) string {
+	u, err := url.Parse(rawURL)
+	if err != nil {
+		return "[invalid-url]"
+	}
+
+	if u.User != nil {
+		u.User = url.UserPassword(u.User.Username(), "***")
+	}
+
+	return u.String()
+}
+
+slog.Info("Connected to database",
+	"url", maskDatabaseURL(databaseURL))
+// Output: url="postgres://user:***@localhost/db"
+```
+
+**Sensitive fields to mask**:
+- Database passwords
+- API keys
+- Authentication tokens
+- Private keys
+- User passwords
+
+### What NOT to Log
+
+**Avoid logging**:
+- Personal Identifiable Information (PII) unless required and approved
+- Secrets or credentials (see masking above)
+- Large payloads (chunk content, entire documents) - log sizes/counts instead
+- Redundant information already in structured fields
+
+```go
+// ❌ BAD: Logs entire chunk content (could be megabytes)
+slog.Info("Processing chunk", "content", chunk.Content)
+
+// ✅ GOOD: Log metadata instead
+slog.Info("Processing chunk",
+	"chunk_id", chunk.ID,
+	"type", chunk.Type,
+	"size", len(chunk.Content))
+```
+
+### Testing with slog
+
+**In tests, slog uses the default handler** (text format to stderr):
+
+```go
+func TestCoordinator(t *testing.T) {
+	// slog output appears in test output
+	slog.Info("Test started")
+
+	// Tests continue normally
+	coord := NewCoordinator(...)
+	// ...
+}
+```
+
+**To suppress logs in tests** (optional):
+
+```go
+func TestQuiet(t *testing.T) {
+	// Redirect slog to io.Discard for this test
+	slog.SetDefault(slog.New(slog.NewTextHandler(io.Discard, nil)))
+
+	// No log output during test
+	doSomethingLoud()
+}
+```
+
+### Summary
+
+**DO**:
+- ✅ Use `log/slog` for all logging
+- ✅ Use structured key-value pairs
+- ✅ Mask credentials before logging
+- ✅ Use appropriate log levels
+- ✅ Use consistent field names
+
+**DON'T**:
+- ❌ Use `log.Printf()` or `fmt.Println()`
+- ❌ Use string formatting for structured data
+- ❌ Log credentials or secrets
+- ❌ Log large payloads
+- ❌ Create multiple logging configurations
+
+---
+
 ## Package Organization
 
 ### Directory Structure
 
 - **Public APIs in pkg/**: Exportable libraries used by external projects
-- **Internal-only code in internal/**: Code that can't be imported by external projects (future)
+- **Internal-only code in internal/**: Code that can't be imported by external projects
 - **One package per directory**: Each directory should contain one Go package
 - **Avoid circular dependencies**: Use dependency inversion (interfaces) to break cycles
 
-**Example**:
+**Standard Go project layout**:
 ```
-pkg/
-├── chunker/       # Public parsing library
-│   └── ...
-└── storage/       # Public storage library
-    └── ...
+project-root/
+├── cmd/              # Command-line applications
+│   ├── chunker/      # Main CLI application
+│   └── db-migration/ # Migration tool
+├── internal/         # Private application code (module-root level)
+│   └── cli/          # CLI implementation (not importable by external projects)
+├── pkg/              # Public library code (can be imported by external projects)
+│   ├── chunker/      # Parsing library
+│   └── storage/      # Storage library
+├── docs/             # Documentation
+├── migrations/       # Database migrations
+└── go.mod
+```
 
-cmd/
-├── chunker/       # CLI application (uses pkg/chunker, pkg/storage)
-└── db-migration/  # Migration tool (uses pkg/storage)
+### The `internal/` Directory: Placement and Purpose
+
+**Rule: Place `internal/` at the module root, alongside `pkg/` and `cmd/`**
+
+The `internal/` directory is a special Go convention that prevents external imports. Go's import rules enforce that packages under `internal/` can only be imported by code in the same module tree at or above the `internal/` directory.
+
+#### ✅ Correct Placement (Module Root)
+
 ```
+github.com/wizact/code-chunker/
+├── cmd/
+│   └── chunker/
+│       └── main.go           # Imports internal/cli
+├── internal/                 # ← At module root
+│   └── cli/
+│       ├── root.go
+│       ├── parse.go
+│       └── version.go
+└── pkg/
+    └── chunker/
+
+Import path: github.com/wizact/code-chunker/internal/cli
+```
+
+**Benefits**:
+- Clean, predictable import paths
+- Follows Go community standards (used by kubernetes, docker, etc.)
+- Clear separation: `internal/` alongside `pkg/` shows public vs. private code
+- Easier to understand project structure at a glance
+
+#### ❌ Incorrect Placement (Nested in cmd/)
+
+```
+github.com/wizact/code-chunker/
+├── cmd/
+│   └── chunker/
+│       ├── internal/         # ← Nested (non-standard)
+│       │   └── cmd/
+│       │       ├── root.go
+│       │       └── parse.go
+│       └── main.go
+└── pkg/
+
+Import path: github.com/wizact/code-chunker/cmd/chunker/internal/cmd
+```
+
+**Problems**:
+- Confusing import paths with redundant directory nesting
+- Non-standard structure (violates Go community conventions)
+- Harder for new contributors to understand project organization
+- Makes code harder to move or refactor
+
+#### When to Use `internal/` vs. `pkg/`
+
+**Use `pkg/`** for code that:
+- ✅ Should be importable by other projects
+- ✅ Provides stable, documented public APIs
+- ✅ Is designed for reuse (libraries, frameworks)
+- Example: `pkg/chunker` - parsing library for any project
+
+**Use `internal/`** for code that:
+- ✅ Is specific to this application only
+- ✅ Should NOT be imported by external projects
+- ✅ Can change without affecting external users
+- Example: `internal/cli` - CLI-specific implementation
+
+**Use `cmd/` packages** (not `internal/`) for:
+- ✅ Main entry points (`package main`)
+- ✅ Minimal glue code that wires together `pkg/` and `internal/`
+- Example: `cmd/chunker/main.go` - just calls `cli.Execute()`
+
+#### Real-World Example
+
+**Before (Incorrect)**:
+```go
+// cmd/chunker/main.go
+import "github.com/wizact/code-chunker/cmd/chunker/internal/cmd"
+
+func main() {
+    cmd.Execute()  // Confusing: cmd.cmd.Execute()?
+}
+```
+
+**After (Correct)**:
+```go
+// cmd/chunker/main.go
+import "github.com/wizact/code-chunker/internal/cli"
+
+func main() {
+    cli.Execute()  // Clear: CLI execution
+}
+```
+
+#### Key Takeaways
+
+1. **Module-root placement**: Always put `internal/` at the module root
+2. **Alongside `pkg/`**: Keep `internal/` and `pkg/` at the same level for clarity
+3. **Descriptive names**: Use meaningful package names under `internal/` (e.g., `internal/cli`, `internal/api`)
+4. **No nesting**: Avoid `cmd/{app}/internal/` - use module-root `internal/` instead
+5. **Check conventions**: Look at standard Go projects (kubernetes, prometheus, docker) for reference
 
 ### Import Organization
 
