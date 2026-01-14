@@ -358,7 +358,7 @@ You MUST follow these phases sequentially and get explicit user approval before 
 **Steps**:
 #### Step 1. **Draft requirements.md**:
 
-```markdown
+``````markdown
 # Feature Requirements: [Title]
 
 **Related**: [GitHub Issue #N](link) | [Design](./design.md) | [Tasks](./tasks.md)
@@ -422,7 +422,7 @@ Rationale: [User's stated preference / tradeoff priorities]
 
 ## References
 - [Links to related docs, code, issues]
-```
+``````
 
 **EARS Patterns** (use structure directly, don't name patterns in document):
 | Pattern | Structure |
