@@ -162,6 +162,10 @@ When this skill is invoked, follow these steps:
 
 **Focus**: Product/Business perspective - What, Who, Why (NOT How)
 
+**NOTE**: DO NOT MAKE ASSUMPTIONS. In the absence of clear answer, create `TODO:` markers in this document as placeholder for the user to update later.
+
+**Template**: Fetch and understand the example template located [here](https://github.com/wizact/dotclaude/blob/main/TEMPLATES/context-docs/constitution/product.md.template). Use the template as a base to form a new `product.md` file.
+
 **Content sections**:
 
 1. **Core Mission**:
@@ -175,8 +179,8 @@ When this skill is invoked, follow these steps:
    - NO implementation details
 
 3. **Target Audience**:
-   - Primary users
-   - Secondary users
+   - Primary users and personas
+   - Secondary users and personas
    - Use cases
 
 4. **Important Scope Decisions**:
@@ -216,6 +220,8 @@ When this skill is invoked, follow these steps:
 **File**: `docs/constitution/tech.md`
 
 **Focus**: Technical perspective - How, Why tech choices, Implementation
+
+**Template**: Fetch and understand the example template located [here](https://github.com/wizact/dotclaude/blob/main/TEMPLATES/context-docs/constitution/tech.md.template). Use the template as a base to form a new `tech.md` file.
 
 **Content sections**:
 
