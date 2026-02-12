@@ -71,7 +71,7 @@ See [wizact-dev-essentials/README.md](wizact-marketplace/plugins/wizact-dev-esse
 Essential development tools plugin providing:
 
 **Commands** (3):
-- `/commit-message` - Generate Conventional Commits formatted messages
+- `/generate-commit-message` - Generate Conventional Commits formatted messages
 - `/search-code` - Smart code pattern search
 - `/setup-context-docs` - Context-driven development documentation setup
 
@@ -101,7 +101,7 @@ Essential development tools plugin providing:
 
 ```bash
 # Generate commit message
-/commit-message
+/generate-commit-message
 
 # Search code
 /search-code "pattern"
