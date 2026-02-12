@@ -10,7 +10,7 @@ Essential development tools plugin for Claude Code, providing fast search capabi
 - **search-code**: Smart code search command combining both tools
 
 ### 📝 Git Workflow
-- **commit-message**: Generate Conventional Commits formatted messages
+- **generate-commit-message**: Generate Conventional Commits formatted messages (skill)
 
 ### 🛠️ Go Development
 - **go-developer**: Comprehensive Go development agent with best practices
@@ -61,16 +61,6 @@ ln -s ~/dev/github.com/wizact/dotclaude/mac/wizact-dev-essentials ~/.claude/plug
 
 ### Commands
 
-#### `/commit-message`
-Generate structured git commit messages:
-```bash
-# Stage your changes first
-git add .
-
-# Generate commit message
-/commit-message
-```
-
 #### `/search-code`
 Smart code search across project:
 ```bash
@@ -85,12 +75,41 @@ Initialize context documentation for project:
 
 ### Skills
 
-Skills are automatically available to Claude agents when the plugin is loaded.
+Skills are automatically available to Claude agents when the plugin is loaded. User-invocable skills can also be called via `/skill-name`.
+
+#### `generate-commit-message` (User-Invocable)
+Generate Conventional Commits formatted messages. See [skills/generate-commit-message/skill.md](skills/generate-commit-message/skill.md) for details.
+
+**Invocation**:
+```bash
+# User can invoke via slash command
+/generate-commit-message
+
+# Claude auto-loads when discussing commits
+```
+
+**Scripts**:
+```bash
+# Analyze staged changes
+@wizact-dev-essentials/skills/generate-commit-message/scripts/analyze-changes.sh
+
+# Generate commit message
+@wizact-dev-essentials/skills/generate-commit-message/scripts/generate-message.sh feat auth "add JWT support"
+
+# Validate commit format
+@wizact-dev-essentials/skills/generate-commit-message/scripts/validate-message.sh <<< "feat: add feature"
+
+# List commit types
+@wizact-dev-essentials/skills/generate-commit-message/scripts/commit-types.sh
+
+# Interactive builder
+@wizact-dev-essentials/skills/generate-commit-message/scripts/commit-interactive.sh
+```
 
 #### `fd-search`
 Fast file system search. See [skills/fd-search/SKILL.md](skills/fd-search/SKILL.md) for details.
 
-Example scripts:
+**Scripts**:
 ```bash
 # Find JavaScript files
 @wizact-dev-essentials/skills/fd-search/scripts/find-by-extension.sh js
@@ -105,7 +124,7 @@ Example scripts:
 #### `ripgrep-search`
 Ultra-fast code search. See [skills/ripgrep-search/skill.md](skills/ripgrep-search/skill.md) for details.
 
-Example scripts:
+**Scripts**:
 ```bash
 # Search code with context
 @wizact-dev-essentials/skills/ripgrep-search/scripts/search-context.sh "TODO"
