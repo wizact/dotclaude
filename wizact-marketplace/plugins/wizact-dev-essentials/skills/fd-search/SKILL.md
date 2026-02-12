@@ -1,6 +1,8 @@
 ---
 name: fd-search
 description: Fast and user-friendly file system search using fd as a replacement for `find` command
+disable-model-invocation: false
+user-invocable: true
 ---
 
 # fd Search Skill
