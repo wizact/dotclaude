@@ -1,6 +1,6 @@
 {
   "name": "wizact-utilities",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Utility hooks for macOS: desktop notifications for Claude waiting states",
   "author": {
     "name": "Amir Mohtasebi",

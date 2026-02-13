@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Permission required for tool execution\" with title \"Claude Code\"' || true",
+            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Permission required\" with title \"Claude Code\"' || true",
             "timeout": 5
           }
         ]
@@ -28,6 +28,17 @@
           {
             "type": "command",
             "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Input needed for MCP tool\" with title \"Claude Code\"' || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Claude has completed its task\" with title \"Claude Code\"' || true",
             "timeout": 5
           }
         ]
