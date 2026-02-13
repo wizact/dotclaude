@@ -1,0 +1,37 @@
+{
+  "description": "macOS notification hooks for Claude waiting states",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Claude is waiting for your input\" with title \"Claude Code\"' || true",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Permission required for tool execution\" with title \"Claude Code\"' || true",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Input needed for MCP tool\" with title \"Claude Code\"' || true",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "wizact-utilities",
+  "version": "1.0.0",
+  "description": "Utility hooks for macOS: desktop notifications for Claude waiting states",
+  "author": {
+    "name": "Amir Mohtasebi",
+    "email": "amir.mohtasebi@gmail.com"
+  },
+  "repository": "https://github.com/wizact/dotclaude",
+  "keywords": ["notifications", "macos", "utilities"],
+  "hooks": "./hooks/hooks.json"
+}
