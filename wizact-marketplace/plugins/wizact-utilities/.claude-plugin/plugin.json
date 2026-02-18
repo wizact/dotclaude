@@ -1,6 +1,6 @@
 {
   "name": "wizact-utilities",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Utility tools for macOS: desktop notifications, plugin version management",
   "author": {
     "name": "Amir Mohtasebi",

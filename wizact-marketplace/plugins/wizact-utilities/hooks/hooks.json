@@ -32,17 +32,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Claude has completed its task\" with title \"Claude Code\"' || true",
-            "timeout": 5
-          }
-        ]
-      }
     ]
   }
 }
