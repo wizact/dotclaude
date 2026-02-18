@@ -75,7 +75,49 @@ Initialize context documentation for project:
 
 ### Skills
 
-Skills are automatically available to Claude agents when the plugin is loaded. User-invocable skills can also be called via `/skill-name`.
+Skills are automatically available to Claude agents when the plugin is loaded. Some skills are **agent-auto-invoked** (replacing bash commands), while others are **user-invocable** via `/skill-name`.
+
+#### `fd-search` (Agent Auto-Invoked + User-Invocable)
+**Replaces bash `find` command** - Agents automatically use this for file searches.
+Fast file system search. See [skills/fd-search/SKILL.md](skills/fd-search/SKILL.md) for details.
+
+**User Invocation**:
+```bash
+/fd-search pattern [directory]
+```
+
+**Scripts**:
+```bash
+# Find JavaScript files
+@wizact-dev-essentials/skills/fd-search/scripts/find-by-extension.sh js
+
+# Find large files
+@wizact-dev-essentials/skills/fd-search/scripts/find-large-files.sh
+
+# Find recent files
+@wizact-dev-essentials/skills/fd-search/scripts/find-recent.sh 1day
+```
+
+#### `ripgrep-search` (Agent Auto-Invoked + User-Invocable)
+**Replaces bash `grep` command** - Agents automatically use this for text searches.
+Ultra-fast code search. See [skills/ripgrep-search/skill.md](skills/ripgrep-search/skill.md) for details.
+
+**User Invocation**:
+```bash
+/ripgrep-search pattern [path]
+```
+
+**Scripts**:
+```bash
+# Search code with context
+@wizact-dev-essentials/skills/ripgrep-search/scripts/search-context.sh "TODO"
+
+# Search logs
+@wizact-dev-essentials/skills/ripgrep-search/scripts/search-logs.sh "ERROR"
+
+# Multiline search
+@wizact-dev-essentials/skills/ripgrep-search/scripts/search-multiline.sh "struct.*{"
+```
 
 #### `generate-commit-message` (User-Invocable)
 Generate Conventional Commits formatted messages. See [skills/generate-commit-message/skill.md](skills/generate-commit-message/skill.md) for details.
@@ -104,36 +146,6 @@ Generate Conventional Commits formatted messages. See [skills/generate-commit-me
 
 # Interactive builder
 @wizact-dev-essentials/skills/generate-commit-message/scripts/commit-interactive.sh
-```
-
-#### `fd-search`
-Fast file system search. See [skills/fd-search/SKILL.md](skills/fd-search/SKILL.md) for details.
-
-**Scripts**:
-```bash
-# Find JavaScript files
-@wizact-dev-essentials/skills/fd-search/scripts/find-by-extension.sh js
-
-# Find large files
-@wizact-dev-essentials/skills/fd-search/scripts/find-large-files.sh
-
-# Find recent files
-@wizact-dev-essentials/skills/fd-search/scripts/find-recent.sh 1day
-```
-
-#### `ripgrep-search`
-Ultra-fast code search. See [skills/ripgrep-search/skill.md](skills/ripgrep-search/skill.md) for details.
-
-**Scripts**:
-```bash
-# Search code with context
-@wizact-dev-essentials/skills/ripgrep-search/scripts/search-context.sh "TODO"
-
-# Search logs
-@wizact-dev-essentials/skills/ripgrep-search/scripts/search-logs.sh "ERROR"
-
-# Multiline search
-@wizact-dev-essentials/skills/ripgrep-search/scripts/search-multiline.sh "struct.*{"
 ```
 
 ### Agents

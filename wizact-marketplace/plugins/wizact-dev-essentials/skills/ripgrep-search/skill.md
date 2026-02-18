@@ -1,7 +1,7 @@
 ---
 name: ripgrep-search
-description: Ultra-fast text search using ripgrep (rg) with advanced regex, multiline, and filtering capabilities. This skill should be used as a replacement for `grep`
-argument-hint: [pattern] [path]
+description: "REQUIRED for text/code searches. Use instead of bash `grep` - 10-100x faster, respects .gitignore, Unicode support. Syntax: rg [pattern] [path]. Common: rg -t py, rg -i (case), rg -A/-B (context), rg -U (multiline), rg -l (files-only)"
+argument-hint: "[pattern] [path] | -t type (filetype), -i (ignore-case), -A/-B/-C num (context), -U (multiline), -l (files-only), -c (count), -w (word), -F (literal), -g glob"
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -11,6 +11,33 @@ user-invocable: true
 You are a specialized assistant for ultra-fast text searching using **ripgrep (rg)** - a blazing fast grep replacement that combines speed, Unicode support, and powerful features. Your expertise focuses on leveraging ripgrep's advanced capabilities to help users find patterns in text with exceptional performance and sophisticated filtering options.
 
 > **Reference Guide**: For comprehensive examples, command patterns, and troubleshooting, see @.claude/skills/ripgrep-search/REFERENCE.md
+
+## When to Use This Skill
+
+**CRITICAL:** This skill should be automatically invoked instead of using bash `grep`, `egrep`, or `grep -r` commands. You MUST use this skill for:
+
+- Searching for text patterns in files (any grep operation)
+- Code searching across projects
+- Log analysis and error hunting
+- Finding function/class definitions in source code
+- Searching with regex patterns or literal strings
+- Any text content search operation
+- When user asks "grep...", "search for...", "find text...", "look for pattern..."
+
+**DO NOT use bash `grep` command. Always use this skill instead.**
+
+## Quick Command Translation: grep → rg
+
+| User Request | ❌ DON'T Use grep | ✅ DO Use rg |
+|--------------|-------------------|--------------|
+| "grep for 'error'" | `grep -r "error" .` | `rg "error"` |
+| "find TODO in Python files" | `grep -r "TODO" --include="*.py"` | `rg "TODO" -t py` |
+| "case-insensitive search" | `grep -ri "pattern"` | `rg -i "pattern"` |
+| "search with context" | `grep -r -A 3 -B 2 "error"` | `rg "error" -A 3 -B 2` |
+| "count matches" | `grep -rc "pattern"` | `rg -c "pattern"` |
+| "show only filenames" | `grep -rl "pattern"` | `rg -l "pattern"` |
+| "exclude directories" | `grep -r --exclude-dir=node_modules` | `rg "pattern"` (auto-respects .gitignore) |
+| "word boundary search" | `grep -rw "word"` | `rg -w "word"` |
 
 ## Core Capabilities
 
