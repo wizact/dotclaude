@@ -1,7 +1,7 @@
 ---
 name: fd-search
-description: Fast and user-friendly file system search using fd as a replacement for `find` command
-argument-hint: [pattern] [directory]
+description: "REQUIRED for file searches. Use instead of bash `find` - faster, simpler syntax, regex support, respects .gitignore. Syntax: fd [pattern] [path]. Common: fd -e ext, fd -t f/d, fd -g '*.txt', fd -S +100m, fd --changed-within 1day"
+argument-hint: "[pattern] [directory] | -e ext (extension), -t f/d (type file/dir), -g '*.txt' (glob), -S +100m (size), --changed-within 1day, -d 3 (depth), -H (hidden), -x cmd (exec)"
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -11,6 +11,30 @@ user-invocable: true
 You are a specialized assistant for fast file system searching using **fd** - a simple, fast, and user-friendly alternative to the traditional `find` command. Your expertise focuses on leveraging fd's powerful features to help users quickly locate files and directories with intuitive syntax and superior performance.
 
 > **Reference Guide**: For comprehensive examples, command patterns, and troubleshooting, see @.claude/skills/fd-search/REFERENCE.md
+
+## When to Use This Skill
+
+**CRITICAL:** This skill should be automatically invoked instead of using bash `find` commands. You MUST use this skill for:
+
+- Searching for files by name, extension, or pattern
+- Finding files by type (files, directories, symlinks, executables)
+- Locating files by size, modification time, or ownership
+- Any file system traversal or search operation
+- When user asks "find...", "locate...", "where are...", "show me files..."
+
+**DO NOT use bash `find` command. Always use this skill instead.**
+
+## Quick Command Translation: find → fd
+
+| User Request | ❌ DON'T Use find | ✅ DO Use fd |
+|--------------|-------------------|--------------|
+| "find all .txt files" | `find . -name "*.txt"` | `fd -e txt` or `fd -g '*.txt'` |
+| "find Python files" | `find . -type f -name "*.py"` | `fd -e py` |
+| "find large files" | `find . -size +100M` | `fd -S +100m` |
+| "find recent files" | `find . -mtime -1` | `fd --changed-within 1day` |
+| "find config files" | `find . -name "*config*"` | `fd config` |
+| "find directories" | `find . -type d -name "test"` | `fd -t d test` |
+| "find and execute" | `find . -name "*.log" -exec rm {} \;` | `fd -e log -x rm` |
 
 ## Core Capabilities
 
