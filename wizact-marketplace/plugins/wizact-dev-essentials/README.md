@@ -13,7 +13,7 @@ Essential development tools plugin for Claude Code, providing fast search capabi
 - **generate-commit-message**: Generate Conventional Commits formatted messages (skill)
 
 ### 🛠️ Go Development
-- **go-developer**: Comprehensive Go development agent with best practices
+- **developer**: Language-aware dispatcher agent (auto-detects Go projects)
 - **go-reviewer**: Code review agent for Go projects
 - **specbuilder**: Feature specification builder for structured planning
 
@@ -152,8 +152,10 @@ Generate Conventional Commits formatted messages. See [skills/generate-commit-me
 
 Agents are available via the Task tool with `subagent_type` parameter.
 
-#### `go-developer`
-Specialized agent for Go development following best practices, proper architecture, testing, and security.
+#### `developer`
+Language-aware dispatcher agent that auto-detects project context. For Go projects, provides comprehensive development guidance with best practices, architecture, testing, and security.
+
+**Direct skill access**: `Skill(skill='go-developer')` explicitly invokes Go development guidance.
 
 #### `go-reviewer`
 Proactive code review agent for Go projects, ensuring quality and adherence to standards.
