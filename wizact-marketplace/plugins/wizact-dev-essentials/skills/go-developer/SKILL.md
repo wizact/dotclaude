@@ -167,6 +167,48 @@ Each rule file contains:
 
 For complete guide with all rules expanded: `@.claude/skills/go-developer/REFERENCE.md`
 
+## Anti-Patterns to Avoid
+
+**Business Logic in Handlers:**
+
+```go
+// ❌ BAD: Handler directly accesses DB, contains business logic
+func handleComplete(w http.ResponseWriter, r *http.Request) {
+    task, _ := db.Query(...)
+    task.Done = true
+    db.Exec(...)
+}
+
+// ✅ GOOD: Delegate to service with proper error handling
+func handleComplete(w http.ResponseWriter, r *http.Request) {
+    id := r.URL.Query().Get("id")
+    if id == "" {
+        http.Error(w, "missing task id", http.StatusBadRequest)
+        return
+    }
+    if err := taskService.Complete(id); err != nil {
+        // Sanitize errors (see security-error-sanitization)
+        http.Error(w, "failed to complete task", http.StatusInternalServerError)
+        return
+    }
+    w.WriteHeader(http.StatusNoContent)
+}
+```
+
+**God Objects:**
+
+```go
+// ❌ BAD: Too many dependencies
+type TaskManager struct {
+    db, cache, emailer, logger, config, httpClient, validator, reporter
+}
+
+// ✅ GOOD: Focused responsibilities
+type TaskService struct {
+    repo TaskRepository  // Single focused dependency
+}
+```
+
 ## Quick Checklist
 
 Before submitting Go code:
