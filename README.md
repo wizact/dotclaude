@@ -80,7 +80,7 @@ Essential development tools plugin providing:
 - `ripgrep-search` - Blazing-fast code search using `ripgrep`
 
 **Agents** (3):
-- `go-developer` - Comprehensive Go development with best practices
+- `developer` - Multi-language dispatcher (Go, Python) with best practices
 - `go-reviewer` - Proactive code review for Go projects
 - `specbuilder` - Feature specification builder from issues/PRs
 
@@ -115,8 +115,11 @@ Essential development tools plugin providing:
 Agents are available via Claude Code's Task tool:
 
 ```python
-# Use go-developer agent
-Task(subagent_type="wizact-dev-essentials:go-developer", prompt="Implement feature X")
+# Auto-detect language and apply best practices
+Task(subagent_type="wizact-dev-essentials:developer", prompt="Implement feature X")
+
+# Or invoke skill directly
+Skill(skill="wizact-dev-essentials:go-developer")
 
 # Use specbuilder agent
 Task(subagent_type="wizact-dev-essentials:specbuilder", prompt="Create spec for issue #123")
