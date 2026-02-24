@@ -60,18 +60,38 @@ graph TD
 
 ### Phase 1: THINK (Strategy)
 
-Explore and define what behavior you're implementing before writing ANY code.
+Define exactly what behavior you're implementing before writing ANY code.
+
+**Required Output (Structured Template):**
+```
+Behavior: When [trigger], then [expected outcome]
+Scope: [Edge cases IN scope this cycle]
+Deferred: [Edge cases NOT in scope - next cycle]
+Assertion: [What will be asserted]
+Test Name: Test<Function>_<Scenario>[_<Expectation>]
+```
+
+**Example Completion:**
+```
+Behavior: When parseJSON receives invalid input, then returns error
+Scope:
+  - Malformed JSON strings
+  - Error is non-nil
+Deferred:
+  - Empty strings (next cycle)
+  - Valid JSON parsing (future)
+Assertion: Error != nil
+Test Name: TestParseJSON_InvalidInput_ReturnsError
+```
 
 **Activities:**
 - Identify ONE specific behavior to implement
 - Define clear success criteria
-- Define happy path and edge cases to implement in this cycle
-- Plan test scope (what to assert, what to ignore)
-- Write one-sentence test objective
+- Define what's in scope vs deferred
+- Plan test assertions (what to check, what to ignore)
+- Write test name following convention
 
-**Output:** Clear statement like "Test that `parseJSON` returns error for invalid input"
-
-**Exit criteria:** You can articulate exactly what the test will verify
+**Exit criteria:** Can fill all template fields with specific values
 
 ---
 
@@ -111,14 +131,50 @@ Test structure:
 **Verification checkpoint:**
 ```
 BEFORE GREEN: Confirm test output shows:
-- Test executed
-- Test FAILED
-- Error message matches expectation
+✓ Test file compiles (no syntax errors)
+✓ Test executed
+✓ Test FAILED (not passed, not errored)
+✓ Failure type matches expected:
+  - Cycle 1 NEW: "undefined: X" or "not declared"
+  - Cycle N EXISTING: assertion failure with wrong value
+  - TYPE CHANGE: type mismatch error
+✓ Compiler/syntax errors resolved
+✓ Diagnosis: "If I fix what error says, will test pass?"
 ```
+
+**Understanding Failure Types:**
+
+**Expected Cycle 1 (New Function):**
+```bash
+./middleware_test.go:19:13: undefined: ErrorMiddleware
+FAIL proj2 [build failed]
+```
+✓ Correct - Function doesn't exist yet
+
+**Expected Cycle N (Existing Function):**
+```bash
+--- FAIL: TestErrorMiddleware_AppError (0.00s)
+    middleware_test.go:25: expected status 503, got 200
+FAIL
+```
+✓ Correct - Implementation exists but logic is wrong
+
+**Unexpected (Broken Test):**
+```bash
+./middleware_test.go:25: syntax error: unexpected newline
+FAIL proj2 [build failed]
+```
+✗ Wrong - Fix test syntax, don't proceed
+
+**Special Case (Silent Pass):**
+If test passes before implementation:
+- Valid IF previous GREEN was sufficient for new test
+- Proves GREEN was "just right" level
+- Otherwise: STOP, test is broken
 
 **If test passes:** STOP. Test is broken. Fix test, not implementation.
 
-**Exit criteria:** Test fails with expected error message
+**Exit criteria:** Test fails with expected error message and correct failure type
 
 ---
 
@@ -148,6 +204,51 @@ Entry requirements:
 - Copy-paste acceptable
 - Bad names acceptable
 
+**The Minimal Spectrum:**
+
+Use this to judge if implementation is minimal enough:
+
+| Implementation | Next Test Impact | Verdict |
+|---|---|---|
+| Return hardcoded value | Requires rewrite | Too minimal (unless only 1 test) |
+| Handle current scenario + defaults | Only assertion change | **Just right ✓** |
+| Validate/optimize/handle future cases | No change needed | Over-engineered |
+
+**Example: HTTP Handler**
+
+**TOO MINIMAL (next test needs major rewrite):**
+```go
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Hello, World")  // Doesn't even read param
+}
+```
+
+**JUST RIGHT ✓ (next test only needs different assertion):**
+```go
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+    name := r.URL.Query().Get("name")
+    if name == "" {
+        name = "World"
+    }
+    fmt.Fprintf(w, "Hello, %s", name)
+}
+```
+
+**OVER-ENGINEERED (adding untested features):**
+```go
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+    name := r.URL.Query().Get("name")
+    if name == "" {
+        name = "World"
+    }
+    if len(name) > 100 {  // Validation not in test
+        http.Error(w, "name too long", 400)
+        return
+    }
+    fmt.Fprintf(w, "Hello, %s", name)
+}
+```
+
 **What NOT to do:**
 - ✗ Refactor while implementing
 - ✗ Optimize prematurely
@@ -163,7 +264,7 @@ AFTER GREEN: Confirm test output shows:
 - No warnings/errors
 ```
 
-**Exit criteria:** Test passes, no other tests break
+**Exit criteria:** Implementation at 'just right' level - next test won't require major rewrite
 
 ---
 
@@ -190,12 +291,31 @@ Entry requirements:
 - Simplify logic
 - Remove hardcoding (if multiple tests exist)
 - Improve readability
+- Change field types (e.g., string → error) if behavior preserved
 
 **What NOT to refactor:**
 - ✗ Multiple changes at once
 - ✗ Add new features
 - ✗ Change behavior
 - ✗ Optimize without measurement
+
+**Example: Type Structure Refactoring**
+```go
+// BEFORE: Works but not idiomatic
+type AppError struct {
+    Error         string  // Can't wrap errors
+    FriendlyError string
+    StatusCode    int
+}
+
+// REFACTOR: Better type semantics
+type AppError struct {
+    Error         error   // Now supports error wrapping
+    FriendlyError string
+    StatusCode    int
+}
+```
+**Why valid:** Tests still pass (behavior unchanged), structure improved (supports Go error wrapping)
 
 **Verification checkpoint:**
 ```
@@ -208,6 +328,34 @@ AFTER EACH REFACTOR: Confirm:
 **If tests fail:** STOP. Revert refactoring. Tests define correctness.
 
 **Exit criteria:** Tests pass, code improved (or no improvements needed)
+
+---
+
+### When TDD Feels Slow
+
+TDD can feel slow but still be efficient. Distinguish between productive slowness and wasteful slowness.
+
+**Feels Slow But IS Efficient:**
+
+| Scenario | Why It Feels Slow | Why It's Actually Fast |
+|----------|-------------------|------------------------|
+| Test takes 5 min, implementation 30 sec | Writing test is work | Saved debugging time later |
+| Test setup complex (first test only) | httptest/fixtures/mocks setup | Subsequent tests reuse infrastructure |
+| Refactoring takes 10 iterations | Each change triggers test run | Every break caught immediately |
+| Test forces you to think harder | Can't just code and see | Prevents implementing wrong thing |
+
+**Actually Slow (Rethink Approach):**
+
+**Red flags:**
+- Mocking everything (test longer than feature)
+- 100-line setup for 5-line test
+- Tests don't catch actual bugs
+- Same test logic duplicated 10+ times
+
+**Guidance:**
+TDD is working if: `time(test + impl + refactor) < time(impl alone + debugging + manual verification)`
+
+**Remember:** Test setup time amortizes across all future tests. First test in module pays infrastructure cost, rest are cheap.
 
 ---
 
@@ -317,343 +465,23 @@ After each refactoring:
 
 ## Examples
 
-### Feature: Add JSON parsing
-
-**THINK:** Test that `parseJSON` returns error for invalid input
-
-**RED:**
-```go
-func TestParseJSON_InvalidInput(t *testing.T) {
-    _, err := parseJSON("invalid")
-    if err == nil {
-        t.Error("expected error for invalid JSON")
-    }
-}
-```
-Execute → FAILS: "undefined: parseJSON" ✓ Correct failure
-
-**GREEN:**
-```go
-func parseJSON(input string) (map[string]interface{}, error) {
-    return nil, errors.New("invalid JSON")
-}
-```
-Execute → PASSES ✓
-
-**REFACTOR:** (skip, nothing to improve yet)
-
-**REPEAT:** THINK: Test that `parseJSON` parses valid JSON...
-
----
-
-### Bugfix: Handle nil pointer
-
-**THINK:** Test that `processUser` doesn't crash on nil user
-
-**RED:**
-```go
-func TestProcessUser_NilUser(t *testing.T) {
-    err := processUser(nil)
-    if err == nil {
-        t.Error("expected error for nil user")
-    }
-}
-```
-Execute → FAILS: "panic: nil pointer dereference" ✓ Wrong error type, but confirms bug
-
-**GREEN:**
-```go
-func processUser(user *User) error {
-    if user == nil {
-        return errors.New("user cannot be nil")
-    }
-    // existing logic...
-}
-```
-Execute → PASSES ✓
-
-**REFACTOR:** Extract error constant
-
-**REPEAT:** (done, bug fixed)
-
----
-
-### Refactor: Extract duplicated logic
-
-**THINK:** Test that `formatName` handles existing cases
-
-**RED:**
-```go
-func TestFormatName_FirstLast(t *testing.T) {
-    result := formatName("John", "Doe")
-    expected := "Doe, John"
-    if result != expected {
-        t.Errorf("got %s, want %s", result, expected)
-    }
-}
-```
-Execute → FAILS: "undefined: formatName" ✓ Correct (function doesn't exist yet)
-
-**GREEN:**
-```go
-func formatName(first, last string) string {
-    return last + ", " + first
-}
-```
-Execute → PASSES ✓
-
-**REFACTOR:** Replace duplicated logic in codebase with `formatName` calls
-
-**REPEAT:** (done, duplication removed)
+See [examples.md](./examples.md) for complete TDD cycle walkthroughs.
 
 ---
 
 ## Common Mistakes and Anti-Patterns
 
-### Implementation Before Test
+**Most Critical Red Flags:**
 
-**WRONG:**
-```
-1. Write parseJSON function
-2. Write test for parseJSON
-```
+| Anti-Pattern | Impact |
+|--------------|--------|
+| Implementation before test | Test doesn't verify anything |
+| Not verifying test failure | False sense of coverage |
+| Multiple assertions per test | Unclear failure messages |
+| Over-engineering during GREEN | Premature complexity |
+| Refactoring without tests | Silent breakage |
 
-**RIGHT:**
-```
-1. Write test for parseJSON (fails)
-2. Write parseJSON function (passes)
-```
-
-**Why:** Test must fail first to prove it actually tests something.
-
----
-
-### Not Verifying Test Failure
-
-**WRONG:**
-```
-1. Write test
-2. Assume it will fail
-3. Write implementation
-```
-
-**RIGHT:**
-```
-1. Write test
-2. Execute test, confirm failure message
-3. Write implementation
-```
-
-**Why:** Test might pass for wrong reasons (typo, wrong assertion, etc).
-
----
-
-### Multiple Assertions in One Test
-
-**WRONG:**
-```go
-func TestParseJSON(t *testing.T) {
-    result, err := parseJSON(`{"key": "value"}`)
-    if err != nil {
-        t.Error("unexpected error")
-    }
-    if result["key"] != "value" {
-        t.Error("wrong value")
-    }
-    if len(result) != 1 {
-        t.Error("wrong length")
-    }
-}
-```
-
-**RIGHT:**
-```go
-func TestParseJSON_ValidInput_NoError(t *testing.T) {
-    _, err := parseJSON(`{"key": "value"}`)
-    if err != nil {
-        t.Error("unexpected error")
-    }
-}
-
-func TestParseJSON_ValidInput_ParsesValue(t *testing.T) {
-    result, _ := parseJSON(`{"key": "value"}`)
-    if result["key"] != "value" {
-        t.Error("wrong value")
-    }
-}
-```
-
-**Why:** One test per behavior. Clear failure messages. Easier debugging.
-
----
-
-### Over-Engineering During GREEN
-
-**WRONG:**
-```go
-// GREEN phase implementation
-func parseJSON(input string) (map[string]interface{}, error) {
-    // Validate input
-    if len(input) == 0 {
-        return nil, errors.New("empty input")
-    }
-
-    // Optimize with custom parser
-    parser := NewOptimizedParser()
-
-    // Handle edge cases
-    result, err := parser.Parse(input)
-    if err != nil {
-        return nil, fmt.Errorf("parse error: %w", err)
-    }
-
-    return result, nil
-}
-```
-
-**RIGHT:**
-```go
-// GREEN phase implementation
-func parseJSON(input string) (map[string]interface{}, error) {
-    var result map[string]interface{}
-    err := json.Unmarshal([]byte(input), &result)
-    return result, err
-}
-```
-
-**Why:** GREEN phase is minimal implementation only. Refactor later.
-
----
-
-### Refactoring Without Test Safety Net
-
-**WRONG:**
-```
-1. Notice duplicated code
-2. Extract function immediately
-3. Hope nothing breaks
-```
-
-**RIGHT:**
-```
-1. Notice duplicated code
-2. Verify tests exist and pass
-3. Extract function
-4. Run tests, confirm still passing
-```
-
-**Why:** Tests prove refactoring didn't break behavior.
-
----
-
-### Testing Mock Behavior Instead of Real Behavior
-
-**WRONG:**
-```go
-func TestProcessUser(t *testing.T) {
-    mock := &MockUserService{}
-    mock.On("GetUser").Return(&User{Name: "test"})
-
-    result := mock.GetUser()
-
-    // Testing that mock returns what we told it to return
-    if result.Name != "test" {
-        t.Error("mock didn't work")
-    }
-}
-```
-
-**RIGHT:**
-```go
-func TestProcessUser(t *testing.T) {
-    // Use real UserService with test database or in-memory store
-    service := NewUserService(testDB)
-    service.CreateUser(&User{Name: "test"})
-
-    // Test actual behavior
-    result := service.GetUser(1)
-
-    if result.Name != "test" {
-        t.Error("service didn't retrieve user correctly")
-    }
-}
-```
-
-**Why:** Tests should verify real behavior, not mock configuration.
-
----
-
-### Adding Test-Only Methods to Production Classes
-
-**WRONG:**
-```go
-type UserService struct {
-    db Database
-}
-
-// Test-only method polluting production code
-func (s *UserService) SetMockDB(mockDB Database) {
-    s.db = mockDB
-}
-```
-
-**RIGHT:**
-```go
-type UserService struct {
-    db Database
-}
-
-// Production code stays clean
-func NewUserService(db Database) *UserService {
-    return &UserService{db: db}
-}
-
-// Tests use constructor with test database
-func TestUserService(t *testing.T) {
-    testDB := NewTestDatabase()
-    service := NewUserService(testDB)
-    // Test with real interface, test implementation
-}
-```
-
-**Why:** Production code shouldn't know about testing. Use dependency injection.
-
----
-
-### Mocking Without Understanding Dependencies
-
-**WRONG:**
-```go
-// Mock everything reflexively
-mockDB := &MockDB{}
-mockCache := &MockCache{}
-mockLogger := &MockLogger{}
-mockMetrics := &MockMetrics{}
-mockValidator := &MockValidator{}
-// ... test becomes mock configuration exercise
-```
-
-**RIGHT:**
-```go
-// Use real implementations for simple dependencies
-logger := log.NewNopLogger()  // Real logger, no output
-validator := NewValidator()    // Real validator, pure logic
-
-// Mock only external/slow dependencies
-mockDB := &MockDB{}  // External I/O
-mockCache := &MockCache{}  // External I/O
-
-service := NewService(mockDB, mockCache, logger, validator)
-// Test actual logic with minimal mocking
-```
-
-**Why:** Over-mocking tests implementation details, not behavior. Mock boundaries, not logic.
-
----
-
-### Testing Multiple Behaviors in One Test
-
-See "Multiple Assertions in One Test" above.
+See [anti-patterns.md](./anti-patterns.md) for detailed examples and solutions.
 
 ---
 
@@ -663,18 +491,22 @@ Before marking work complete, verify ALL items:
 
 PRE-COMPLETION CHECKLIST:
 - [ ] Every new function/method has a test
+- [ ] Each test name follows Test<Function>_<Scenario>[_<Expectation>] convention
+- [ ] THINK template completed for each cycle
 - [ ] Watched each test fail before implementing
 - [ ] Each test failed for expected reason (feature missing, not typo)
+- [ ] Verified failure TYPE matched expected (undefined vs assertion vs type error)
 - [ ] Wrote minimal code to pass each test
+- [ ] GREEN implementation at "just right" level (not too minimal, not over-engineered)
 - [ ] All tests pass
 - [ ] Output pristine (no errors, warnings)
-- [ ] Tests use real code (mocks only if unavoidable)
+- [ ] Tests use real code (mocks only at boundaries)
+- [ ] Performance feels slow but IS efficient (test time < debug time saved)
 - [ ] Edge cases covered (nil, empty, invalid input)
 - [ ] Error cases covered (failures, exceptions)
 - [ ] No test-only methods in production code
 - [ ] No testing mock behavior instead of real behavior
 - [ ] No multiple behaviors in single test
-- [ ] No mocks without understanding why
 
 **If ANY item unchecked:** Work is NOT complete. Return to appropriate phase.
 
