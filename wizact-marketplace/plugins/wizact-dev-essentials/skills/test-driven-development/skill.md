@@ -20,12 +20,16 @@ Use TDD for ALL code changes:
 - ✓ Fixing bugs
 - ✓ Refactoring existing code
 - ✓ Modifying behavior
-- ✓ "Simple" one-line changes
-- ✓ "Obvious" fixes
-- ✓ "Quick" refactors
-- ✓ "Trivial" updates
 
-**NO EXCEPTIONS.** User override only.
+**Except:**
+- Mistakes requiring immediate revert
+- Anti-patterns discovered during code review
+- "Simple" one-line changes
+- "Obvious" fixes
+- "Quick" refactors
+- "Trivial" updates
+
+**NO OTHER EXCEPTIONS.** User override only.
 
 ## The Five Phases
 
@@ -56,7 +60,7 @@ graph TD
 
 ### Phase 1: THINK (Strategy)
 
-Define what behavior you're implementing before writing ANY code.
+Explore and define what behavior you're implementing before writing ANY code.
 
 **Activities:**
 - Identify ONE specific behavior to implement
@@ -66,8 +70,6 @@ Define what behavior you're implementing before writing ANY code.
 - Write one-sentence test objective
 
 **Output:** Clear statement like "Test that `parseJSON` returns error for invalid input"
-
-**Duration:** ~30 seconds
 
 **Exit criteria:** You can articulate exactly what the test will verify
 
@@ -116,8 +118,6 @@ BEFORE GREEN: Confirm test output shows:
 
 **If test passes:** STOP. Test is broken. Fix test, not implementation.
 
-**Duration:** ~30 seconds
-
 **Exit criteria:** Test fails with expected error message
 
 ---
@@ -163,8 +163,6 @@ AFTER GREEN: Confirm test output shows:
 - No warnings/errors
 ```
 
-**Duration:** ~30 seconds
-
 **Exit criteria:** Test passes, no other tests break
 
 ---
@@ -209,8 +207,6 @@ AFTER EACH REFACTOR: Confirm:
 
 **If tests fail:** STOP. Revert refactoring. Tests define correctness.
 
-**Duration:** ~60 seconds (or skip if nothing to improve)
-
 **Exit criteria:** Tests pass, code improved (or no improvements needed)
 
 ---
@@ -228,8 +224,6 @@ Return to Phase 1 for next behavior.
 - All required behaviors implemented
 - All tests passing
 - No obvious improvements remaining
-
-**Cycle target:** 20-40 cycles per hour (~2 minutes per cycle)
 
 ---
 
@@ -311,13 +305,13 @@ After each refactoring:
 
 ## Quick Reference
 
-| Phase | Goal | Duration | Exit Criteria |
-|-------|------|----------|---------------|
-| **THINK** | Define behavior | ~30s | Can articulate test objective |
-| **RED** | Write failing test | ~30s | Test fails with expected error |
-| **GREEN** | Minimal implementation | ~30s | Test passes, minimal code |
-| **REFACTOR** | Improve design | ~60s | Tests pass, code improved |
-| **REPEAT** | Next behavior | - | More work exists |
+| Phase | Goal | Exit Criteria |
+|-------|------|---------------|
+| **THINK** | Define behavior | Can articulate test objective |
+| **RED** | Write failing test | Test fails with expected error |
+| **GREEN** | Minimal implementation | Test passes, minimal code |
+| **REFACTOR** | Improve design | Tests pass, code improved |
+| **REPEAT** | Next behavior | More work exists |
 
 ---
 
@@ -414,9 +408,9 @@ Execute → PASSES ✓
 
 ---
 
-## Common Mistakes
+## Common Mistakes and Anti-Patterns
 
-### Mistake 1: Writing Implementation Before Test
+### Implementation Before Test
 
 **WRONG:**
 ```
@@ -434,7 +428,7 @@ Execute → PASSES ✓
 
 ---
 
-### Mistake 2: Not Verifying Test Failure
+### Not Verifying Test Failure
 
 **WRONG:**
 ```
@@ -454,7 +448,7 @@ Execute → PASSES ✓
 
 ---
 
-### Mistake 3: Multiple Assertions in One Test
+### Multiple Assertions in One Test
 
 **WRONG:**
 ```go
@@ -493,7 +487,7 @@ func TestParseJSON_ValidInput_ParsesValue(t *testing.T) {
 
 ---
 
-### Mistake 4: Over-Engineering During GREEN
+### Over-Engineering During GREEN
 
 **WRONG:**
 ```go
@@ -531,7 +525,7 @@ func parseJSON(input string) (map[string]interface{}, error) {
 
 ---
 
-### Mistake 5: Refactoring Without Test Safety Net
+### Refactoring Without Test Safety Net
 
 **WRONG:**
 ```
@@ -552,50 +546,148 @@ func parseJSON(input string) (map[string]interface{}, error) {
 
 ---
 
-### Mistake 6: Skipping TDD for "Simple" Changes
+### Testing Mock Behavior Instead of Real Behavior
 
 **WRONG:**
-```
-User: "Fix typo in error message"
-Agent: *Changes error message directly*
+```go
+func TestProcessUser(t *testing.T) {
+    mock := &MockUserService{}
+    mock.On("GetUser").Return(&User{Name: "test"})
+
+    result := mock.GetUser()
+
+    // Testing that mock returns what we told it to return
+    if result.Name != "test" {
+        t.Error("mock didn't work")
+    }
+}
 ```
 
 **RIGHT:**
-```
-User: "Fix typo in error message"
-Agent:
-THINK: Test that error message has correct spelling
-RED: Write test asserting correct error text (fails)
-GREEN: Fix typo in error message (passes)
-REFACTOR: (skip)
+```go
+func TestProcessUser(t *testing.T) {
+    // Use real UserService with test database or in-memory store
+    service := NewUserService(testDB)
+    service.CreateUser(&User{Name: "test"})
+
+    // Test actual behavior
+    result := service.GetUser(1)
+
+    if result.Name != "test" {
+        t.Error("service didn't retrieve user correctly")
+    }
+}
 ```
 
-**Why:** Even "simple" changes need verification. Tests catch regressions.
+**Why:** Tests should verify real behavior, not mock configuration.
+
+---
+
+### Adding Test-Only Methods to Production Classes
+
+**WRONG:**
+```go
+type UserService struct {
+    db Database
+}
+
+// Test-only method polluting production code
+func (s *UserService) SetMockDB(mockDB Database) {
+    s.db = mockDB
+}
+```
+
+**RIGHT:**
+```go
+type UserService struct {
+    db Database
+}
+
+// Production code stays clean
+func NewUserService(db Database) *UserService {
+    return &UserService{db: db}
+}
+
+// Tests use constructor with test database
+func TestUserService(t *testing.T) {
+    testDB := NewTestDatabase()
+    service := NewUserService(testDB)
+    // Test with real interface, test implementation
+}
+```
+
+**Why:** Production code shouldn't know about testing. Use dependency injection.
+
+---
+
+### Mocking Without Understanding Dependencies
+
+**WRONG:**
+```go
+// Mock everything reflexively
+mockDB := &MockDB{}
+mockCache := &MockCache{}
+mockLogger := &MockLogger{}
+mockMetrics := &MockMetrics{}
+mockValidator := &MockValidator{}
+// ... test becomes mock configuration exercise
+```
+
+**RIGHT:**
+```go
+// Use real implementations for simple dependencies
+logger := log.NewNopLogger()  // Real logger, no output
+validator := NewValidator()    // Real validator, pure logic
+
+// Mock only external/slow dependencies
+mockDB := &MockDB{}  // External I/O
+mockCache := &MockCache{}  // External I/O
+
+service := NewService(mockDB, mockCache, logger, validator)
+// Test actual logic with minimal mocking
+```
+
+**Why:** Over-mocking tests implementation details, not behavior. Mock boundaries, not logic.
+
+---
+
+### Testing Multiple Behaviors in One Test
+
+See "Multiple Assertions in One Test" above.
+
+---
+
+## Verification Checklist
+
+Before marking work complete, verify ALL items:
+
+PRE-COMPLETION CHECKLIST:
+- [ ] Every new function/method has a test
+- [ ] Watched each test fail before implementing
+- [ ] Each test failed for expected reason (feature missing, not typo)
+- [ ] Wrote minimal code to pass each test
+- [ ] All tests pass
+- [ ] Output pristine (no errors, warnings)
+- [ ] Tests use real code (mocks only if unavoidable)
+- [ ] Edge cases covered (nil, empty, invalid input)
+- [ ] Error cases covered (failures, exceptions)
+- [ ] No test-only methods in production code
+- [ ] No testing mock behavior instead of real behavior
+- [ ] No multiple behaviors in single test
+- [ ] No mocks without understanding why
+
+**If ANY item unchecked:** Work is NOT complete. Return to appropriate phase.
 
 ---
 
 ## Language-Specific Notes
 
 **Infer from codebase:**
-- Test framework (Go: testing, Python: pytest, etc)
+- Test framework (Go: testing / testify, Python: pytest, etc)
 - Test file naming (`*_test.go`, `test_*.py`, etc)
 - Assertion style (table-driven, BDD, etc)
 
 **When in doubt:** Ask user for test framework preference.
-
----
-
-## Cycle Metrics (Optional)
-
-Track cycles to improve discipline:
-
-- **Target:** 20-40 cycles/hour
-- **Each cycle:** < 2 minutes
-- **Phase balance:** RED ~30s, GREEN ~30s, REFACTOR ~60s
-
-**If cycles taking > 5 minutes:** Scope too large. Break into smaller behaviors.
-
----
 
 ## Integration with Other Workflows
 
