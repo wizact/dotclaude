@@ -561,3 +561,12 @@ PRE-COMPLETION CHECKLIST:
 - High test coverage
 - Confident refactoring
 - Clear regression detection
+
+## Language-Specific Test Patterns
+
+For language-specific testing best practices, see:
+
+- **Go projects**: [../go-developer/SKILL.md](../go-developer/SKILL.md#test-rules) - Table-driven tests, test fixtures, benchmark tests, test organization
+- **Python projects**: [../python-developer/SKILL.md](../python-developer/SKILL.md#test-rules) - pytest fixtures, parametrization, async tests, mocking patterns
+
+These language-specific guides complement TDD workflow with concrete testing patterns and framework-specific best practices.

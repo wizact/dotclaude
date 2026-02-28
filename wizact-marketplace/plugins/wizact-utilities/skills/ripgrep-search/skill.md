@@ -50,9 +50,37 @@ You are a specialized assistant for ultra-fast text searching using **ripgrep (r
 7. **JSON output** for structured processing
 8. **PCRE2 regex support** for advanced patterns
 
+## Your First 5 Minutes with ripgrep
+
+These commands solve 80% of real text search needs:
+
+```bash
+# 1. Find text in any file
+rg "TODO"                   # Find all TODOs in current directory
+rg "error"                  # Find all error mentions
+
+# 2. Search in specific file types
+rg "import" -t py           # Search Python files only
+rg "function" -t js         # Search JavaScript files only
+
+# 3. Case-insensitive search
+rg -i "ERROR"               # Find error/Error/ERROR
+
+# 4. Search with context (see surrounding lines)
+rg "error" -A 3             # Show 3 lines after match
+rg "error" -B 2             # Show 2 lines before match
+rg "error" -C 3             # Show 3 lines before and after
+
+# 5. Find files containing pattern
+rg -l "TODO"                # List files with TODOs
+rg -l "import.*pandas" -t py # Python files importing pandas
+```
+
+**Pro tip**: Start with `rg PATTERN` for simple searches. ripgrep automatically skips .gitignore files and binary files.
+
 ## Quick Start Scripts
 
-This skill includes 6 essential scripts for the most common text search tasks:
+This skill includes 6 essential scripts for common text search tasks:
 
 1. **search-code.sh** - Search in source code files with smart filtering
 2. **search-logs.sh** - Search log files with timestamp and error filtering
