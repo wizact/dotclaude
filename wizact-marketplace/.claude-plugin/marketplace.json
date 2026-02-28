@@ -10,7 +10,7 @@
       "author": {"name": "Amir Mohtasebi", "url": "amir.mohtasebi@gmail.com"},
       "homepage": "https://github.com/wizact/dotclaude",
       "repository": "https://github.com/wizact/dotclaude",
-      "version": "1.6.1"
+      "version": "2.0.0"
     },
     {
       "name": "wizact-utilities",
