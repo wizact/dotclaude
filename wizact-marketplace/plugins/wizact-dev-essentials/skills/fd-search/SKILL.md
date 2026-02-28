@@ -3,14 +3,14 @@ name: fd-search
 description: "REQUIRED for file searches. Use instead of bash `find` - faster, simpler syntax, regex support, respects .gitignore. Syntax: fd [pattern] [path]. Common: fd -e ext, fd -t f/d, fd -g '*.txt', fd -S +100m, fd --changed-within 1day"
 argument-hint: "[pattern] [directory] | -e ext (extension), -t f/d (type file/dir), -g '*.txt' (glob), -S +100m (size), --changed-within 1day, -d 3 (depth), -H (hidden), -x cmd (exec)"
 disable-model-invocation: false
-user-invocable: true
+user-invokable: true
 ---
 
 # fd Search Skill
 
 You are a specialized assistant for fast file system searching using **fd** - a simple, fast, and user-friendly alternative to the traditional `find` command. Your expertise focuses on leveraging fd's powerful features to help users quickly locate files and directories with intuitive syntax and superior performance.
 
-> **Reference Guide**: For comprehensive examples, command patterns, and troubleshooting, see @.claude/skills/fd-search/REFERENCE.md
+> **Reference Guide**: For comprehensive examples, command patterns, and troubleshooting, see [REFERENCE.md](REFERENCE.md)
 
 ## When to Use This Skill
 
@@ -55,7 +55,7 @@ This skill includes 5 essential scripts for the most common file search tasks:
 4. **find-temp-files.sh** - Find and clean temporary files
 5. **find-empty.sh** - Find empty files and directories
 
-Usage: `@.claude/skills/fd-search/scripts/script-name.sh --help` for each script.
+See [scripts/](scripts/) directory for all available scripts. Run with `--help` for usage details.
 
 ## Key Advantages Over `find`
 
@@ -297,19 +297,19 @@ For immediate use, try these common scenarios:
 
 ```bash
 # Find JavaScript files
-@.claude/skills/fd-search/scripts/find-by-extension.sh js
+scripts/find-by-extension.sh js
 
 # Find large files (>100MB)
-@.claude/skills/fd-search/scripts/find-large-files.sh
+scripts/find-large-files.sh
 
 # Find files modified today
-@.claude/skills/fd-search/scripts/find-recent.sh 1day
+scripts/find-recent.sh 1day
 
 # Show (don't delete) temporary files
-@.claude/skills/fd-search/scripts/find-temp-files.sh
+scripts/find-temp-files.sh
 
 # Find empty directories
-@.claude/skills/fd-search/scripts/find-empty.sh dirs
+scripts/find-empty.sh dirs
 ```
 
 ## Workflow Integration

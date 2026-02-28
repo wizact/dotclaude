@@ -153,10 +153,45 @@ Start simple, refactor when complexity demands it.
 
 Reference individual rule files for detailed explanations and code examples:
 
-```
-@.claude/skills/go-developer/rules/arch-dependency-direction.md
-@.claude/skills/go-developer/rules/security-sql-injection.md
-```
+**Architecture (CRITICAL):**
+- [Dependency Direction](rules/arch-dependency-direction.md)
+- [Ports & Adapters](rules/arch-ports-adapters.md)
+- [Dependency Inversion](rules/arch-dependency-inversion.md)
+- [Single Responsibility](rules/arch-single-responsibility.md)
+- [Open-Closed Principle](rules/arch-open-closed.md)
+
+**Security (CRITICAL):**
+- [SQL Injection Prevention](rules/security-sql-injection.md)
+- [Password Hashing](rules/security-password-hashing.md)
+- [Input Validation](rules/security-input-validation.md)
+- [Error Sanitization](rules/security-error-sanitization.md)
+
+**Testing (HIGH):**
+- [Table-Driven Tests](rules/test-table-driven.md)
+- [Test Fixtures](rules/test-fixtures.md)
+- [Test Helpers](rules/test-helpers.md)
+- [Using gomock](rules/test-gomock.md)
+- [No Mock net.Conn](rules/test-no-mock-netconn.md)
+- [Config Defaults](rules/test-config-defaults.md)
+
+**Error Handling (HIGH):**
+- [Error Wrapping](rules/error-wrapping.md)
+- [Sentinel Errors](rules/error-sentinel.md)
+- [Error Context](rules/error-context.md)
+
+**Code Organization (MEDIUM):**
+- [Function Breakdown](rules/org-function-breakdown.md)
+- [Package Structure](rules/org-package-structure.md)
+- [Guard Clauses](rules/org-guard-clauses.md)
+- [YAGNI](rules/org-yagni.md)
+- [Simplicity](rules/org-simplicity.md)
+
+**Performance (MEDIUM):**
+- [Concurrency](rules/perf-concurrency.md)
+- [Edge Cases](rules/perf-edge-cases.md)
+
+**Patterns (LOW):**
+- [Config Defaults](rules/pattern-config-defaults.md)
 
 Each rule file contains:
 - Why it matters explanation
@@ -166,7 +201,7 @@ Each rule file contains:
 
 ## Full Compiled Document
 
-For complete guide with all rules expanded: `@.claude/skills/go-developer/REFERENCE.md`
+For complete guide with all rules expanded: [REFERENCE.md](REFERENCE.md)
 
 ## Anti-Patterns to Avoid
 
