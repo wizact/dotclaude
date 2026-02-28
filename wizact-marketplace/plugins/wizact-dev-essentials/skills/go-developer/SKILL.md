@@ -1,6 +1,7 @@
 ---
 name: go-developer
 description: Go development best practices - clean architecture, testing, security, and idiomatic patterns for production-ready code
+user-invocable: true
 ---
 
 # Go Developer

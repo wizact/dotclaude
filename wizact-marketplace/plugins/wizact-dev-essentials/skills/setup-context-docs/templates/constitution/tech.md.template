@@ -1,0 +1,456 @@
+# Technical Decisions & Standards
+
+## Technology Stack
+
+### Core Technologies
+[List primary technologies with versions and rationale]
+
+Example:
+- **Python**: 3.11+ (modern async, type hints, performance improvements)
+- **PyTorch**: 2.0+ (deep learning framework for embeddings)
+- **Transformers**: 4.30+ (HuggingFace model library)
+
+**Why [Technology] [Version]+?**
+[Bullet points explaining the choice]
+
+Example:
+- Native async/await support for I/O
+- Improved type hints (Self, TypeVarTuple)
+- Better performance (10-60% faster than previous version)
+- Industry standard for [domain] work
+
+**Why [Technology A] over [Technology B]?**
+[Comparative reasoning]
+
+Example:
+- Better Python integration
+- More intuitive API
+- Stronger research community
+- Better ecosystem support
+
+### Development Tools
+[List dev tools with brief rationale]
+
+Example:
+- **uv**: Fast dependency management (10-100x faster than pip)
+- **ruff**: Linting and formatting (10-100x faster than black + flake8)
+- **mypy**: Static type checking (catches bugs before runtime)
+- **pytest**: Testing framework (async support, fixtures, plugins)
+- **structlog**: Structured logging with JSON output
+
+**Why [Tool] over [Alternative]?**
+[Explain tool choices with trade-offs]
+
+Example:
+- Single tool instead of two
+- 10-100x faster (Rust-based)
+- Covers both formatting and linting
+- Auto-fix for many issues
+
+### Architecture
+
+[Project Name] follows **[Architecture Pattern]** (e.g., Hexagonal, Clean, MVC):
+
+```
+[ASCII diagram of architecture - keep it simple and informative]
+
+Example:
+┌─────────────────────────────────────────┐
+│          Application Layer              │
+│         (EmbeddingPipeline)             │
+│  • Orchestrates data flow                │
+│  • Manages batching                      │
+│  • Coordinates async/sync boundary       │
+└────────────┬──────────────┬─────────────┘
+             │              │
+      ┌──────▼──────┐  ┌───▼──────────┐
+      │   Domain    │  │   Adapters   │
+      │  Services   │  │ (Ports impl) │
+      └─────────────┘  └──────────────┘
+```
+
+**Core Components:**
+[List key architectural components with responsibilities]
+
+Example:
+- **Domain**: `CodeEmbeddingService` (pure business logic, no dependencies)
+- **Ports**: `InputAdapter`, `OutputAdapter` (interface definitions)
+- **Adapters**: `JSONLReader`, `EmbeddingWriter` (I/O implementations)
+- **Application**: `EmbeddingPipeline` (orchestration)
+
+**Key Patterns:**
+[List design patterns and architectural decisions]
+
+Example:
+- **Async I/O**: aiofiles for non-blocking file operations
+- **Thread Pool**: asyncio.to_thread() for CPU-bound inference
+- **Structured Logging**: structlog with JSON output
+
+See [CLAUDE.md](../../CLAUDE.md) for comprehensive architectural principles.
+
+## Project Structure
+
+```
+[Show actual directory tree with brief annotations]
+
+Example:
+project-name/
+├── docs/                    # Documentation
+│   ├── constitution/        # Long-term principles
+│   ├── features/            # Feature specifications
+│   │   ├── TEMPLATES/       # Templates for new features
+│   │   └── f001-*/          # Implemented features
+├── src/project_name/
+│   ├── domain/              # Core business logic
+│   ├── adapters/            # I/O implementations
+│   ├── application/         # Orchestration
+│   └── cli/                 # Command-line interface
+├── tests/
+│   ├── unit/                # Isolated component tests
+│   └── integration/         # End-to-end tests
+├── CLAUDE.md                # Constitutional principles
+├── README.md                # Quick start guide
+└── pyproject.toml           # Project configuration
+```
+
+## Design Standards
+
+### Code Style
+[Define coding conventions]
+
+Example:
+- **Line Length**: 100 characters max
+- **Indentation**: 4 spaces (no tabs)
+- **Imports**: Organized by stdlib, third-party, local
+- **Naming**:
+  - Classes: PascalCase
+  - Functions/methods: snake_case
+  - Constants: UPPER_SNAKE_CASE
+  - Private: leading underscore (_private_method)
+
+### Type Hints
+[Type annotation requirements and patterns]
+
+Example:
+- Required on all public functions
+- Required on all class attributes
+- Use specific types over Any
+- Use typing.Protocol for structural subtyping
+- Use dataclasses with frozen=True for immutability
+
+**Example**:
+```[language]
+[Show actual code example demonstrating type hint patterns]
+```
+
+### Docstrings
+[Documentation requirements and style]
+
+Example:
+- **Style**: Google style (or NumPy, reStructuredText)
+- **Required for**: All public classes, functions, methods
+- **Not required for**: Private methods, obvious property getters
+- **Include**: Args, Returns, Raises, Examples
+
+**Example**:
+```[language]
+[Show actual docstring example following the chosen style]
+```
+
+### Testing Standards
+
+#### Coverage
+[Define coverage requirements]
+
+Example:
+- **Target**: 95%+ total coverage
+- **Required**: 100% coverage for domain logic
+- **Allowed lower**: Integration test glue code
+
+#### Test Organization
+```
+[Show test directory structure]
+
+Example:
+tests/
+├── unit/              # Fast, isolated, mocked dependencies
+│   ├── test_models.py
+│   ├── test_service.py
+│   └── test_adapters.py
+└── integration/       # Slower, real components, minimal mocking
+    └── test_pipeline.py
+```
+
+#### Test Naming
+[Define naming conventions]
+
+Example:
+- **Pattern**: `test_<method>_<scenario>_<expected_outcome>`
+- **Example**: `test_embed_batch_empty_list_returns_empty`
+
+#### [Language-Specific Test Features]
+[e.g., Async Tests, Fixtures, Parameterization]
+
+Example:
+- Mark with `@pytest.mark.asyncio`
+- Use async fixtures where needed
+- Test both success and error paths
+
+## Dependencies
+
+### Production Dependencies
+```[language-specific format]
+[Show actual dependency declarations]
+
+Example (Python):
+[project.dependencies]
+torch = ">=2.0.0"
+transformers = ">=4.30.0"
+pydantic = ">=2.0.0"
+```
+
+### Development Dependencies
+```[language-specific format]
+[Show dev dependency declarations]
+
+Example (Python):
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "mypy>=1.4.0",
+]
+```
+
+### Dependency Policy
+[Define how dependencies are managed]
+
+Example:
+- **Minimum versions**: Specify minimum version that works
+- **No upper bounds**: Let users choose latest compatible version
+- **Security updates**: Update dependencies when CVEs are found
+- **Breaking changes**: Major version bumps require code updates
+
+## CI/CD Standards
+
+### Pre-commit Checks
+[Commands to run before committing]
+
+Example:
+```bash
+make format    # ruff format
+make lint      # ruff check
+make typecheck # mypy
+make test      # pytest (fast tests only)
+```
+
+### CI Pipeline
+[Define CI stages and requirements]
+
+Example:
+Run on every PR and push to main:
+1. **Linting**: ruff check --fix
+2. **Formatting**: ruff format --check
+3. **Type Checking**: mypy --strict
+4. **Testing**: pytest with coverage
+5. **Coverage Report**: Fail if < 95%
+
+### Release Process
+[Step-by-step release workflow]
+
+Example:
+1. Update version in [config file]
+2. Update CHANGELOG.md
+3. Create git tag (v0.1.0, v1.0.0, etc.)
+4. Push tag to trigger release workflow
+5. Publish to [package registry] (automated)
+
+## Performance Targets
+
+### Throughput
+[Define performance expectations]
+
+Example:
+- **CPU**: 100+ snippets/second
+- **GPU**: 500+ snippets/second
+- **Memory**: < 500MB regardless of input size
+
+### Latency
+[Define latency requirements]
+
+Example:
+- **Per request**: < 100ms (p95)
+- **Per batch**: < 0.5 seconds (batch size 32)
+
+### Scalability
+[Define scaling characteristics]
+
+Example:
+- **Input size**: Support files up to 1GB
+- **Codebase size**: Support 10M+ lines of code
+- **Concurrent requests**: 100+ requests/second
+
+## Security Standards
+
+### Input Validation
+[Define input validation requirements]
+
+Example:
+- Validate all input at system boundaries
+- Use [validation library] for configuration validation
+- Sanitize file paths (prevent path traversal)
+- Limit input size (prevent DoS)
+
+### Secrets Management
+[Define how secrets are handled]
+
+Example:
+- **Never** commit secrets to git
+- Use environment variables for sensitive config
+- Document required environment variables
+- Provide .env.example (not .env)
+
+### Logging
+[Security considerations for logging]
+
+Example:
+- **Never** log sensitive data (tokens, API keys, PII)
+- Use structured logging for easy filtering
+- Log at appropriate levels (DEBUG, INFO, WARNING, ERROR)
+- Include request IDs for traceability
+
+### Dependencies
+[Security practices for dependencies]
+
+Example:
+- Run [security scanner] to check for vulnerabilities
+- Monitor security advisories
+- Update dependencies quarterly (or when CVEs found)
+
+## Code Review Standards
+
+### Review Checklist
+[Define what reviewers should check]
+
+Example:
+- [ ] Code follows style guide
+- [ ] Type hints are comprehensive
+- [ ] Tests are included and passing
+- [ ] Coverage meets threshold
+- [ ] Documentation is updated
+- [ ] No secrets in code
+- [ ] Error handling is appropriate
+- [ ] Performance is acceptable
+
+### Review Guidelines
+[Define review process expectations]
+
+Example:
+- Review within 24 hours
+- Be constructive and specific
+- Approve if minor comments only
+- Request changes if blocking issues
+- Use GitHub suggestions for quick fixes
+
+## Decision Records
+
+[Document major technical decisions with context and alternatives]
+
+### Why [Technical Decision]?
+**Decision**: [Clear statement of what was decided]
+
+**Rationale**:
+[Bullet points explaining why]
+
+Example:
+- Prevents accidental mutation
+- Makes code easier to reason about
+- Enables hashability for use in sets/dicts
+- Thread-safe by default
+
+**Alternatives**: [List alternatives with brief rejection reasons]
+
+Example: Regular dataclasses (too error-prone), NamedTuples (less flexible)
+
+### Why No [Feature/Technology]?
+**Decision**: [What is excluded and for how long]
+
+**Rationale**:
+[Explain the reasoning]
+
+Example:
+- JSONL I/O only in v1.0
+- Adds significant complexity
+- Not needed for current use case
+- Can add in v2.0 if needed
+
+**Alternatives**: [List alternatives with context]
+
+## Monitoring & Observability
+
+### Metrics to Track
+[List important metrics to monitor]
+
+Example:
+- Embeddings generated per second
+- Average batch processing time
+- Memory usage per batch
+- Error rate by error type
+- Input file sizes
+
+### Logging Strategy
+[Define logging levels and usage]
+
+Example:
+- **DEBUG**: Internal state for debugging
+- **INFO**: Normal operations (files processed, batches completed)
+- **WARNING**: Recoverable errors (invalid snippets skipped)
+- **ERROR**: Unrecoverable errors (model loading failed)
+
+### Structured Logging Format
+[Show example of structured log output]
+
+Example:
+```[language]
+logger.info(
+    "operation_completed",
+    count=len(results),
+    batch_size=len(items),
+    duration_ms=elapsed * 1000,
+)
+```
+
+## Backwards Compatibility
+
+### Versioning
+[Define versioning strategy]
+
+Example:
+- Follow Semantic Versioning (SemVer)
+- MAJOR: Breaking API changes
+- MINOR: New features, backwards compatible
+- PATCH: Bug fixes, backwards compatible
+
+### Deprecation Policy
+[Define how features are deprecated]
+
+Example:
+1. Mark feature as deprecated in docs
+2. Add deprecation warning in code
+3. Wait at least 1 minor version
+4. Remove in next major version
+
+**Example**:
+```[language]
+[Show code example of deprecation warning]
+```
+
+## Updates to This Document
+
+This document should be updated when:
+- Adopting new major technology
+- Changing code standards
+- Making architectural decisions
+- Learning lessons that affect all development
+
+Last updated: [YYYY-MM-DD]
