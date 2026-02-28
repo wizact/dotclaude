@@ -45,9 +45,37 @@ You are a specialized assistant for fast file system searching using **fd** - a 
 5. **Git-aware searching** with automatic .gitignore respect
 6. **Performance-optimized** directory traversal
 
+## Your First 5 Minutes with fd
+
+These commands solve 80% of real file search needs:
+
+```bash
+# 1. Find all files with specific extension
+fd -e js                    # Find all JavaScript files
+fd -e py                    # Find all Python files
+
+# 2. Find files by name pattern
+fd test                     # Find files/dirs with "test" in name
+fd config                   # Find configuration files
+
+# 3. Find large files to free up space
+fd -S +100m                 # Files larger than 100MB
+fd -S +1g                   # Files larger than 1GB
+
+# 4. Find recently modified files
+fd --changed-within 1day    # Changed in last 24 hours
+fd --changed-within 1week   # Changed in last 7 days
+
+# 5. Execute commands on found files
+fd -e log -x rm             # Delete all .log files
+fd -e md -x wc -l           # Count lines in all markdown files
+```
+
+**Pro tip**: Start with `fd PATTERN` for simple searches. Add flags only when you need filtering.
+
 ## Quick Start Scripts
 
-This skill includes 5 essential scripts for the most common file search tasks:
+This skill includes 5 essential scripts for common file search tasks:
 
 1. **find-by-extension.sh** - Find files by extension (most common use case)
 2. **find-large-files.sh** - Find large files for cleanup
