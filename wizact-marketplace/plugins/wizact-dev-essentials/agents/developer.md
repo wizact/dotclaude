@@ -39,7 +39,7 @@ Skill(skill="go-developer")
 
 **Python Projects:**
 ```
-Skill(skill="python-developer")  # Future implementation, use fallback method for now
+Skill(skill="python-developer")
 ```
 
 **Rust Projects:**

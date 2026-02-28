@@ -138,16 +138,14 @@ You MUST follow these phases sequentially and get explicit user approval before 
    Glob(pattern="CLAUDE.md")
    Glob(pattern="docs/constitution/*.md")
    Glob(pattern=".claude/*.md")
-   Glob(pattern="docs/conventions.md")
    ```
 
 2. **Read found files** (if exist):
    - **CLAUDE.md**: Architecture, tech stack, development conventions
    - **docs/constitution/product.md** or **.claude/product.md**: Product scope, user personas, domain terminology
-   - **docs/constitution/tech.md** or **.claude/tech.md**: Design principles, architectural standards
+   - **docs/constitution/tech.md** or **.claude/tech.md**: Design principles, architectural standards. Language specific coding standards, testing practices, etc. 
    - **.claude/README.md**: User-level development guide
-   - **docs/conventions.md**: Language specific coding standards, testing practices, etc. 
-
+ 
 3. **Create internal context summary**:
    ```markdown
    **Project Context Summary** (for reference in Phases 1-5):
@@ -231,11 +229,11 @@ You MUST follow these phases sequentially and get explicit user approval before 
    Use the Project Context Summary from Phase 0:
    - **Architecture**: [From CLAUDE.md, and tech.md - e.g., 3-layer, microservices]
    - **Tech Stack**: [From CLAUDE.md and tech.md - e.g., Go 1.23, PostgreSQL]
-   - **Naming Conventions**: [From Phase 0 and conventions.md - e.g., b###-name]
+   - **Naming Conventions**: [From Phase 0 and tech.md - e.g., b###-name]
    - **Design Principles**: [From tech.md - e.g., unidirectional deps]
    - **Project Scope**: [From product.md - what's in/out of scope]
    - **User Personas**: [From product.md - target users]
-   - **Coding standards**: [From conventions.md - e.g. code formatting]
+   - **Coding standards**: [From tech.md - e.g. code formatting]
 
    **Apply context to exploration**:
    - Use tech stack to focus Explore agents (e.g., "Search Go (or relevant language to repo) files only")
