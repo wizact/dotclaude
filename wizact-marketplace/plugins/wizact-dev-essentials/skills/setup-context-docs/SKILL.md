@@ -1,3 +1,9 @@
+---
+name: setup-context-docs
+description: Creates comprehensive context-driven development documentation structure for repositories. Analyzes codebase, generates multi-document constitution pattern (product.md, tech.md), language-agnostic feature specification templates, and updates README. Auto-invoked when setting up project documentation, context docs, or CLAUDE.md setup.
+user-invocable: true
+---
+
 # Setup Context-Driven Development Documentation
 
 **Description**: Creates a comprehensive context-driven development documentation structure for any repository, based on proven patterns from code-transformer and go-todo-api.
@@ -164,7 +170,7 @@ When this skill is invoked, follow these steps:
 
 **NOTE**: DO NOT MAKE ASSUMPTIONS. In the absence of clear answer, create `TODO:` markers in this document as placeholder for the user to update later.
 
-**Template**: Fetch and understand the example template located [here](https://github.com/wizact/dotclaude/blob/main/TEMPLATES/context-docs/constitution/product.md.template). Use the template as a base to form a new `product.md` file.
+**Template**: Read the template located at `templates/constitution/product.md.template` (relative to this skill directory). Use the template as a base to form a new `product.md` file.
 
 **Content sections**:
 
@@ -221,7 +227,7 @@ When this skill is invoked, follow these steps:
 
 **Focus**: Technical perspective - How, Why tech choices, Implementation
 
-**Template**: Fetch and understand the example template located [here](https://github.com/wizact/dotclaude/blob/main/TEMPLATES/context-docs/constitution/tech.md.template). Use the template as a base to form a new `tech.md` file.
+**Template**: Read the template located at `templates/constitution/tech.md.template` (relative to this skill directory). Use the template as a base to form a new `tech.md` file.
 
 **Content sections**:
 
@@ -287,15 +293,15 @@ When this skill is invoked, follow these steps:
 
 **Reference Implementation**:
 
-Check if language-specific convention file exists in this repository. Available reference implementations:
+Check if language-specific convention file exists in this skill's templates directory. Available reference implementations:
 
-| Language | GitHub URL |
-|----------|--------------|
-| Go | [Go Conventions Template](https://github.com/wizact/dotclaude/blob/main/TEMPLATES/conventions/go/conventions.md) |
-| Python | [Python Conventions Template](https://github.com/wizact/dotclaude/blob/main/TEMPLATES/conventions/python/conventions.md) |
+| Language | Skill Template Path |
+|----------|---------------------|
+| Go | `templates/conventions/go/conventions.md` |
+| Python | `templates/conventions/python/conventions.md` |
 
 **Creation Strategy**:
-1. **If language-specific convention exists in TEMPLATES/**:
+1. **If language-specific convention exists in templates/**:
    - Use as reference for structure and content
    - Adapt to current project specifics
    - Follow the same section organization
@@ -335,7 +341,7 @@ Check if language-specific convention file exists in this repository. Available 
 **Reference Implementation**:
 
 A reference README.md is available that explains the feature specification structure:
-- **GitHub URL**: [Context-Docs README Template](https://github.com/wizact/dotclaude/blob/main/TEMPLATES/context-docs/README.md)
+- **Template Path**: `templates/features/README.md` (relative to this skill directory)
 - **Use as**: Foundation for creating docs/features/README.md
 - **Adapt**: Customize for project-specific workflow and conventions
 
@@ -368,7 +374,7 @@ A reference README.md is available that explains the feature specification struc
 
 A complete example feature specification is available to learn from:
 - **Feature**: UUID Multi-Repo Support (f002-uuid-multi-repo)
-- **GitHub URL**: [Example Feature Spec](https://github.com/wizact/dotclaude/tree/main/TEMPLATES/context-docs/features/f002-uuid-multi-repo)
+- **Template Path**: `templates/features/examples/f002-uuid-multi-repo/` (relative to this skill directory)
 - **Contains**: Complete requirements.md, design.md, tasks.md
 - **Use as**: Reference for structure, section organization, and level of detail
 
@@ -557,11 +563,7 @@ git commit -S -m "docs: establish context-driven development documentation
 - Migrate .claude/project_rules.md to docs/conventions.md
 
 Based on proven patterns from code-transformer and go-todo-api.
-Establishes foundation for AI agents and contributor onboarding.
-
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
+Establishes foundation for AI agents and contributor onboarding."
 ```
 
 ---

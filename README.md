@@ -70,14 +70,16 @@ See [wizact-dev-essentials/README.md](wizact-marketplace/plugins/wizact-dev-esse
 
 Essential development tools plugin providing:
 
-**Commands** (3):
+**Commands** (2):
 - `/generate-commit-message` - Generate Conventional Commits formatted messages
 - `/search-code` - Smart code pattern search
-- `/setup-context-docs` - Context-driven development documentation setup
 
-**Skills** (2):
+**Skills** (5):
 - `fd-search` - Lightning-fast file system search using `fd`
 - `ripgrep-search` - Blazing-fast code search using `ripgrep`
+- `go-developer` - Go development best practices and idiomatic patterns
+- `test-driven-development` - TDD red-green-refactor discipline enforcement
+- `setup-context-docs` - Context-driven development documentation setup
 
 **Agents** (3):
 - `developer` - Multi-language dispatcher (Go, Python) with best practices
@@ -89,7 +91,7 @@ Essential development tools plugin providing:
 #### Context Documentation (`TEMPLATES/context-docs/`)
 - Feature specification templates (requirements, design, tasks)
 - Example feature structure (f002-uuid-multi-repo)
-- Setup via `/setup-context-docs` command
+- Setup via `/setup-context-docs` skill
 
 #### Language Conventions (`TEMPLATES/conventions/`)
 - **Go** (`go/conventions.md`) - Go coding standards and patterns

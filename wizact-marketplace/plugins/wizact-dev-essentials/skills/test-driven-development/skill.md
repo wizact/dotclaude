@@ -1,7 +1,7 @@
 ---
 name: test-driven-development
 description: Use when implementing features, fixing bugs, or refactoring code. Enforces TDD red-green-refactor discipline - write failing tests first, minimal implementation second, then refactor. Prevents writing implementation before tests, skipping test failure verification, over-engineering during green phase, or bundling multiple behaviors in one test. Keywords trigger automatic invocation - tdd, test first, write tests, unit test, test coverage
-user-invokable: true
+user-invocable: true
 ---
 
 # Test-Driven Development
