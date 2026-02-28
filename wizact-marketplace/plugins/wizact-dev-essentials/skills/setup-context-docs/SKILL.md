@@ -6,7 +6,7 @@ user-invocable: true
 
 # Setup Context-Driven Development Documentation
 
-**Description**: Creates a comprehensive context-driven development documentation structure for any repository, based on proven patterns from code-transformer and go-todo-api.
+**Description**: Creates a comprehensive context-driven development documentation structure for any repository, based on proven patterns of specification driven development and context engineering.
 
 **Usage**:
 ```
@@ -91,6 +91,7 @@ When this skill is invoked, follow these steps:
    - Directory structure patterns
    - Module organization (monolith, libs, microservices)
    - Layer separation if obvious
+   - Data flow hints (e.g. API → Service → DB)
 
 4. **Check existing documentation**:
    - `.claude/project_rules.md` (MIGRATE)
@@ -112,7 +113,7 @@ When this skill is invoked, follow these steps:
 
 **File**: `CLAUDE.md`
 
-**Target**: 800-1200 words MAX (similar to go-todo-api)
+**Target**: 800-1200 words MAX 
 
 **Content** (use progressive disclosure):
 
@@ -127,7 +128,6 @@ When this skill is invoked, follow these steps:
 
    - **Product**: [docs/constitution/product.md](docs/constitution/product.md) - Vision, scope, roadmap
    - **Technical**: [docs/constitution/tech.md](docs/constitution/tech.md) - Architecture, stack, patterns
-   - **Conventions**: [docs/conventions.md](docs/conventions.md) - [Language] coding standards
    - **Features**: [docs/features/](docs/features/) - Feature planning templates
    ```
 
@@ -145,7 +145,16 @@ When this skill is invoked, follow these steps:
    - Brief role (1 line)
    - Link to tech.md for rationale: "See tech.md for technology decisions"
 
-6. **Module Structure** (overview only):
+6. **Code Standards** (brief + link):
+   ```markdown
+   ## Code Standards
+
+   - **Style**: Follow [Language] standard formatting ([tool name - e.g., gofmt, black, prettier])
+   - **Git**: Conventional commits, signed with GPG
+   - **Details**: See [tech.md](docs/constitution/tech.md#code-patterns) for comprehensive coding patterns
+   ```
+
+7. **Module Structure** (overview only):
    - High-level organization
    - Dependency flow if clear
    - Link to tech.md for details
@@ -153,7 +162,7 @@ When this skill is invoked, follow these steps:
 **What NOT to include**:
 - ❌ Detailed architecture explanations (→ tech.md)
 - ❌ Technology rationale (→ tech.md)
-- ❌ Coding standards (→ conventions.md)
+- ❌ Coding standards (→ tech.md, brief reference is OK)
 - ❌ Product scope (→ product.md)
 - ❌ Testing strategies (→ tech.md)
 - ❌ Database schemas (→ tech.md)
@@ -168,7 +177,7 @@ When this skill is invoked, follow these steps:
 
 **Focus**: Product/Business perspective - What, Who, Why (NOT How)
 
-**NOTE**: DO NOT MAKE ASSUMPTIONS. In the absence of clear answer, create `TODO:` markers in this document as placeholder for the user to update later.
+**NOTE**: DO NOT MAKE ASSUMPTIONS. In the absence of clear answer, create `TASKS` for the user to fill in later. For example, if the target audience is not clear, add a task: "TASK: Define target user personas and use cases."
 
 **Template**: Read the template located at `templates/constitution/product.md.template` (relative to this skill directory). Use the template as a base to form a new `product.md` file.
 
@@ -242,31 +251,42 @@ When this skill is invoked, follow these steps:
    - Design patterns used
    - Component interactions
 
-3. **Database Design** (if applicable):
+3. **Code Patterns** (language-specific standards):
+   - Naming conventions (files, classes, functions, constants)
+   - Error handling patterns (wrapping, sentinel errors, propagation)
+   - Testing framework setup (frameworks, assertions, mocking, fixtures)
+   - Package/module organization (structure, dependencies, API design)
+   - Interface/contract design (patterns, dependency injection)
+   - Git workflow (commit messages, branching, signing)
+   - Extending/adding features (step-by-step guide)
+
+**Only include patterns that are actually used in the codebase**. If a pattern is not currently followed, do NOT include it as a recommendation.
+
+4. **Database Design** (if applicable):
    - Schema details
    - Indexes, constraints
    - Migration strategy
    - Query patterns
 
-4. **Testing Requirements**:
+5. **Testing Requirements**:
    - Framework details
    - Coverage targets
    - Test organization
    - CI/CD specifics
 
-5. **Performance Targets** (technical metrics):
+6. **Performance Targets** (technical metrics):
    - Latency, throughput
    - Memory, CPU usage
    - Benchmark results
    - Optimization strategies
 
-6. **Security & Operations**:
+7. **Security & Operations**:
    - Security patterns
    - Deployment architecture
    - Configuration management
    - Monitoring
 
-7. **Dependency Policy**:
+8. **Dependency Policy**:
    - Dependency management
    - Version pinning
    - Audit process
@@ -278,61 +298,12 @@ When this skill is invoked, follow these steps:
 - ✅ Performance benchmarks
 - ✅ Technology trade-offs
 - ✅ Build/deployment details
+- ✅ Code patterns and conventions (naming, error handling, testing, organization)
+- ✅ Git workflow and commit standards
 
 ---
 
-#### 2.4: Create docs/conventions.md
-
-**File**: `docs/conventions.md`
-
-**Content**: Language-specific coding patterns and practices
-   - Language-specific conventions
-   - Naming, formatting, organization
-   - Error handling patterns
-   - Testing strategies
-
-**Reference Implementation**:
-
-Check if language-specific convention file exists in this skill's templates directory. Available reference implementations:
-
-| Language | Skill Template Path |
-|----------|---------------------|
-| Go | `templates/conventions/go/conventions.md` |
-| Python | `templates/conventions/python/conventions.md` |
-
-**Creation Strategy**:
-1. **If language-specific convention exists in templates/**:
-   - Use as reference for structure and content
-   - Adapt to current project specifics
-   - Follow the same section organization
-
-2. **If no template exists for detected language**:
-   - Create `docs/conventions.md` with placeholder sections
-   - Add note at top: "⚠️ This file contains placeholders. Please complete with project-specific conventions."
-   - Use standard sections below with `TODO:` markers
-   - User will complete later
-
-**Sections**:
-1. Code Conventions (filenames, naming, structure)
-2. Testing Conventions (frameworks, patterns, organization)
-3. Error Handling (language-specific patterns)
-4. Package/Module Organization
-5. Interface/Contract Design (if applicable)
-6. Git Workflow
-7. Extending/Adding Features (step-by-step guide)
-
-**Migration**:
-- IF `.claude/project_rules.md` exists:
-  - Read, migrate content, DELETE original
-  - Note migration in commit
-- IF `CONVENTIONS.md` exists:
-  - Read, consolidate into `docs/conventions.md`
-  - Consider keeping original if substantial
-- **EXCLUDE**: `.github/CONTRIBUTING.md` (leave it alone, out of scope)
-
----
-
-#### 2.5: Create docs/features/README.md
+#### 2.4: Create docs/features/README.md
 
 **File**: `docs/features/README.md`
 
@@ -363,7 +334,7 @@ A reference README.md is available that explains the feature specification struc
 
 ---
 
-#### 2.6: Create Feature Templates
+#### 2.5: Create Feature Templates
 
 **Files**:
 - `docs/features/TEMPLATES/requirements.md.template`
@@ -440,8 +411,7 @@ A complete example feature specification is available to learn from:
 
 - **[CLAUDE.md](CLAUDE.md)** - Quick reference and navigation hub
 - **[docs/constitution/product.md](docs/constitution/product.md)** - Product vision, scope, and roadmap
-- **[docs/constitution/tech.md](docs/constitution/tech.md)** - Technical architecture and decisions
-- **[docs/conventions.md](docs/conventions.md)** - [Language] coding standards and patterns
+- **[docs/constitution/tech.md](docs/constitution/tech.md)** - Technical architecture, decisions, and coding standards
 - **[docs/features/](docs/features/)** - Feature specification templates
 
 **Start here**: New contributors should read CLAUDE.md first for quick orientation.
@@ -449,8 +419,7 @@ A complete example feature specification is available to learn from:
 
 **Update references**:
 - Fix links to moved documentation
-- Update "Contributing" to reference `docs/conventions.md`
-- Update "Extending" to reference appropriate docs
+- Update "Contributing" to reference `docs/constitution/tech.md#code-patterns`
 - Clarify roadmap scope (link to product.md if needed)
 
 **Preserve**:
@@ -463,9 +432,13 @@ A complete example feature specification is available to learn from:
 
 #### 3.2: Handle Existing Conventions
 
-**Migrate these**:
-- `.claude/project_rules.md` → `docs/conventions.md` (DELETE original)
-- `CONVENTIONS.md` → `docs/conventions.md` (consolidate, consider keeping original)
+**Migrate these to tech.md (Code Patterns section)**:
+- `.claude/project_rules.md` → `docs/constitution/tech.md` (DELETE original)
+  - Append content to "Code Patterns" section in tech.md
+  - Preserve existing conventions, adapt format to match tech.md structure
+- `CONVENTIONS.md` → `docs/constitution/tech.md` (consolidate, consider keeping original)
+  - Merge content into appropriate subsections of "Code Patterns"
+  - Update references to point to tech.md#code-patterns
 
 **Leave alone** (OUT OF SCOPE):
 - ❌ `.github/CONTRIBUTING.md` - Community contributions, separate concern
@@ -520,6 +493,8 @@ A complete example feature specification is available to learn from:
 - [ ] Database schemas present (if applicable)
 - [ ] Architecture diagrams/explanations
 - [ ] Technology trade-offs explained
+- [ ] Code Patterns section includes comprehensive coding standards
+- [ ] No separate conventions.md file created
 
 **No duplication check**:
 - [ ] Database schema in ONE place (tech.md)
@@ -538,12 +513,11 @@ A complete example feature specification is available to learn from:
 **File creation order**:
 1. `CLAUDE.md`
 2. `docs/constitution/product.md`
-3. `docs/constitution/tech.md`
-4. `docs/conventions.md`
-5. `docs/features/README.md`
-6. `docs/features/TEMPLATES/*.template`
-7. Update `README.md`
-8. Delete migrated files
+3. `docs/constitution/tech.md` 
+4. `docs/features/README.md`
+5. `docs/features/TEMPLATES/*.template`
+6. Update `README.md`
+7. Delete migrated files
 
 **Commit**:
 ```bash
@@ -554,13 +528,15 @@ git commit -S -m "docs: establish context-driven development documentation
 - Add CLAUDE.md as concise navigation hub with progressive disclosure
 - Create constitution pattern (product.md, tech.md) with clear separation:
   * product.md: Business perspective (WHAT/WHO/WHY, no tech details)
-  * tech.md: Technical perspective (HOW/architecture/all tech details)
-- Add conventions.md with [Language]-specific patterns
+  * tech.md: Technical perspective (HOW/architecture/all tech details/code patterns)
+- Consolidate coding standards into tech.md Code Patterns section:
+  * Naming conventions, error handling, testing, module organization
+  * Interface design, feature extension guide
 - Create feature templates with WHAT vs HOW separation:
   * requirements.md: Specifications and acceptance criteria
   * design.md: Implementation and technical decisions
 - Update README.md with documentation navigation
-- Migrate .claude/project_rules.md to docs/conventions.md
+- Migrate .claude/project_rules.md to docs/constitution/tech.md
 
 Based on proven patterns from code-transformer and go-todo-api.
 Establishes foundation for AI agents and contributor onboarding."
@@ -587,7 +563,7 @@ Establishes foundation for AI agents and contributor onboarding."
 6. **Next Steps**:
    - Review scope boundaries in product.md
    - Verify technology rationale in tech.md
-   - Customize conventions.md for team patterns
+   - Customize Code Patterns section in tech.md for team-specific patterns
 
 ---
 
@@ -614,26 +590,29 @@ Establishes foundation for AI agents and contributor onboarding."
 
 ## Language Adaptations
 
-**Adapt conventions.md for**:
+**Adapt tech.md Code Patterns section for**:
 - Python: PEP 8, snake_case, type hints, pytest
 - JavaScript/TypeScript: camelCase, ESLint, Jest
 - Java: PascalCase, JUnit, Maven/Gradle
 - Rust: snake_case, Cargo, built-in testing
 - Ruby: snake_case, RSpec, Bundler
+- Go: PascalCase (exported), gofmt, testing package
 
-**Adapt examples in templates for detected language**
+**Adapt code examples in tech.md and feature templates for detected language**
 
 ---
 
 ## Success Criteria
 
 - [ ] CLAUDE.md is <1200 words and acts as navigation hub
+- [ ] CLAUDE.md includes brief Code Standards section with link to tech.md
 - [ ] product.md contains ZERO technical implementation details
-- [ ] tech.md contains ALL technical details
+- [ ] tech.md contains ALL technical details including Code Patterns section
+- [ ] tech.md Code Patterns section is minimalistic based on the current patterns detected in the repo (naming, error handling, testing)
 - [ ] No information is duplicated across documents
 - [ ] requirements.md focuses on WHAT (specifications)
 - [ ] design.md focuses on HOW (implementation)
 - [ ] All cross-references are valid links
-- [ ] README.md documentation section added
+- [ ] README.md documentation section added (references tech.md)
 - [ ] .github/CONTRIBUTING.md left untouched (out of scope)
 - [ ] Commit message follows conventional commits

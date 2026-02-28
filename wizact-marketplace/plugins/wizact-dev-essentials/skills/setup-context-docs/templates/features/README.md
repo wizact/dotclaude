@@ -352,7 +352,7 @@ git commit -m "feat: add Python support"
 
 - **Product Vision**: See [../constitution/product.md](../constitution/product.md) for overall scope and roadmap
 - **Technical Standards**: See [../constitution/tech.md](../constitution/tech.md) for architecture patterns
-- **Coding Conventions**: See [../conventions.md](../conventions.md) for Go-specific practices
+- **Coding Standards**: See [../constitution/tech.md](../constitution/tech.md#code-patterns) for language-specific practices
 - **Development Guide**: See [../../CLAUDE.md](../../CLAUDE.md) for quick reference
 
 ---

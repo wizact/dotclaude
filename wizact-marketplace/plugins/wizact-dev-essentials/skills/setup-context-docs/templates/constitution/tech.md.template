@@ -88,6 +88,19 @@ Example:
 
 See [CLAUDE.md](../../CLAUDE.md) for comprehensive architectural principles.
 
+## Code Patterns
+
+### Naming Conventions
+[Define language-specific naming patterns]
+
+Example:
+- **Files**: snake_case.py, kebab-case.js, PascalCase.go
+- **Classes/Types**: PascalCase
+- **Functions/Methods**: snake_case (Python), camelCase (JavaScript), PascalCase (Go exported)
+- **Constants**: UPPER_SNAKE_CASE
+- **Private**: _leading_underscore (Python), unexported (Go)
+- **Packages/Modules**: lowercase, short, descriptive
+
 ## Project Structure
 
 ```
