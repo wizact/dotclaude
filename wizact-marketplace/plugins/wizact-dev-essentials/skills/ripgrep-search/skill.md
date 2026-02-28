@@ -1,16 +1,16 @@
 ---
 name: ripgrep-search
-description: "REQUIRED for text/code searches. Use instead of bash `grep` - 10-100x faster, respects .gitignore, Unicode support. Syntax: rg [pattern] [path]. Common: rg -t py, rg -i (case), rg -A/-B (context), rg -U (multiline), rg -l (files-only)"
+description: "REQUIRED for text/code searches. Use instead of bash `grep` - 10-100x faster, respects .gitignore, Unicode support. Syntax: rg [pattern] [path]. Common: rg -t py, rg -i (case), rg -A/-B (context), -U (multiline), -l (files-only)"
 argument-hint: "[pattern] [path] | -t type (filetype), -i (ignore-case), -A/-B/-C num (context), -U (multiline), -l (files-only), -c (count), -w (word), -F (literal), -g glob"
 disable-model-invocation: false
-user-invocable: true
+user-invokable: true
 ---
 
 # Ripgrep Search Skill
 
 You are a specialized assistant for ultra-fast text searching using **ripgrep (rg)** - a blazing fast grep replacement that combines speed, Unicode support, and powerful features. Your expertise focuses on leveraging ripgrep's advanced capabilities to help users find patterns in text with exceptional performance and sophisticated filtering options.
 
-> **Reference Guide**: For comprehensive examples, command patterns, and troubleshooting, see @.claude/skills/ripgrep-search/REFERENCE.md
+> **Reference Guide**: For comprehensive examples, command patterns, and troubleshooting, see [REFERENCE.md](REFERENCE.md)
 
 ## When to Use This Skill
 
@@ -61,7 +61,7 @@ This skill includes 6 essential scripts for the most common text search tasks:
 5. **search-context.sh** - Search with configurable context lines
 6. **search-stats.sh** - Generate search statistics and reports
 
-Usage: `@.claude/skills/ripgrep-search/scripts/script-name.sh --help` for each script.
+See [scripts/](scripts/) directory for all available scripts. Run with `--help` for usage details.
 
 ## Key Advantages Over `grep`
 
@@ -378,22 +378,22 @@ For immediate use, try these common scenarios:
 
 ```bash
 # Search in source code
-@.claude/skills/ripgrep-search/scripts/search-code.sh "function" rust
+scripts/search-code.sh "function" rust
 
 # Search logs for errors
-@.claude/skills/ripgrep-search/scripts/search-logs.sh "ERROR" /var/log
+scripts/search-logs.sh "ERROR" /var/log
 
 # Multi-line pattern search
-@.claude/skills/ripgrep-search/scripts/search-multiline.sh "class.*?\n.*def"
+scripts/search-multiline.sh "class.*?\n.*def"
 
 # Find and replace preview
-@.claude/skills/ripgrep-search/scripts/search-replace.sh "old_name" "new_name"
+scripts/search-replace.sh "old_name" "new_name"
 
 # Search with context
-@.claude/skills/ripgrep-search/scripts/search-context.sh "error" 3
+scripts/search-context.sh "error" 3
 
 # Generate search statistics
-@.claude/skills/ripgrep-search/scripts/search-stats.sh "TODO" src/
+scripts/search-stats.sh "TODO" src/
 ```
 
 Remember: ripgrep is designed for speed and accuracy. When in doubt, start with simple patterns and add complexity as needed. The tool's smart defaults (Unicode support, gitignore respect, parallel processing) make it immediately powerful without complex configuration.
