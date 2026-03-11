@@ -208,6 +208,7 @@ Trackable work items with requirement cross-references.
 2. Create feature branch per PR workflow in tasks.md
 3. Implement tasks T1-T12 in sequence
 4. Create PRs with `AI-Assisted` label
+5. Verify implementation: `/spec-verify --strict`
 ```
 
 ### 8. Update context.json
@@ -368,5 +369,13 @@ After this skill completes, the spec package is **ready for implementation**:
    - Start with task T1 (first in dependency order)
    - Follow commit conventions and sign commits (`git commit -S`)
    - Create PRs with `AI-Assisted` label
+5. **After implementation complete**, verify all requirements satisfied:
+   ```bash
+   /spec-verify
+   ```
+   Or in strict mode for CI/CD:
+   ```bash
+   /spec-verify --strict
+   ```
 
 **Workflow complete** - no further spec skills needed unless updates required.
