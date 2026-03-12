@@ -2,6 +2,16 @@
 
 Essential development tools plugin for Claude Code, providing fast search capabilities, git workflow helpers, Go development agents, and documentation setup utilities.
 
+## Breaking Changes (v3.0.0)
+
+Spec builder skills moved to `wizact-spec-builder` plugin.
+
+**Removed**:
+- spec-context, spec-requirements, spec-design, spec-tasks, spec-finalize, spec-verify
+- specbuilder agent
+
+**Migration**: Install `wizact-spec-builder` plugin (same marketplace)
+
 ## Features
 
 ### 🔍 Fast Search Tools
@@ -15,7 +25,6 @@ Essential development tools plugin for Claude Code, providing fast search capabi
 ### 🛠️ Go Development
 - **developer**: Language-aware dispatcher agent (auto-detects Go projects)
 - **go-reviewer**: Code review agent for Go projects
-- **specbuilder**: Feature specification builder for structured planning
 
 ### 📚 Documentation
 - **setup-context-docs**: Context-driven development documentation setup (skill)
@@ -171,9 +180,6 @@ Language-aware dispatcher agent that auto-detects project context. For Go projec
 
 #### `go-reviewer`
 Proactive code review agent for Go projects, ensuring quality and adherence to standards.
-
-#### `specbuilder`
-Creates complete feature/bug specifications from GitHub issues, PRs, or user prompts.
 
 ## License
 
