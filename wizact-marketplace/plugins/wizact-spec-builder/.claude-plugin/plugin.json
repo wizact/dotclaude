@@ -1,0 +1,17 @@
+{
+  "name": "wizact-spec-builder",
+  "version": "1.0.0",
+  "description": "Comprehensive spec builder: GitHub issue/PR → requirements → design → tasks → verification",
+  "skills": "./skills/",
+  "agents": [
+    "./agents/specbuilder.md"
+  ],
+  "keywords": [
+    "specs",
+    "requirements",
+    "EARS",
+    "design",
+    "tasks",
+    "verification"
+  ]
+}
