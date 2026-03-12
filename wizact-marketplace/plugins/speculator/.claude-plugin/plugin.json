@@ -1,0 +1,19 @@
+{
+  "name": "speculator",
+  "version": "1.1.0",
+  "description": "Comprehensive spec builder: project setup → GitHub issue/PR → requirements → design → tasks → verification",
+  "skills": "./skills/",
+  "agents": [
+    "./agents/specbuilder.md"
+  ],
+  "keywords": [
+    "specs",
+    "requirements",
+    "EARS",
+    "design",
+    "tasks",
+    "verification",
+    "documentation",
+    "setup"
+  ]
+}

@@ -1,6 +1,16 @@
 # Wizact Dev Essentials
 
-Essential development tools plugin for Claude Code, providing fast search capabilities, git workflow helpers, Go development agents, and documentation setup utilities.
+Essential development tools plugin for Claude Code, providing fast search capabilities, git workflow helpers, and Go development agents.
+
+## Breaking Changes (v3.0.0)
+
+Spec builder skills moved to `speculator` plugin.
+
+**Removed**:
+- spec-context, spec-requirements, spec-design, spec-tasks, spec-finalize, spec-verify, spec-setup (formerly setup-context-docs)
+- specbuilder agent
+
+**Migration**: Install `speculator` plugin (same marketplace)
 
 ## Features
 
@@ -15,10 +25,6 @@ Essential development tools plugin for Claude Code, providing fast search capabi
 ### 🛠️ Go Development
 - **developer**: Language-aware dispatcher agent (auto-detects Go projects)
 - **go-reviewer**: Code review agent for Go projects
-- **specbuilder**: Feature specification builder for structured planning
-
-### 📚 Documentation
-- **setup-context-docs**: Context-driven development documentation setup (skill)
 
 ## Installation
 
@@ -143,23 +149,6 @@ Generate Conventional Commits formatted messages. See [skills/generate-commit-me
 @wizact-dev-essentials/skills/generate-commit-message/scripts/commit-interactive.sh
 ```
 
-#### `setup-context-docs` (User-Invocable + Auto-Invoked)
-Context-driven development documentation setup. Creates comprehensive documentation structure with constitution pattern (product.md, tech.md), feature templates, and conventions. See [skills/setup-context-docs/SKILL.md](skills/setup-context-docs/SKILL.md) for details.
-
-**Invocation**:
-```bash
-# User can invoke via slash command
-/setup-context-docs
-
-# Claude auto-invokes when setting up project docs, context docs, or CLAUDE.md setup
-```
-
-**Templates included**:
-- Constitution templates (product.md, tech.md)
-- Feature specification templates (requirements, design, tasks)
-- Language-specific conventions (Go, Python)
-- Example feature spec (f002-uuid-multi-repo)
-
 ### Agents
 
 Agents are available via the Task tool with `subagent_type` parameter.
@@ -171,9 +160,6 @@ Language-aware dispatcher agent that auto-detects project context. For Go projec
 
 #### `go-reviewer`
 Proactive code review agent for Go projects, ensuring quality and adherence to standards.
-
-#### `specbuilder`
-Creates complete feature/bug specifications from GitHub issues, PRs, or user prompts.
 
 ## License
 

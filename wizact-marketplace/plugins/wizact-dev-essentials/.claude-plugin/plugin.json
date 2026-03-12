@@ -1,7 +1,7 @@
 {
   "name": "wizact-dev-essentials",
-  "version": "2.1.0",
-  "description": "Required dev tools with auto-invoked skills: fd-search (replaces find), ripgrep-search (replaces grep), git helpers, language-specific agents (Go/Python developer), spec builder",
+  "version": "3.0.0",
+  "description": "Required dev tools with auto-invoked skills: fd-search (replaces find), ripgrep-search (replaces grep), git helpers, language-specific agents (Go/Python developer)",
   "author": { "name": "wizact", "email": "amir.mohtasebi@gmail.com" },
   "repository": "https://github.com/wizact/dotclaude",
   "keywords": ["search", "git", "go", "python", "productivity", "developer-tools", "fd", "ripgrep", "auto-invoke"],
@@ -9,5 +9,5 @@
     "./commands/"
   ],
   "skills": "./skills/",
-  "agents": ["./agents/developer.md", "./agents/go-reviewer.md", "./agents/specbuilder.md"]
+  "agents": ["./agents/developer.md", "./agents/go-reviewer.md"]
 }

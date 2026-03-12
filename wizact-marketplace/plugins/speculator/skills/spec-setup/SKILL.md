@@ -1,5 +1,5 @@
 ---
-name: setup-context-docs
+name: spec-setup
 description: Creates comprehensive context-driven development documentation structure for repositories. Analyzes codebase, generates multi-document constitution pattern (product.md, tech.md), language-agnostic feature specification templates, and updates README. Auto-invoked when setting up project documentation, context docs, or CLAUDE.md setup.
 user-invocable: true
 ---
@@ -10,7 +10,7 @@ user-invocable: true
 
 **Usage**:
 ```
-/setup-context-docs
+/spec-setup
 ```
 
 **What it does**:
