@@ -1,16 +1,16 @@
 # Wizact Dev Essentials
 
-Essential development tools plugin for Claude Code, providing fast search capabilities, git workflow helpers, Go development agents, and documentation setup utilities.
+Essential development tools plugin for Claude Code, providing fast search capabilities, git workflow helpers, and Go development agents.
 
 ## Breaking Changes (v3.0.0)
 
-Spec builder skills moved to `wizact-spec-builder` plugin.
+Spec builder skills moved to `speculator` plugin.
 
 **Removed**:
-- spec-context, spec-requirements, spec-design, spec-tasks, spec-finalize, spec-verify
+- spec-context, spec-requirements, spec-design, spec-tasks, spec-finalize, spec-verify, spec-setup (formerly setup-context-docs)
 - specbuilder agent
 
-**Migration**: Install `wizact-spec-builder` plugin (same marketplace)
+**Migration**: Install `speculator` plugin (same marketplace)
 
 ## Features
 
@@ -25,9 +25,6 @@ Spec builder skills moved to `wizact-spec-builder` plugin.
 ### 🛠️ Go Development
 - **developer**: Language-aware dispatcher agent (auto-detects Go projects)
 - **go-reviewer**: Code review agent for Go projects
-
-### 📚 Documentation
-- **setup-context-docs**: Context-driven development documentation setup (skill)
 
 ## Installation
 
@@ -151,23 +148,6 @@ Generate Conventional Commits formatted messages. See [skills/generate-commit-me
 # Interactive builder
 @wizact-dev-essentials/skills/generate-commit-message/scripts/commit-interactive.sh
 ```
-
-#### `setup-context-docs` (User-Invocable + Auto-Invoked)
-Context-driven development documentation setup. Creates comprehensive documentation structure with constitution pattern (product.md, tech.md), feature templates, and conventions. See [skills/setup-context-docs/SKILL.md](skills/setup-context-docs/SKILL.md) for details.
-
-**Invocation**:
-```bash
-# User can invoke via slash command
-/setup-context-docs
-
-# Claude auto-invokes when setting up project docs, context docs, or CLAUDE.md setup
-```
-
-**Templates included**:
-- Constitution templates (product.md, tech.md)
-- Feature specification templates (requirements, design, tasks)
-- Language-specific conventions (Go, Python)
-- Example feature spec (f002-uuid-multi-repo)
 
 ### Agents
 

@@ -1,18 +1,19 @@
-# wizact-spec-builder
+# speculator
 
 Comprehensive specification builder that transforms GitHub issues and PRs into detailed, verifiable specs with requirements (EARS notation), design docs, and tracked tasks.
 
 ## Overview
 
-7-phase spec workflow:
+8-phase spec workflow:
 
-1. **spec-context** - Parse GitHub issue/PR, gather project context
-2. **spec-requirements** - Generate requirements.md with EARS notation
-3. **spec-design** - Create design.md with architecture and components
-4. **spec-tasks** - Build tasks.md with trackable work items
-5. **spec-finalize** - Cross-link all documents, add metadata
-6. **spec-verify** - Verify implementation against requirements
-7. **specbuilder** (agent) - Orchestrates entire workflow end-to-end
+1. **spec-setup** - Create context-driven documentation structure (CLAUDE.md, constitution, templates)
+2. **spec-context** - Parse GitHub issue/PR, gather project context
+3. **spec-requirements** - Generate requirements.md with EARS notation
+4. **spec-design** - Create design.md with architecture and components
+5. **spec-tasks** - Build tasks.md with trackable work items
+6. **spec-finalize** - Cross-link all documents, add metadata
+7. **spec-verify** - Verify implementation against requirements
+8. **specbuilder** (agent) - Orchestrates entire workflow end-to-end
 
 ## Workflow
 
@@ -42,6 +43,9 @@ Plugin auto-detected from wizact-marketplace. No manual installation needed.
 ### Individual Skills
 
 ```bash
+# Setup project documentation (optional, run once per project)
+/spec-setup
+
 # Parse GitHub issue/PR
 /spec-context https://github.com/owner/repo/issues/123
 

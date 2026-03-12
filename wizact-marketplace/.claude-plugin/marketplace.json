@@ -6,11 +6,20 @@
     {
       "name": "wizact-dev-essentials",
       "source": "./plugins/wizact-dev-essentials",
-      "description": "Essential development tools: fast search (fd/ripgrep), git commit helpers, Go development agents, and context documentation setup",
+      "description": "Essential development tools: fast search (fd/ripgrep), git commit helpers, and Go development agents",
       "author": {"name": "Amir Mohtasebi", "url": "amir.mohtasebi@gmail.com"},
       "homepage": "https://github.com/wizact/dotclaude",
       "repository": "https://github.com/wizact/dotclaude",
-      "version": "2.5.0"
+      "version": "3.0.0"
+    },
+    {
+      "name": "speculator",
+      "source": "./plugins/speculator",
+      "description": "Comprehensive specification builder: project setup → GitHub issues/PRs → requirements (EARS) → design → tasks → verification",
+      "author": {"name": "Amir Mohtasebi", "url": "amir.mohtasebi@gmail.com"},
+      "homepage": "https://github.com/wizact/dotclaude",
+      "repository": "https://github.com/wizact/dotclaude",
+      "version": "1.1.0"
     },
     {
       "name": "wizact-utilities",

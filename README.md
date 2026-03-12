@@ -79,19 +79,17 @@ Essential development tools plugin providing:
 - `ripgrep-search` - Blazing-fast code search using `ripgrep`
 - `go-developer` - Go development best practices and idiomatic patterns
 - `test-driven-development` - TDD red-green-refactor discipline enforcement
-- `setup-context-docs` - Context-driven development documentation setup
 
-**Agents** (3):
+**Agents** (2):
 - `developer` - Multi-language dispatcher (Go, Python) with best practices
 - `go-reviewer` - Proactive code review for Go projects
-- `specbuilder` - Feature specification builder from issues/PRs
 
 ### Templates
 
 #### Context Documentation (`TEMPLATES/context-docs/`)
 - Feature specification templates (requirements, design, tasks)
 - Example feature structure (f002-uuid-multi-repo)
-- Setup via `/setup-context-docs` skill
+- Setup via `/spec-setup` skill (speculator plugin)
 
 #### Language Conventions (`TEMPLATES/conventions/`)
 - **Go** (`go/conventions.md`) - Go coding standards and patterns
@@ -108,8 +106,8 @@ Essential development tools plugin providing:
 # Search code
 /search-code "pattern"
 
-# Setup project documentation
-/setup-context-docs
+# Setup project documentation (requires speculator plugin)
+/spec-setup
 ```
 
 ### Using Agents

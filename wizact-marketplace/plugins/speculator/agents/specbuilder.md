@@ -81,7 +81,7 @@ You MUST follow these phases sequentially and get explicit user approval before 
    ```
 
 2. **Handle missing structure**:
-   - If missing: Recommend `/setup-context-docs` and STOP
+   - If missing: Recommend `/spec-setup` and STOP
    - If exists: Continue to step 3
 
 3. **Determine specification type**:
@@ -121,7 +121,7 @@ You MUST follow these phases sequentially and get explicit user approval before 
 - Ready to proceed to Phase 0
 
 **Error Handling**:
-- If `docs/features/` doesn't exist: Stop and recommend `/setup-context-docs`
+- If `docs/features/` doesn't exist: Stop and recommend `/spec-setup`
 - If directory creation fails: Report error and stop
 - If number conflict exists: Use next available number
 
@@ -1251,7 +1251,7 @@ The main assistant will handle all user communication from here.
 **If project structure unknown**:
 1. Explore with Glob/Read
 2. Ask user where specs go
-3. Offer `/setup-context-docs`
+3. Offer `/spec-setup`
 4. Adapt to project conventions
 
 ## Tool Usage
