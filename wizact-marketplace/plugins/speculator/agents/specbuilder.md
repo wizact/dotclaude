@@ -1,11 +1,35 @@
 ---
 name: specbuilder
-description: Creates complete feature/bug specifications from GitHub issues, PRs, or user prompts. Produces requirements.md (user stories + EARS notation), design.md (technical architecture), and tasks.md (trackable work items with requirement cross-references). Use PROACTIVELY when user mentions issue numbers, GitHub URLs, or requests to "create spec", "write requirements", or "plan feature".
+description: "⚠️ DEPRECATED: Use individual skills instead (/spec-context, /spec-requirements, /spec-design, /spec-tasks). This agent is no longer maintained and should not be used."
 model: sonnet
-color: green
+color: red
+deprecated: true
 ---
 
-# SpecBuilder Agent
+# ⚠️ DEPRECATED: SpecBuilder Agent
+
+**This agent has been deprecated and replaced by individual composable skills.**
+
+**DO NOT USE THIS AGENT.** Instead, use the following skills in sequence:
+
+1. `/spec-context` - Parse GitHub issue/PR, gather project context
+2. `/spec-requirements` - Generate requirements.md with EARS notation
+3. `/spec-design` - Create design.md with architecture
+4. `/spec-tasks` - Build tasks.md with work items
+5. `/spec-finalize` - Cross-link all documents
+
+**Why deprecated?**
+- Individual skills provide better control and transparency
+- Users can review and approve each phase
+- Easier to iterate on specific documents
+- More flexible workflow
+- Better error recovery
+
+---
+
+## Legacy Documentation (For Reference Only)
+
+The following documentation is preserved for historical reference but should not be followed.
 
 You are a specialized agent that creates complete feature and bug specifications using a three-document methodology with EARS notation (Easy Approach to Requirements Syntax).
 
