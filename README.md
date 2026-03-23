@@ -12,16 +12,18 @@ This repository provides a structured marketplace for Claude Code extensions tha
 dotclaude/
 ├── wizact-marketplace/           # Plugin marketplace
 │   └── plugins/
-│       └── wizact-dev-essentials/  # Core development plugin
-│           ├── agents/              # Specialized agents
-│           ├── commands/            # Slash commands
-│           ├── skills/              # Reusable skills
-│           └── README.md
-├── TEMPLATES/                    # Reusable templates
-│   ├── context-docs/            # Context documentation templates
-│   └── conventions/             # Language conventions
-│       ├── go/                  # Go coding standards
-│       └── python/              # Python coding standards
+│       ├── wizact-dev-essentials/  # Core development plugin
+│       │   ├── agents/              # Specialized agents
+│       │   ├── skills/              # Reusable skills
+│       │   └── .claude-plugin/
+│       ├── wizact-utilities/        # System utilities plugin
+│       │   ├── skills/              # Utility skills
+│       │   ├── hooks/               # Custom hooks
+│       │   └── .claude-plugin/
+│       └── speculator/              # Specification builder plugin
+│           ├── agents/              # Spec agents
+│           ├── skills/              # Spec skills
+│           └── .claude-plugin/
 └── README.md
 ```
 
@@ -58,7 +60,7 @@ cd <your-machine-name>
 ```
 
 Install the `wizact-marketplace` on your machine.
-Install the `wizact-dev-essentials` plugin.
+Install desired plugins: `wizact-dev-essentials`, `wizact-utilities`, `speculator`.
 
 See [wizact-dev-essentials/README.md](wizact-marketplace/plugins/wizact-dev-essentials/README.md) for detailed plugin documentation.
 
@@ -70,65 +72,80 @@ See [wizact-dev-essentials/README.md](wizact-marketplace/plugins/wizact-dev-esse
 
 Essential development tools plugin providing:
 
-**Commands** (2):
-- `/generate-commit-message` - Generate Conventional Commits formatted messages
-- `/search-code` - Smart code pattern search
-
 **Skills** (5):
-- `fd-search` - Lightning-fast file system search using `fd`
-- `ripgrep-search` - Blazing-fast code search using `ripgrep`
+- `generate-commit-message` - Generate Conventional Commits formatted messages
 - `go-developer` - Go development best practices and idiomatic patterns
+- `python-developer` - Python development best practices and Pythonic patterns
 - `test-driven-development` - TDD red-green-refactor discipline enforcement
+- `worktree` - Git worktree workflow automation
 
 **Agents** (2):
 - `developer` - Multi-language dispatcher (Go, Python) with best practices
 - `go-reviewer` - Proactive code review for Go projects
 
-### Templates
+#### wizact-utilities
 
-#### Context Documentation (`TEMPLATES/context-docs/`)
-- Feature specification templates (requirements, design, tasks)
-- Example feature structure (f002-uuid-multi-repo)
-- Setup via `/spec-setup` skill (speculator plugin)
+System utilities plugin providing:
 
-#### Language Conventions (`TEMPLATES/conventions/`)
-- **Go** (`go/conventions.md`) - Go coding standards and patterns
-- **Python** (`python/conventions.md`) - Python coding standards and patterns
+**Skills** (3):
+- `fd-search` - Lightning-fast file system search using `fd`
+- `ripgrep-search` - Blazing-fast code search using `ripgrep`
+- `bump-plugin-version` - Automatic semantic version bumping for plugins
+
+#### speculator
+
+Comprehensive specification builder plugin providing:
+
+**Skills** (7):
+- `spec-setup` - Initialize project documentation structure
+- `spec-context` - Parse GitHub issues/PRs and gather context
+- `spec-requirements` - Generate requirements.md with EARS notation
+- `spec-design` - Generate design.md with architecture
+- `spec-tasks` - Generate tasks.md with trackable work items
+- `spec-verify` - Verify implementation completeness
+- `spec-finalize` - Finalize spec package with cross-links
+
+**Agents** (1):
+- `specbuilder` - ⚠️ DEPRECATED: Use individual skills instead
+
 
 ## Usage
 
 ### Quick Start
 
 ```bash
-# Generate commit message
+# Generate commit message (wizact-dev-essentials skill)
 /generate-commit-message
 
-# Search code
-/search-code "pattern"
+# Search files (wizact-utilities skill)
+/fd-search "*.go"
 
-# Setup project documentation (requires speculator plugin)
+# Search code (wizact-utilities skill)
+/ripgrep-search "pattern"
+
+# Setup project documentation (speculator skill)
 /spec-setup
 ```
 
 ### Using Agents
 
-Agents are available via Claude Code's Task tool:
+Agents are available via Claude Code's Agent tool:
 
 ```python
 # Auto-detect language and apply best practices
-Task(subagent_type="wizact-dev-essentials:developer", prompt="Implement feature X")
+Agent(subagent_type="wizact-dev-essentials:developer", prompt="Implement feature X")
 
-# Or invoke skill directly
-Skill(skill="wizact-dev-essentials:go-developer")
+# Go code review agent (auto-invoked after Go code changes)
+Agent(subagent_type="wizact-dev-essentials:go-reviewer", prompt="Review recent changes")
 
-# Use specbuilder agent
-Task(subagent_type="wizact-dev-essentials:specbuilder", prompt="Create spec for issue #123")
+# Specbuilder agent (DEPRECATED - use individual /spec-* skills)
+Agent(subagent_type="speculator:specbuilder", prompt="Create spec for issue #123")
 ```
 
-See individual component documentation for detailed usage:
-- [Plugin README](wizact-marketplace/plugins/wizact-dev-essentials/README.md)
-- [fd-search](wizact-marketplace/plugins/wizact-dev-essentials/skills/fd-search/SKILL.md)
-- [ripgrep-search](wizact-marketplace/plugins/wizact-dev-essentials/skills/ripgrep-search/skill.md)
+See individual plugin documentation for detailed usage:
+- [wizact-dev-essentials](wizact-marketplace/plugins/wizact-dev-essentials/)
+- [wizact-utilities](wizact-marketplace/plugins/wizact-utilities/README.md)
+- [speculator](wizact-marketplace/plugins/speculator/)
 
 ## License
 
