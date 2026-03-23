@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Contains 'WHEN <event> the system SHALL' pattern",
+      "passed": false,
+      "evidence": "Missing Event-Driven pattern"
+    },
+    {
+      "text": "Has numbered requirements (R1, R2, etc.)",
+      "passed": false,
+      "evidence": "Missing numbered requirements"
+    },
+    {
+      "text": "Includes dependencies tracking",
+      "passed": false,
+      "evidence": "Missing Dependencies field"
+    },
+    {
+      "text": "Has Rationale and Verification fields",
+      "passed": false,
+      "evidence": "Missing Rationale or Verification"
+    },
+    {
+      "text": "User stories link to requirements",
+      "passed": false,
+      "evidence": "Missing User Stories"
+    }
+  ],
+  "pass_rate": 0.0
+}

@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Contains 'WHEN <event> the system SHALL' pattern",
+      "passed": true,
+      "evidence": "Found Event-Driven pattern"
+    },
+    {
+      "text": "Has numbered requirements (R1, R2, etc.)",
+      "passed": true,
+      "evidence": "Found R1, R2... format"
+    },
+    {
+      "text": "Includes dependencies tracking",
+      "passed": true,
+      "evidence": "Found Dependencies field"
+    },
+    {
+      "text": "Has Rationale and Verification fields",
+      "passed": true,
+      "evidence": "Found both fields"
+    },
+    {
+      "text": "User stories link to requirements",
+      "passed": true,
+      "evidence": "Found User Stories"
+    }
+  ],
+  "pass_rate": 1.0
+}

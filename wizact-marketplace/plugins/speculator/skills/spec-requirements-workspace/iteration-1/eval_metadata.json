@@ -1,0 +1,101 @@
+{
+  "iteration": 1,
+  "test_cases": [
+    {
+      "eval_id": 1,
+      "eval_name": "ubiquitous-validation",
+      "expected_ears_pattern": "Ubiquitous",
+      "assertions": [
+        {"text": "Contains 'The system SHALL' pattern", "type": "pattern_check"},
+        {"text": "Has numbered requirements (R1, R2, etc.)", "type": "structure_check"},
+        {"text": "Includes EARS pattern field", "type": "metadata_check"},
+        {"text": "Has Rationale and Verification fields", "type": "completeness_check"},
+        {"text": "Includes Feasibility Verification section", "type": "structure_check"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "event-driven-logout",
+      "expected_ears_pattern": "Event-Driven",
+      "assertions": [
+        {"text": "Contains 'WHEN <event> the system SHALL' pattern", "type": "pattern_check"},
+        {"text": "Has numbered requirements (R1, R2, etc.)", "type": "structure_check"},
+        {"text": "Includes dependencies tracking", "type": "metadata_check"},
+        {"text": "Has Rationale and Verification fields", "type": "completeness_check"},
+        {"text": "User stories link to requirements", "type": "traceability_check"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "unwanted-behavior-payment",
+      "expected_ears_pattern": "Unwanted Behavior",
+      "assertions": [
+        {"text": "Contains 'IF <condition> THEN the system SHALL' pattern", "type": "pattern_check"},
+        {"text": "Has numbered requirements (R1, R2, etc.)", "type": "structure_check"},
+        {"text": "Includes EARS pattern field", "type": "metadata_check"},
+        {"text": "Has Rationale and Verification fields", "type": "completeness_check"},
+        {"text": "Covers error scenarios", "type": "coverage_check"}
+      ]
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "state-driven-session",
+      "expected_ears_pattern": "State-Driven",
+      "assertions": [
+        {"text": "Contains 'WHILE <state> the system SHALL' pattern", "type": "pattern_check"},
+        {"text": "Has numbered requirements (R1, R2, etc.)", "type": "structure_check"},
+        {"text": "Covers both authenticated and expired states", "type": "coverage_check"},
+        {"text": "Has Rationale and Verification fields", "type": "completeness_check"},
+        {"text": "Dependencies form DAG (no cycles)", "type": "validation_check"}
+      ]
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "optional-notifications",
+      "expected_ears_pattern": "Optional",
+      "assertions": [
+        {"text": "Contains 'WHERE <feature enabled> the system SHALL' pattern", "type": "pattern_check"},
+        {"text": "Has numbered requirements (R1, R2, etc.)", "type": "structure_check"},
+        {"text": "Includes EARS pattern field", "type": "metadata_check"},
+        {"text": "Has Rationale and Verification fields", "type": "completeness_check"},
+        {"text": "Covers optional feature toggles", "type": "coverage_check"}
+      ]
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "manual-registration",
+      "expected_ears_pattern": "Mixed",
+      "assertions": [
+        {"text": "Contains all 5 EARS patterns", "type": "pattern_check"},
+        {"text": "Has numbered requirements (R1, R2, etc.)", "type": "structure_check"},
+        {"text": "Properly maps requirements to patterns", "type": "metadata_check"},
+        {"text": "Has cross-references between requirements", "type": "traceability_check"},
+        {"text": "Includes Feasibility Verification section", "type": "structure_check"}
+      ]
+    },
+    {
+      "eval_id": 7,
+      "eval_name": "bug-timeout-fix",
+      "expected_ears_pattern": "Mixed",
+      "assertions": [
+        {"text": "Contains Optional, Ubiquitous, and Unwanted Behavior patterns", "type": "pattern_check"},
+        {"text": "Has numbered requirements (R1, R2, etc.)", "type": "structure_check"},
+        {"text": "Includes EARS pattern field", "type": "metadata_check"},
+        {"text": "Has Rationale and Verification fields", "type": "completeness_check"},
+        {"text": "Dependencies form DAG", "type": "validation_check"}
+      ]
+    },
+    {
+      "eval_id": 8,
+      "eval_name": "complex-collaboration",
+      "expected_ears_pattern": "Mixed",
+      "assertions": [
+        {"text": "Contains all 5 EARS patterns", "type": "pattern_check"},
+        {"text": "Has numbered requirements (R1, R2, etc.)", "type": "structure_check"},
+        {"text": "Proper dependency tracking", "type": "metadata_check"},
+        {"text": "Has Rationale and Verification fields", "type": "completeness_check"},
+        {"text": "Includes Feasibility Verification section", "type": "structure_check"}
+      ]
+    }
+  ]
+}

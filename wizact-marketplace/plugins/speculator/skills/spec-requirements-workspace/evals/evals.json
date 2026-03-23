@@ -1,0 +1,53 @@
+{
+  "skill_name": "spec-requirements",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to write requirements for implementing data validation in our API. We need to validate all incoming requests, sanitize user inputs, and enforce schema compliance. The context is in specs/api-validation/context.json - please generate requirements.md.",
+      "expected_output": "requirements.md with Ubiquitous pattern requirements using 'The system SHALL...' for validation rules that are always active",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Can you help me write requirements for the user logout flow? When users click logout, we need to invalidate tokens, clear sessions, and redirect to login. Context file is at docs/logout-feature/context.json.",
+      "expected_output": "requirements.md with Event-Driven pattern requirements using 'WHEN <event> the system SHALL...' for logout triggers",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I'm working on error handling for our payment system. Need requirements for: what happens if payment gateway fails, if user's card is declined, or if network timeout occurs. Context is in specs/payment-errors/context.json.",
+      "expected_output": "requirements.md with Unwanted Behavior pattern requirements using 'IF <condition> THEN the system SHALL...' for error scenarios",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Generate requirements for session management. While user is authenticated, we need to refresh tokens, track activity, and maintain connection. While session is expired, block access and show timeout message. Context: docs/session-mgmt/context.json",
+      "expected_output": "requirements.md with State-Driven pattern requirements using 'WHILE <state> the system SHALL...' for state-dependent behaviors",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "I need requirements for configurable notification system. Where email is enabled, send email. Where SMS is enabled, send text. Where push notifications are on, send mobile alert. The context file is at specs/notifications/context.json.",
+      "expected_output": "requirements.md with Optional pattern requirements using 'WHERE <feature enabled> the system SHALL...' for optional features",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Create requirements manually for a user registration feature. No context file. The feature needs: always validate email format, when user submits form send verification email, if email already exists show error, while verification pending block login, and where captcha is enabled show challenge.",
+      "expected_output": "requirements.md with all 5 EARS patterns mixed: Ubiquitous (validate email), Event-Driven (submit form), Unwanted Behavior (email exists), State-Driven (verification pending), Optional (captcha enabled)",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Generate requirements from bugs/b123-timeout-fix/context.json. My answers: timeout should be configurable at 30 seconds, failed requests should retry 3 times, and we should log all timeout events.",
+      "expected_output": "requirements.md with mixed patterns: Optional (configurable timeout), Unwanted Behavior (retry logic), Ubiquitous (logging)",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "I'm building a real-time collaboration feature. Context is in specs/collab/context.json. Need requirements covering: always sync changes, when user edits broadcast to others, if conflict detected merge automatically, while multiple users active show presence indicators, where video chat enabled show call button.",
+      "expected_output": "requirements.md with all 5 EARS patterns with proper cross-references and dependencies: Ubiquitous (sync), Event-Driven (broadcast), Unwanted Behavior (conflicts), State-Driven (presence), Optional (video chat)",
+      "files": []
+    }
+  ]
+}
