@@ -4,7 +4,7 @@ Comprehensive specification builder that transforms GitHub issues and PRs into d
 
 ## Overview
 
-8-phase spec workflow:
+7-phase spec workflow using individual skills:
 
 1. **spec-setup** - Create context-driven documentation structure (CLAUDE.md, constitution, templates)
 2. **spec-context** - Parse GitHub issue/PR, gather project context
@@ -13,7 +13,8 @@ Comprehensive specification builder that transforms GitHub issues and PRs into d
 5. **spec-tasks** - Build tasks.md with trackable work items
 6. **spec-finalize** - Cross-link all documents, add metadata
 7. **spec-verify** - Verify implementation against requirements
-8. **specbuilder** (agent) - Orchestrates entire workflow end-to-end
+
+**⚠️ DEPRECATED**: The `specbuilder` agent has been deprecated. Use individual skills in sequence for better control and flexibility.
 
 ## Workflow
 
@@ -65,16 +66,20 @@ Plugin auto-detected from wizact-marketplace. No manual installation needed.
 /spec-verify
 ```
 
-### Agent Orchestration
+### ~~Agent Orchestration~~ (DEPRECATED)
 
-Let specbuilder agent run the entire workflow:
+**⚠️ The specbuilder agent is deprecated.** Use individual skills instead for better control:
 
 ```bash
-# Provide GitHub URL - agent handles all phases
-@specbuilder https://github.com/owner/repo/issues/123
+# OLD (deprecated):
+# @specbuilder https://github.com/owner/repo/issues/123
 
-# Or just mention URL in conversation
-# Auto-invokes on GitHub URLs
+# NEW (recommended):
+/spec-context https://github.com/owner/repo/issues/123
+/spec-requirements
+/spec-design
+/spec-tasks
+/spec-finalize
 ```
 
 ## Auto-Invoke
@@ -83,9 +88,7 @@ Let specbuilder agent run the entire workflow:
 - GitHub issue/PR URLs mentioned in conversation
 - User asks to "create spec from issue"
 
-**specbuilder** agent auto-invokes when:
-- GitHub URLs in requests for specs
-- Keywords: "spec builder", "requirements doc", "EARS notation"
+**Note**: The specbuilder agent no longer auto-invokes. Use skills directly.
 
 ## Features
 
@@ -128,8 +131,11 @@ specs/
 
 ### Bug Fix Spec
 ```bash
-@specbuilder https://github.com/acme/web/issues/108
-# → Agent orchestrates: parses issue → requirements → fix design → test tasks
+# Sequential skill invocation (recommended)
+/spec-context https://github.com/acme/web/issues/108
+/spec-requirements
+/spec-design
+/spec-tasks
 ```
 
 ### Implementation Verification
@@ -145,7 +151,7 @@ specs/
 2. **Sequential workflow** - Follow phase order (context → requirements → design → tasks)
 3. **Iterative refinement** - Revise requirements/design before generating tasks
 4. **Verification last** - Run spec-verify only after implementation complete
-5. **Agent for full workflow** - Use specbuilder agent for complete automation
+5. **Use individual skills** - Invoke skills sequentially for better control and transparency
 
 ## Limitations
 
