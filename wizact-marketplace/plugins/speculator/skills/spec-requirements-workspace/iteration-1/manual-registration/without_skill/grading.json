@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Contains all 5 EARS patterns",
+      "passed": false,
+      "evidence": "No EARS patterns found"
+    },
+    {
+      "text": "Has numbered requirements (R1, R2, etc.)",
+      "passed": false,
+      "evidence": "Missing numbered requirements"
+    },
+    {
+      "text": "Properly maps requirements to patterns",
+      "passed": false,
+      "evidence": "Missing metadata fields"
+    },
+    {
+      "text": "Has cross-references between requirements",
+      "passed": false,
+      "evidence": "Missing cross-references"
+    },
+    {
+      "text": "Includes Feasibility Verification section",
+      "passed": false,
+      "evidence": "Missing Feasibility section"
+    }
+  ],
+  "pass_rate": 0.0
+}

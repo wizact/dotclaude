@@ -1,0 +1,498 @@
+{
+  "ubiquitous-validation": {
+    "with_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'The system SHALL' pattern",
+          "passed": true,
+          "evidence": "Found Ubiquitous pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": true,
+          "evidence": "Found R1, R2... format"
+        },
+        {
+          "text": "Includes EARS pattern field",
+          "passed": true,
+          "evidence": "Found Pattern field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": true,
+          "evidence": "Found both fields"
+        },
+        {
+          "text": "Includes Feasibility Verification section",
+          "passed": true,
+          "evidence": "Found Feasibility section"
+        }
+      ],
+      "pass_rate": 1.0
+    },
+    "without_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'The system SHALL' pattern",
+          "passed": false,
+          "evidence": "Missing Ubiquitous pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": false,
+          "evidence": "Missing numbered requirements"
+        },
+        {
+          "text": "Includes EARS pattern field",
+          "passed": false,
+          "evidence": "Missing Pattern field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": false,
+          "evidence": "Missing Rationale or Verification"
+        },
+        {
+          "text": "Includes Feasibility Verification section",
+          "passed": false,
+          "evidence": "Missing Feasibility section"
+        }
+      ],
+      "pass_rate": 0.0
+    }
+  },
+  "event-driven-logout": {
+    "with_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'WHEN <event> the system SHALL' pattern",
+          "passed": true,
+          "evidence": "Found Event-Driven pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": true,
+          "evidence": "Found R1, R2... format"
+        },
+        {
+          "text": "Includes dependencies tracking",
+          "passed": true,
+          "evidence": "Found Dependencies field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": true,
+          "evidence": "Found both fields"
+        },
+        {
+          "text": "User stories link to requirements",
+          "passed": true,
+          "evidence": "Found User Stories"
+        }
+      ],
+      "pass_rate": 1.0
+    },
+    "without_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'WHEN <event> the system SHALL' pattern",
+          "passed": false,
+          "evidence": "Missing Event-Driven pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": false,
+          "evidence": "Missing numbered requirements"
+        },
+        {
+          "text": "Includes dependencies tracking",
+          "passed": false,
+          "evidence": "Missing Dependencies field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": false,
+          "evidence": "Missing Rationale or Verification"
+        },
+        {
+          "text": "User stories link to requirements",
+          "passed": false,
+          "evidence": "Missing User Stories"
+        }
+      ],
+      "pass_rate": 0.0
+    }
+  },
+  "unwanted-behavior-payment": {
+    "with_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'IF <condition> THEN the system SHALL' pattern",
+          "passed": true,
+          "evidence": "Found Unwanted Behavior pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": true,
+          "evidence": "Found R1, R2... format"
+        },
+        {
+          "text": "Includes EARS pattern field",
+          "passed": true,
+          "evidence": "Found Pattern field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": true,
+          "evidence": "Found both fields"
+        },
+        {
+          "text": "Covers error scenarios",
+          "passed": true,
+          "evidence": "Covers errors"
+        }
+      ],
+      "pass_rate": 1.0
+    },
+    "without_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'IF <condition> THEN the system SHALL' pattern",
+          "passed": false,
+          "evidence": "Missing Unwanted Behavior pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": false,
+          "evidence": "Missing numbered requirements"
+        },
+        {
+          "text": "Includes EARS pattern field",
+          "passed": false,
+          "evidence": "Missing Pattern field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": false,
+          "evidence": "Missing Rationale or Verification"
+        },
+        {
+          "text": "Covers error scenarios",
+          "passed": true,
+          "evidence": "Covers errors"
+        }
+      ],
+      "pass_rate": 0.2
+    }
+  },
+  "state-driven-session": {
+    "with_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'WHILE <state> the system SHALL' pattern",
+          "passed": true,
+          "evidence": "Found State-Driven pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": true,
+          "evidence": "Found R1, R2... format"
+        },
+        {
+          "text": "Covers both authenticated and expired states",
+          "passed": true,
+          "evidence": "Covers both states"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": true,
+          "evidence": "Found both fields"
+        },
+        {
+          "text": "Dependencies form DAG (no cycles)",
+          "passed": true,
+          "evidence": "Verified DAG"
+        }
+      ],
+      "pass_rate": 1.0
+    },
+    "without_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'WHILE <state> the system SHALL' pattern",
+          "passed": false,
+          "evidence": "Missing State-Driven pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": false,
+          "evidence": "Missing numbered requirements"
+        },
+        {
+          "text": "Covers both authenticated and expired states",
+          "passed": true,
+          "evidence": "Covers both states"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": false,
+          "evidence": "Missing Rationale or Verification"
+        },
+        {
+          "text": "Dependencies form DAG (no cycles)",
+          "passed": false,
+          "evidence": "Missing DAG verification"
+        }
+      ],
+      "pass_rate": 0.2
+    }
+  },
+  "optional-notifications": {
+    "with_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'WHERE <feature enabled> the system SHALL' pattern",
+          "passed": true,
+          "evidence": "Found Optional pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": true,
+          "evidence": "Found R1, R2... format"
+        },
+        {
+          "text": "Includes EARS pattern field",
+          "passed": true,
+          "evidence": "Found Pattern field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": true,
+          "evidence": "Found both fields"
+        },
+        {
+          "text": "Covers optional feature toggles",
+          "passed": true,
+          "evidence": "Covers toggles"
+        }
+      ],
+      "pass_rate": 1.0
+    },
+    "without_skill": {
+      "expectations": [
+        {
+          "text": "Contains 'WHERE <feature enabled> the system SHALL' pattern",
+          "passed": false,
+          "evidence": "Missing Optional pattern"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": false,
+          "evidence": "Missing numbered requirements"
+        },
+        {
+          "text": "Includes EARS pattern field",
+          "passed": false,
+          "evidence": "Missing Pattern field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": false,
+          "evidence": "Missing Rationale or Verification"
+        },
+        {
+          "text": "Covers optional feature toggles",
+          "passed": true,
+          "evidence": "Covers toggles"
+        }
+      ],
+      "pass_rate": 0.2
+    }
+  },
+  "manual-registration": {
+    "with_skill": {
+      "expectations": [
+        {
+          "text": "Contains all 5 EARS patterns",
+          "passed": true,
+          "evidence": "Found 5/5 patterns: Ubiquitous, Event-Driven, State-Driven, Unwanted Behavior, Optional"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": true,
+          "evidence": "Found R1, R2... format"
+        },
+        {
+          "text": "Properly maps requirements to patterns",
+          "passed": true,
+          "evidence": "Found pattern and dependency tracking"
+        },
+        {
+          "text": "Has cross-references between requirements",
+          "passed": true,
+          "evidence": "Found cross-references"
+        },
+        {
+          "text": "Includes Feasibility Verification section",
+          "passed": true,
+          "evidence": "Found Feasibility section"
+        }
+      ],
+      "pass_rate": 1.0
+    },
+    "without_skill": {
+      "expectations": [
+        {
+          "text": "Contains all 5 EARS patterns",
+          "passed": false,
+          "evidence": "No EARS patterns found"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": false,
+          "evidence": "Missing numbered requirements"
+        },
+        {
+          "text": "Properly maps requirements to patterns",
+          "passed": false,
+          "evidence": "Missing metadata fields"
+        },
+        {
+          "text": "Has cross-references between requirements",
+          "passed": false,
+          "evidence": "Missing cross-references"
+        },
+        {
+          "text": "Includes Feasibility Verification section",
+          "passed": false,
+          "evidence": "Missing Feasibility section"
+        }
+      ],
+      "pass_rate": 0.0
+    }
+  },
+  "bug-timeout-fix": {
+    "with_skill": {
+      "expectations": [
+        {
+          "text": "Contains Optional, Ubiquitous, and Unwanted Behavior patterns",
+          "passed": true,
+          "evidence": "Found: Optional, Ubiquitous, Unwanted Behavior"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": true,
+          "evidence": "Found R1, R2... format"
+        },
+        {
+          "text": "Includes EARS pattern field",
+          "passed": true,
+          "evidence": "Found Pattern field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": true,
+          "evidence": "Found both fields"
+        },
+        {
+          "text": "Dependencies form DAG",
+          "passed": true,
+          "evidence": "Verified DAG"
+        }
+      ],
+      "pass_rate": 1.0
+    },
+    "without_skill": {
+      "expectations": [
+        {
+          "text": "Contains Optional, Ubiquitous, and Unwanted Behavior patterns",
+          "passed": false,
+          "evidence": "Missing expected patterns"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": false,
+          "evidence": "Missing numbered requirements"
+        },
+        {
+          "text": "Includes EARS pattern field",
+          "passed": false,
+          "evidence": "Missing Pattern field"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": false,
+          "evidence": "Missing Rationale or Verification"
+        },
+        {
+          "text": "Dependencies form DAG",
+          "passed": false,
+          "evidence": "Missing DAG verification"
+        }
+      ],
+      "pass_rate": 0.0
+    }
+  },
+  "complex-collaboration": {
+    "with_skill": {
+      "expectations": [
+        {
+          "text": "Contains all 5 EARS patterns",
+          "passed": true,
+          "evidence": "Found 5/5 patterns: Ubiquitous, Event-Driven, State-Driven, Unwanted Behavior, Optional"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": true,
+          "evidence": "Found R1, R2... format"
+        },
+        {
+          "text": "Proper dependency tracking",
+          "passed": true,
+          "evidence": "Found pattern and dependency tracking"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": true,
+          "evidence": "Found both fields"
+        },
+        {
+          "text": "Includes Feasibility Verification section",
+          "passed": true,
+          "evidence": "Found Feasibility section"
+        }
+      ],
+      "pass_rate": 1.0
+    },
+    "without_skill": {
+      "expectations": [
+        {
+          "text": "Contains all 5 EARS patterns",
+          "passed": false,
+          "evidence": "No EARS patterns found"
+        },
+        {
+          "text": "Has numbered requirements (R1, R2, etc.)",
+          "passed": false,
+          "evidence": "Missing numbered requirements"
+        },
+        {
+          "text": "Proper dependency tracking",
+          "passed": false,
+          "evidence": "Missing metadata fields"
+        },
+        {
+          "text": "Has Rationale and Verification fields",
+          "passed": false,
+          "evidence": "Missing Rationale or Verification"
+        },
+        {
+          "text": "Includes Feasibility Verification section",
+          "passed": false,
+          "evidence": "Missing Feasibility section"
+        }
+      ],
+      "pass_rate": 0.0
+    }
+  }
+}

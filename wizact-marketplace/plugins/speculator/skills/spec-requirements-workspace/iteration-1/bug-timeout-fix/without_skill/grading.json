@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Contains Optional, Ubiquitous, and Unwanted Behavior patterns",
+      "passed": false,
+      "evidence": "Missing expected patterns"
+    },
+    {
+      "text": "Has numbered requirements (R1, R2, etc.)",
+      "passed": false,
+      "evidence": "Missing numbered requirements"
+    },
+    {
+      "text": "Includes EARS pattern field",
+      "passed": false,
+      "evidence": "Missing Pattern field"
+    },
+    {
+      "text": "Has Rationale and Verification fields",
+      "passed": false,
+      "evidence": "Missing Rationale or Verification"
+    },
+    {
+      "text": "Dependencies form DAG",
+      "passed": false,
+      "evidence": "Missing DAG verification"
+    }
+  ],
+  "pass_rate": 0.0
+}

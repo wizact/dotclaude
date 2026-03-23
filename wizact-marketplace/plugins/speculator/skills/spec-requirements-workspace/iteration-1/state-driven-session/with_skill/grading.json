@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Contains 'WHILE <state> the system SHALL' pattern",
+      "passed": true,
+      "evidence": "Found State-Driven pattern"
+    },
+    {
+      "text": "Has numbered requirements (R1, R2, etc.)",
+      "passed": true,
+      "evidence": "Found R1, R2... format"
+    },
+    {
+      "text": "Covers both authenticated and expired states",
+      "passed": true,
+      "evidence": "Covers both states"
+    },
+    {
+      "text": "Has Rationale and Verification fields",
+      "passed": true,
+      "evidence": "Found both fields"
+    },
+    {
+      "text": "Dependencies form DAG (no cycles)",
+      "passed": true,
+      "evidence": "Verified DAG"
+    }
+  ],
+  "pass_rate": 1.0
+}

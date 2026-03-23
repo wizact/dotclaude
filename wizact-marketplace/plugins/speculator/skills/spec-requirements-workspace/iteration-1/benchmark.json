@@ -1,0 +1,89 @@
+{
+  "skill_name": "spec-requirements",
+  "iteration": 1,
+  "date": "2026-03-23",
+  "configurations": [
+    {
+      "name": "with_skill",
+      "pass_rate": 1.0,
+      "description": "Using spec-requirements skill with EARS notation"
+    },
+    {
+      "name": "without_skill",
+      "pass_rate": 0.075,
+      "description": "Baseline informal requirements without skill"
+    }
+  ],
+  "delta": {
+    "pass_rate_improvement": 0.925,
+    "improvement_percentage": "+92.5%",
+    "description": "Skill provides structured EARS requirements with proper patterns, dependencies, and verification methods"
+  },
+  "per_eval_results": {
+    "ubiquitous-validation": {
+      "with_skill": {"pass_rate": 1.0, "passed": 5, "total": 5},
+      "without_skill": {"pass_rate": 0.0, "passed": 0, "total": 5},
+      "delta": "+100%"
+    },
+    "event-driven-logout": {
+      "with_skill": {"pass_rate": 1.0, "passed": 5, "total": 5},
+      "without_skill": {"pass_rate": 0.0, "passed": 0, "total": 5},
+      "delta": "+100%"
+    },
+    "unwanted-behavior-payment": {
+      "with_skill": {"pass_rate": 1.0, "passed": 5, "total": 5},
+      "without_skill": {"pass_rate": 0.2, "passed": 1, "total": 5},
+      "delta": "+80%"
+    },
+    "state-driven-session": {
+      "with_skill": {"pass_rate": 1.0, "passed": 5, "total": 5},
+      "without_skill": {"pass_rate": 0.2, "passed": 1, "total": 5},
+      "delta": "+80%"
+    },
+    "optional-notifications": {
+      "with_skill": {"pass_rate": 1.0, "passed": 5, "total": 5},
+      "without_skill": {"pass_rate": 0.2, "passed": 1, "total": 5},
+      "delta": "+80%"
+    },
+    "manual-registration": {
+      "with_skill": {"pass_rate": 1.0, "passed": 5, "total": 5},
+      "without_skill": {"pass_rate": 0.0, "passed": 0, "total": 5},
+      "delta": "+100%"
+    },
+    "bug-timeout-fix": {
+      "with_skill": {"pass_rate": 1.0, "passed": 5, "total": 5},
+      "without_skill": {"pass_rate": 0.0, "passed": 0, "total": 5},
+      "delta": "+100%"
+    },
+    "complex-collaboration": {
+      "with_skill": {"pass_rate": 1.0, "passed": 10, "total": 10},
+      "without_skill": {"pass_rate": 0.0, "passed": 0, "total": 10},
+      "delta": "+100%"
+    }
+  },
+  "analyst_notes": [
+    "✅ Perfect 100% pass rate with skill across all 8 test cases",
+    "✅ All 5 EARS patterns correctly applied: Ubiquitous, Event-Driven, Unwanted Behavior, State-Driven, Optional",
+    "✅ Skill enforces: numbered requirements, dependency tracking, rationale, verification methods",
+    "✅ Without skill: informal bullets, no EARS notation, missing metadata (7.5% pass rate)",
+    "✅ Mixed pattern tests (manual-registration, bug-timeout-fix, complex-collaboration) show skill correctly combines multiple patterns",
+    "✅ Feasibility verification checklist included in all with-skill outputs",
+    "⚠️ Without-skill outputs occasionally had basic structure (20% on some tests) but lacked formal EARS notation",
+    "📊 Improvement: +92.5 percentage points (from 7.5% to 100%)"
+  ],
+  "coverage": {
+    "ears_patterns_tested": {
+      "Ubiquitous": ["ubiquitous-validation"],
+      "Event-Driven": ["event-driven-logout"],
+      "Unwanted Behavior": ["unwanted-behavior-payment"],
+      "State-Driven": ["state-driven-session"],
+      "Optional": ["optional-notifications"],
+      "Mixed (all 5)": ["manual-registration", "complex-collaboration"],
+      "Mixed (3 patterns)": ["bug-timeout-fix"]
+    },
+    "workflow_modes_tested": {
+      "with_context_json": ["ubiquitous-validation", "event-driven-logout", "unwanted-behavior-payment", "state-driven-session", "optional-notifications", "bug-timeout-fix", "complex-collaboration"],
+      "manual_input": ["manual-registration"]
+    }
+  }
+}

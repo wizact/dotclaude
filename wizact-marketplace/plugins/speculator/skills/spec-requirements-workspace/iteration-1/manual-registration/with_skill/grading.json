@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Contains all 5 EARS patterns",
+      "passed": true,
+      "evidence": "Found 5/5 patterns: Ubiquitous, Event-Driven, State-Driven, Unwanted Behavior, Optional"
+    },
+    {
+      "text": "Has numbered requirements (R1, R2, etc.)",
+      "passed": true,
+      "evidence": "Found R1, R2... format"
+    },
+    {
+      "text": "Properly maps requirements to patterns",
+      "passed": true,
+      "evidence": "Found pattern and dependency tracking"
+    },
+    {
+      "text": "Has cross-references between requirements",
+      "passed": true,
+      "evidence": "Found cross-references"
+    },
+    {
+      "text": "Includes Feasibility Verification section",
+      "passed": true,
+      "evidence": "Found Feasibility section"
+    }
+  ],
+  "pass_rate": 1.0
+}

@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Contains 'WHERE <feature enabled> the system SHALL' pattern",
+      "passed": true,
+      "evidence": "Found Optional pattern"
+    },
+    {
+      "text": "Has numbered requirements (R1, R2, etc.)",
+      "passed": true,
+      "evidence": "Found R1, R2... format"
+    },
+    {
+      "text": "Includes EARS pattern field",
+      "passed": true,
+      "evidence": "Found Pattern field"
+    },
+    {
+      "text": "Has Rationale and Verification fields",
+      "passed": true,
+      "evidence": "Found both fields"
+    },
+    {
+      "text": "Covers optional feature toggles",
+      "passed": true,
+      "evidence": "Covers toggles"
+    }
+  ],
+  "pass_rate": 1.0
+}
