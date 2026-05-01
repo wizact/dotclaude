@@ -1,6 +1,6 @@
 {
   "name": "wizact-utilities",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Utility tools for macOS: desktop notifications, plugin version management",
   "author": {
     "name": "Amir Mohtasebi",
@@ -8,6 +8,5 @@
   },
   "repository": "https://github.com/wizact/dotclaude",
   "keywords": ["notifications", "macos", "utilities", "version-management"],
-  "hooks": "./hooks/hooks.json",
   "skills": "./skills/"
 }

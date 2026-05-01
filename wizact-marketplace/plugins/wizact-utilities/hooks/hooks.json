@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Claude is waiting for your input\" with title \"Claude Code\"' || true",
+            "command": "\"$CLAUDE_PLUGIN_ROOT/hooks/notify.sh\" 'Waiting for your input'",
             "timeout": 5
           }
         ]
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Permission required\" with title \"Claude Code\"' || true",
+            "command": "\"$CLAUDE_PLUGIN_ROOT/hooks/notify.sh\" 'Permission required'",
             "timeout": 5
           }
         ]
@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"Input needed for MCP tool\" with title \"Claude Code\"' || true",
+            "command": "\"$CLAUDE_PLUGIN_ROOT/hooks/notify.sh\" 'Input needed for MCP tool'",
             "timeout": 5
           }
         ]
