@@ -32,10 +32,12 @@ fi
 TMUX_WIN=""
 TMUX_SOCK=""
 TMUX_BIN=""
+CLIENT_TTY=""
 if [ -n "${TMUX:-}" ] && [ -n "${TMUX_PANE:-}" ]; then
   TMUX_BIN=$(command -v tmux)
   TMUX_WIN=$("$TMUX_BIN" display-message -t "$TMUX_PANE" -p '#{window_index}' 2>/dev/null || true)
   TMUX_SOCK=$(echo "$TMUX" | cut -d, -f1)
+  CLIENT_TTY=$("$TMUX_BIN" display-message -p '#{client_tty}' 2>/dev/null || true)
 fi
 
 # --- Send notification ---
@@ -53,19 +55,26 @@ if command -v grrr >/dev/null 2>&1; then
     # Inside tmux: --reactivate can't see the real terminal app, so we
     # detect the terminal via env vars and use --execute to activate it
     # and switch to the correct tmux window.
-    BUNDLE_ID=""
-    if [ -n "${ITERM_SESSION_ID:-}" ]; then
-      BUNDLE_ID="com.googlecode.iterm2"
-    elif [ -n "${KITTY_WINDOW_ID:-}" ]; then
-      BUNDLE_ID="net.kovidgoyal.kitty"
-    elif [ -n "${WEZTERM_PANE:-}" ]; then
-      BUNDLE_ID="com.github.wez.wezterm"
-    elif [ -n "${GHOSTTY_RESOURCES_DIR:-}" ]; then
-      BUNDLE_ID="com.mitchellh.ghostty"
-    fi
-    EXEC_CMD="'$TMUX_BIN' -S '$TMUX_SOCK' select-window -t '$TMUX_WIN'"
-    if [ -n "$BUNDLE_ID" ]; then
-      EXEC_CMD="open -b '$BUNDLE_ID' && $EXEC_CMD"
+    TMUX_SELECT="'$TMUX_BIN' -S '$TMUX_SOCK' select-window -t '$TMUX_WIN'"
+    if [ -n "${ITERM_SESSION_ID:-}" ] && [ -n "$CLIENT_TTY" ]; then
+      # AppleScript finds the iTerm2 window containing the tmux client tty
+      # and brings that specific window to front (not just any iTerm2 window).
+      EXEC_CMD="/usr/bin/osascript -e 'tell application \"iTerm2\"' -e 'activate' -e 'repeat with w in windows' -e 'repeat with t in tabs of w' -e 'repeat with s in sessions of t' -e 'if tty of s is \"$CLIENT_TTY\" then' -e 'set index of w to 1' -e 'return' -e 'end if' -e 'end repeat' -e 'end repeat' -e 'end repeat' -e 'end tell' && $TMUX_SELECT"
+    else
+      BUNDLE_ID=""
+      if [ -n "${ITERM_SESSION_ID:-}" ]; then
+        BUNDLE_ID="com.googlecode.iterm2"
+      elif [ -n "${KITTY_WINDOW_ID:-}" ]; then
+        BUNDLE_ID="net.kovidgoyal.kitty"
+      elif [ -n "${WEZTERM_PANE:-}" ]; then
+        BUNDLE_ID="com.github.wez.wezterm"
+      elif [ -n "${GHOSTTY_RESOURCES_DIR:-}" ]; then
+        BUNDLE_ID="com.mitchellh.ghostty"
+      fi
+      EXEC_CMD="$TMUX_SELECT"
+      if [ -n "$BUNDLE_ID" ]; then
+        EXEC_CMD="open -b '$BUNDLE_ID' && $EXEC_CMD"
+      fi
     fi
     GRRR_ARGS+=(--execute "$EXEC_CMD")
   else
