@@ -59,7 +59,7 @@ if command -v grrr >/dev/null 2>&1; then
     if [ -n "${ITERM_SESSION_ID:-}" ] && [ -n "$CLIENT_TTY" ]; then
       # AppleScript finds the iTerm2 window containing the tmux client tty
       # and brings that specific window to front (not just any iTerm2 window).
-      EXEC_CMD="/usr/bin/osascript -e 'tell application \"iTerm2\"' -e 'activate' -e 'repeat with w in windows' -e 'repeat with t in tabs of w' -e 'repeat with s in sessions of t' -e 'if tty of s is \"$CLIENT_TTY\" then' -e 'set index of w to 1' -e 'return' -e 'end if' -e 'end repeat' -e 'end repeat' -e 'end repeat' -e 'end tell' && $TMUX_SELECT"
+      EXEC_CMD="/usr/bin/osascript -e 'tell application \"iTerm2\"' -e 'activate' -e 'repeat with w in windows' -e 'repeat with t in tabs of w' -e 'repeat with s in sessions of t' -e 'if tty of s is \"$CLIENT_TTY\" then' -e 'set index of w to 1' -e 'select t' -e 'return' -e 'end if' -e 'end repeat' -e 'end repeat' -e 'end repeat' -e 'end tell' && $TMUX_SELECT"
     else
       BUNDLE_ID=""
       if [ -n "${ITERM_SESSION_ID:-}" ]; then
@@ -77,6 +77,14 @@ if command -v grrr >/dev/null 2>&1; then
       fi
     fi
     GRRR_ARGS+=(--execute "$EXEC_CMD")
+  elif [ -n "${ITERM_SESSION_ID:-}" ]; then
+    # Not in tmux but in iTerm2: find the correct tab by tty.
+    SHELL_TTY="/dev/$(ps -o tty= -p $$ 2>/dev/null | tr -d ' ')"
+    if [ -n "$SHELL_TTY" ] && [ "$SHELL_TTY" != "/dev/" ]; then
+      GRRR_ARGS+=(--execute "/usr/bin/osascript -e 'tell application \"iTerm2\"' -e 'activate' -e 'repeat with w in windows' -e 'repeat with t in tabs of w' -e 'repeat with s in sessions of t' -e 'if tty of s is \"$SHELL_TTY\" then' -e 'set index of w to 1' -e 'select t' -e 'return' -e 'end if' -e 'end repeat' -e 'end repeat' -e 'end repeat' -e 'end tell'")
+    else
+      GRRR_ARGS+=(--reactivate)
+    fi
   else
     GRRR_ARGS+=(--reactivate)
   fi
