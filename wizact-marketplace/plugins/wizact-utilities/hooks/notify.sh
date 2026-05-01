@@ -22,7 +22,10 @@ if [ -n "$CLAUDE_PID" ]; then
   fi
 fi
 if [ -z "$SESSION_NAME" ] && [ -n "${TMUX:-}" ]; then
-  SESSION_NAME=$(tmux display-message -p '#{window_name}' 2>/dev/null || true)
+  TMUX_WINDOW_NAME=$(tmux display-message -p '#{window_name}' 2>/dev/null || true)
+  if [ -n "$TMUX_WINDOW_NAME" ]; then
+    SESSION_NAME="tmux: $TMUX_WINDOW_NAME"
+  fi
 fi
 
 # --- Tmux window info ---
@@ -37,7 +40,12 @@ fi
 
 # --- Send notification ---
 if command -v grrr >/dev/null 2>&1; then
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  ICON="$SCRIPT_DIR/claude-code-icon.png"
   GRRR_ARGS=(--title "Claude Code" --sound none)
+  if [ -f "$ICON" ]; then
+    GRRR_ARGS+=(--image "$ICON")
+  fi
   if [ -n "$SESSION_NAME" ]; then
     GRRR_ARGS+=(--subtitle "$SESSION_NAME")
   fi
