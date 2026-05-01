@@ -21,8 +21,8 @@ if [ -n "$CLAUDE_PID" ]; then
     fi
   fi
 fi
-if [ -z "$SESSION_NAME" ] && [ -n "${TMUX:-}" ]; then
-  TMUX_WINDOW_NAME=$(tmux display-message -p '#{window_name}' 2>/dev/null || true)
+if [ -z "$SESSION_NAME" ] && [ -n "${TMUX:-}" ] && [ -n "${TMUX_PANE:-}" ]; then
+  TMUX_WINDOW_NAME=$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}' 2>/dev/null || true)
   if [ -n "$TMUX_WINDOW_NAME" ]; then
     SESSION_NAME="tmux: $TMUX_WINDOW_NAME"
   fi
