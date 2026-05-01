@@ -2,10 +2,8 @@
 # macOS notification helper for Claude Code hooks.
 # Usage: notify.sh <message>
 # Detects session name and tmux window automatically.
-# Uses terminal-notifier if available, falls back to osascript.
-#
-# Note: terminal-notifier's -execute/-activate flags are broken on
-# macOS Sequoia+, so we don't use them.
+# Prefers growlrrr (click-to-activate + tmux switch), falls back to
+# terminal-notifier, then osascript.
 
 set -euo pipefail
 
@@ -27,27 +25,50 @@ if [ -z "$SESSION_NAME" ] && [ -n "${TMUX:-}" ]; then
   SESSION_NAME=$(tmux display-message -p '#{window_name}' 2>/dev/null || true)
 fi
 
-TITLE="Claude Code"
-if [ -n "$SESSION_NAME" ]; then
-  TITLE="Claude Code - $SESSION_NAME"
-fi
-
-# --- Tmux window info (included in notification body) ---
-TMUX_INFO=""
+# --- Tmux window info ---
+TMUX_WIN=""
+TMUX_SOCK=""
 if [ -n "${TMUX:-}" ] && [ -n "${TMUX_PANE:-}" ]; then
   TMUX_WIN=$(tmux display-message -t "$TMUX_PANE" -p '#{window_index}' 2>/dev/null || true)
-  if [ -n "$TMUX_WIN" ]; then
-    TMUX_INFO=" [tmux:$TMUX_WIN]"
-  fi
+  TMUX_SOCK=$(echo "$TMUX" | cut -d, -f1)
 fi
 
 # --- Send notification ---
-if command -v terminal-notifier >/dev/null 2>&1; then
+if command -v grrr >/dev/null 2>&1; then
+  GRRR_ARGS=(--title "Claude Code" --reactivate)
+  if [ -n "$SESSION_NAME" ]; then
+    GRRR_ARGS+=(--subtitle "$SESSION_NAME")
+  fi
+  if [ -n "$TMUX_WIN" ] && [ -n "$TMUX_SOCK" ]; then
+    GRRR_ARGS+=(--execute "tmux -S '$TMUX_SOCK' select-window -t '$TMUX_WIN'")
+  fi
+  grrr "${GRRR_ARGS[@]}" "$MESSAGE" >/dev/null 2>&1
+
+elif command -v terminal-notifier >/dev/null 2>&1; then
+  # terminal-notifier: -execute/-activate broken on macOS Sequoia+
+  TN_TITLE="Claude Code"
+  if [ -n "$SESSION_NAME" ]; then
+    TN_TITLE="Claude Code - $SESSION_NAME"
+  fi
+  TMUX_INFO=""
+  if [ -n "$TMUX_WIN" ]; then
+    TMUX_INFO=" [tmux:$TMUX_WIN]"
+  fi
   terminal-notifier \
     -message "${MESSAGE}${TMUX_INFO}" \
-    -title "$TITLE" \
+    -title "$TN_TITLE" \
     -group "claude-code-$$" \
     >/dev/null 2>&1
+
 else
-  osascript -e "display notification \"${MESSAGE}${TMUX_INFO}\" with title \"$TITLE\"" 2>/dev/null
+  # osascript: no click action support
+  OS_TITLE="Claude Code"
+  if [ -n "$SESSION_NAME" ]; then
+    OS_TITLE="Claude Code - $SESSION_NAME"
+  fi
+  TMUX_INFO=""
+  if [ -n "$TMUX_WIN" ]; then
+    TMUX_INFO=" [tmux:$TMUX_WIN]"
+  fi
+  osascript -e "display notification \"${MESSAGE}${TMUX_INFO}\" with title \"$OS_TITLE\"" 2>/dev/null
 fi
