@@ -1,0 +1,41 @@
+{
+  "name": "speculator",
+  "version": "1.1.1",
+  "description": "Comprehensive spec builder: project setup, GitHub issue/PR context, requirements, design, tasks, and verification",
+  "author": {
+    "name": "Amir Mohtasebi",
+    "email": "amir.mohtasebi@gmail.com"
+  },
+  "homepage": "https://github.com/wizact/dotclaude",
+  "repository": "https://github.com/wizact/dotclaude",
+  "license": "MIT",
+  "keywords": [
+    "specs",
+    "requirements",
+    "EARS",
+    "design",
+    "tasks",
+    "verification",
+    "documentation",
+    "setup"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Speculator",
+    "shortDescription": "Context-driven specification workflow.",
+    "longDescription": "Create and verify structured specs from project context, GitHub issues, requirements, design decisions, and task breakdowns.",
+    "developerName": "Wizact",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/wizact/dotclaude",
+    "defaultPrompt": [
+      "Create a spec from this GitHub issue.",
+      "Generate requirements for this feature.",
+      "Verify this implementation against its spec."
+    ],
+    "brandColor": "#10A37F"
+  }
+}

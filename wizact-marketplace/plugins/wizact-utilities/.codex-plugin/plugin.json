@@ -1,0 +1,38 @@
+{
+  "name": "wizact-utilities",
+  "version": "1.4.1",
+  "description": "Utility tools for macOS: desktop notifications and plugin version management",
+  "author": {
+    "name": "Amir Mohtasebi",
+    "email": "amir.mohtasebi@gmail.com"
+  },
+  "homepage": "https://github.com/wizact/dotclaude",
+  "repository": "https://github.com/wizact/dotclaude",
+  "license": "MIT",
+  "keywords": [
+    "notifications",
+    "macos",
+    "utilities",
+    "version-management"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "Wizact Utilities",
+    "shortDescription": "macOS utility skills and hooks.",
+    "longDescription": "Desktop notification hooks, plugin version management, and utility search workflows for local development.",
+    "developerName": "Wizact",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/wizact/dotclaude",
+    "defaultPrompt": [
+      "Bump the plugin version.",
+      "Find files quickly with fd.",
+      "Search code quickly with ripgrep."
+    ],
+    "brandColor": "#059669"
+  }
+}

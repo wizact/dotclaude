@@ -1,0 +1,44 @@
+{
+  "name": "wizact-local",
+  "interface": {
+    "displayName": "Wizact Local"
+  },
+  "plugins": [
+    {
+      "name": "wizact-dev-essentials",
+      "source": {
+        "source": "local",
+        "path": "./wizact-marketplace/plugins/wizact-dev-essentials"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Engineering"
+    },
+    {
+      "name": "speculator",
+      "source": {
+        "source": "local",
+        "path": "./wizact-marketplace/plugins/speculator"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Engineering"
+    },
+    {
+      "name": "wizact-utilities",
+      "source": {
+        "source": "local",
+        "path": "./wizact-marketplace/plugins/wizact-utilities"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

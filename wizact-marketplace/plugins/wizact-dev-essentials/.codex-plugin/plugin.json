@@ -1,0 +1,42 @@
+{
+  "name": "wizact-dev-essentials",
+  "version": "4.0.1",
+  "description": "Required dev tools with auto-invoked skills: fd-search, ripgrep-search, git helpers, and language-specific development guidance",
+  "author": {
+    "name": "wizact",
+    "email": "amir.mohtasebi@gmail.com"
+  },
+  "homepage": "https://github.com/wizact/dotclaude",
+  "repository": "https://github.com/wizact/dotclaude",
+  "license": "MIT",
+  "keywords": [
+    "search",
+    "git",
+    "go",
+    "python",
+    "productivity",
+    "developer-tools",
+    "fd",
+    "ripgrep",
+    "auto-invoke"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Wizact Dev Essentials",
+    "shortDescription": "Core development workflow skills.",
+    "longDescription": "Fast search, commit message helpers, test-driven workflow guidance, worktree support, and Go/Python development practices.",
+    "developerName": "Wizact",
+    "category": "Engineering",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/wizact/dotclaude",
+    "defaultPrompt": [
+      "Search this repo with fd or ripgrep.",
+      "Generate a conventional commit message.",
+      "Apply Go or Python development guidance."
+    ],
+    "brandColor": "#2563EB"
+  }
+}
