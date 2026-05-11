@@ -32,6 +32,7 @@
       "Write"
     ],
     "websiteURL": "https://github.com/wizact/dotclaude",
+    "logo": "./assets/logo.png",
     "defaultPrompt": [
       "Search this repo with fd or ripgrep.",
       "Generate a conventional commit message.",

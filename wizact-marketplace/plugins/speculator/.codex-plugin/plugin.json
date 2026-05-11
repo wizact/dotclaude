@@ -31,6 +31,7 @@
       "Write"
     ],
     "websiteURL": "https://github.com/wizact/dotclaude",
+    "logo": "./assets/logo.png",
     "defaultPrompt": [
       "Create a spec from this GitHub issue.",
       "Generate requirements for this feature.",

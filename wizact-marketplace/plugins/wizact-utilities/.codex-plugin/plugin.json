@@ -28,6 +28,7 @@
       "Write"
     ],
     "websiteURL": "https://github.com/wizact/dotclaude",
+    "logo": "./assets/logo.png",
     "defaultPrompt": [
       "Bump the plugin version.",
       "Find files quickly with fd.",

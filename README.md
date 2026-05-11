@@ -1,29 +1,41 @@
-# Claude Code Extensions
+# Wizact Agent Extensions
 
-A marketplace-based collection of reusable plugins providing agents, skills, and commands for Claude Code.
+A marketplace-based collection of reusable plugins providing agents, skills,
+commands, and hooks for Claude Code and Codex.
 
 ## Purpose
 
-This repository provides a structured marketplace for Claude Code extensions that can be integrated into any project. Organized as a proper marketplace with plugins, templates, and conventions to standardize development workflows.
+This repository provides structured marketplaces for Claude Code and Codex
+extensions that can be integrated into any project. It organizes plugins,
+templates, and conventions to standardize development workflows across both
+agent runtimes.
 
 ## Repository Structure
 
 ```
 dotclaude/
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json        # Codex marketplace catalog
 ├── wizact-marketplace/           # Plugin marketplace
+│   ├── .claude-plugin/
+│   │   └── marketplace.json        # Claude Code marketplace catalog
 │   └── plugins/
 │       ├── wizact-dev-essentials/  # Core development plugin
 │       │   ├── agents/              # Specialized agents
 │       │   ├── skills/              # Reusable skills
-│       │   └── .claude-plugin/
+│       │   ├── .claude-plugin/      # Claude Code plugin manifest
+│       │   └── .codex-plugin/       # Codex plugin manifest
 │       ├── wizact-utilities/        # System utilities plugin
 │       │   ├── skills/              # Utility skills
 │       │   ├── hooks/               # Custom hooks
-│       │   └── .claude-plugin/
+│       │   ├── .claude-plugin/      # Claude Code plugin manifest
+│       │   └── .codex-plugin/       # Codex plugin manifest
 │       └── speculator/              # Specification builder plugin
 │           ├── agents/              # Spec agents
 │           ├── skills/              # Spec skills
-│           └── .claude-plugin/
+│           ├── .claude-plugin/      # Claude Code plugin manifest
+│           └── .codex-plugin/       # Codex plugin manifest
 └── README.md
 ```
 
@@ -55,12 +67,24 @@ cd <your-machine-name>
 
 ### Plugin Installation
 
+#### Claude Code
+
 ```
 /plugin 
 ```
 
 Install the `wizact-marketplace` on your machine.
 Install desired plugins: `wizact-dev-essentials`, `wizact-utilities`, `speculator`.
+
+#### Codex
+
+Codex discovers the local marketplace from `.agents/plugins/marketplace.json`.
+The catalog points to the `.codex-plugin/plugin.json` manifests for each
+plugin:
+
+- `wizact-dev-essentials`
+- `wizact-utilities`
+- `speculator`
 
 See [wizact-dev-essentials/README.md](wizact-marketplace/plugins/wizact-dev-essentials/README.md) for detailed plugin documentation.
 
@@ -129,7 +153,8 @@ Comprehensive specification builder plugin providing:
 
 ### Using Agents
 
-Agents are available via Claude Code's Agent tool:
+Agents are available via Claude Code's Agent tool and Codex sub-agents where
+the runtime supports them:
 
 ```python
 # Auto-detect language and apply best practices

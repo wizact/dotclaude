@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Wizact Dev Essentials logo</title>
+  <desc id="desc">A development toolkit mark with code brackets, search, and git workflow nodes.</desc>
+  <defs>
+    <linearGradient id="bg" x1="128" y1="96" x2="896" y2="928" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1D4ED8"/>
+      <stop offset="0.5" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="282" y1="192" x2="742" y2="824" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#CFE0FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="30" stdDeviation="34" flood-color="#020617" flood-opacity="0.36"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <path d="M146 720C206 626 280 578 368 578C452 578 498 646 582 630C678 612 712 500 820 500C858 500 890 510 918 530V824C918 876 876 918 824 918H200C148 918 106 876 106 824V784C118 762 132 740 146 720Z" fill="#020617" opacity="0.24"/>
+  <g filter="url(#shadow)">
+    <rect x="210" y="190" width="604" height="644" rx="86" fill="url(#panel)"/>
+    <rect x="256" y="246" width="512" height="92" rx="46" fill="#1E3A8A"/>
+    <circle cx="318" cy="292" r="14" fill="#93C5FD"/>
+    <circle cx="368" cy="292" r="14" fill="#60A5FA"/>
+    <circle cx="418" cy="292" r="14" fill="#DBEAFE"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M416 444L334 512L416 580" stroke="#1D4ED8" stroke-width="46"/>
+    <path d="M608 444L690 512L608 580" stroke="#1D4ED8" stroke-width="46"/>
+    <path d="M544 418L480 606" stroke="#0F766E" stroke-width="42"/>
+  </g>
+  <g>
+    <circle cx="420" cy="704" r="44" fill="#0F766E"/>
+    <circle cx="604" cy="704" r="44" fill="#2563EB"/>
+    <circle cx="512" cy="638" r="38" fill="#1E3A8A"/>
+    <path d="M452 686L482 660M542 660L574 686M464 704H560" fill="none" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round"/>
+    <path d="M656 724L722 790" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+    <circle cx="632" cy="700" r="62" fill="none" stroke="#FFFFFF" stroke-width="30"/>
+  </g>
+</svg>

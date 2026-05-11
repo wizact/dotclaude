@@ -1,6 +1,8 @@
 # speculator
 
-Comprehensive specification builder that transforms GitHub issues and PRs into detailed, verifiable specs with requirements (EARS notation), design docs, and tracked tasks.
+Comprehensive specification builder for Claude Code and Codex that transforms
+GitHub issues and PRs into detailed, verifiable specs with requirements (EARS
+notation), design docs, and tracked tasks.
 
 ## Overview
 
@@ -37,7 +39,9 @@ GitHub URL → spec-context → spec-requirements → spec-design → spec-tasks
 
 ## Installation
 
-Plugin auto-detected from wizact-marketplace. No manual installation needed.
+Plugin auto-detected from `wizact-marketplace` for Claude Code and from
+`.agents/plugins/marketplace.json` for Codex. The plugin includes both
+`.claude-plugin/plugin.json` and `.codex-plugin/plugin.json` manifests.
 
 ## Usage
 

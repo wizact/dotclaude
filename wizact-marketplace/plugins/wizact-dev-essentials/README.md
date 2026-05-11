@@ -1,6 +1,7 @@
 # Wizact Dev Essentials
 
-Essential development tools plugin for Claude Code, providing fast search capabilities, git workflow helpers, and Go development agents.
+Essential development tools plugin for Claude Code and Codex, providing fast
+search capabilities, git workflow helpers, and Go development agents.
 
 ## Breaking Changes (v3.0.0)
 
@@ -28,6 +29,9 @@ Spec builder skills moved to `speculator` plugin.
 
 ## Installation
 
+The plugin includes both `.claude-plugin/plugin.json` and
+`.codex-plugin/plugin.json` manifests.
+
 ### Prerequisites
 
 Install required system tools:
@@ -45,7 +49,7 @@ dnf install fd-find ripgrep
 
 ### Plugin Installation
 
-#### Option 1: Add to settings.json (Recommended)
+#### Claude Code: Add to settings.json (Recommended)
 
 Add to `~/.claude/settings.json`:
 
@@ -57,11 +61,16 @@ Add to `~/.claude/settings.json`:
 }
 ```
 
-#### Option 2: Symlink to plugins directory
+#### Claude Code: Symlink to plugins directory
 
 ```bash
 ln -s ~/dev/github.com/wizact/dotclaude/mac/wizact-dev-essentials ~/.claude/plugins/wizact-dev-essentials
 ```
+
+#### Codex
+
+Install through the repository-level Codex marketplace catalog at
+`.agents/plugins/marketplace.json`.
 
 ## Usage
 
@@ -76,7 +85,9 @@ Smart code search across project:
 
 ### Skills
 
-Skills are automatically available to Claude agents when the plugin is loaded. Some skills are **agent-auto-invoked** (replacing bash commands), while others are **user-invocable** via `/skill-name`.
+Skills are automatically available to Claude Code and Codex agents when the
+plugin is loaded. Some skills are **agent-auto-invoked** (replacing bash
+commands), while others are **user-invocable** via `/skill-name`.
 
 #### `fd-search` (Agent Auto-Invoked + User-Invocable)
 **Replaces bash `find` command** - Agents automatically use this for file searches.

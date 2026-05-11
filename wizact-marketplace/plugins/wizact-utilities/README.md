@@ -1,6 +1,6 @@
 # wizact-utilities
 
-Utility tools and hooks for Claude Code on macOS.
+Utility tools and hooks for Claude Code and Codex on macOS.
 
 ## Features
 
@@ -16,6 +16,11 @@ Utility tools and hooks for Claude Code on macOS.
 - **bump-plugin-version**: Automatically bump plugin versions following semantic versioning
 
 ## Installation
+The plugin includes both `.claude-plugin/plugin.json` and
+`.codex-plugin/plugin.json` manifests.
+
+### Claude Code
+
 Add to `~/.claude/settings.json`:
 ```json
 {
@@ -25,6 +30,11 @@ Add to `~/.claude/settings.json`:
 }
 ```
 Then restart Claude session.
+
+### Codex
+
+Install through the repository-level Codex marketplace catalog at
+`.agents/plugins/marketplace.json`.
 
 ## Notification Tool Setup
 
