@@ -53,6 +53,18 @@ brew install fd ripgrep
 apt install fd-find ripgrep
 ```
 
+For MacOS notifications triggered by a hook:
+
+```bash
+brew tap moltenbits/tap && brew install growlrrr
+```
+
+or alternatively: 
+
+```bash
+brew install terminal-notifier
+```
+
 ### Setup
 
 ```bash

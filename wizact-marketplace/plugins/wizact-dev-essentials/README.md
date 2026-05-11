@@ -56,7 +56,7 @@ Add to `~/.claude/settings.json`:
 ```json
 {
   "plugins": [
-    "~/dev/github.com/wizact/dotclaude/mac/wizact-dev-essentials"
+    "~/dev/github.com/wizact/dotclaude/main/wizact-dev-essentials"
   ]
 }
 ```
@@ -64,7 +64,7 @@ Add to `~/.claude/settings.json`:
 #### Claude Code: Symlink to plugins directory
 
 ```bash
-ln -s ~/dev/github.com/wizact/dotclaude/mac/wizact-dev-essentials ~/.claude/plugins/wizact-dev-essentials
+ln -s ~/dev/github.com/wizact/dotclaude/main/wizact-dev-essentials ~/.claude/plugins/wizact-dev-essentials
 ```
 
 #### Codex
@@ -73,15 +73,6 @@ Install through the repository-level Codex marketplace catalog at
 `.agents/plugins/marketplace.json`.
 
 ## Usage
-
-### Commands
-
-#### `/search-code`
-Smart code search across project:
-```bash
-/search-code <pattern>
-```
-
 
 ### Skills
 
@@ -165,7 +156,7 @@ Generate Conventional Commits formatted messages. See [skills/generate-commit-me
 Agents are available via the Task tool with `subagent_type` parameter.
 
 #### `developer`
-Language-aware dispatcher agent that auto-detects project context. For Go projects, provides comprehensive development guidance with best practices, architecture, testing, and security.
+Language-aware dispatcher agent that auto-detects project context. For Go and Python projects, provides comprehensive development guidance with best practices, architecture, testing, and security.
 
 **Direct skill access**: `Skill(skill='go-developer')` explicitly invokes Go development guidance.
 
