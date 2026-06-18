@@ -1,7 +1,7 @@
 {
   "name": "wizact-utilities",
-  "version": "1.4.1",
-  "description": "Utility tools for macOS: desktop notifications and plugin version management",
+  "version": "1.5.0",
+  "description": "Essential developer utilities: fast file/code search (fd, ripgrep, ast-grep), desktop notifications, plugin version management",
   "author": {
     "name": "Amir Mohtasebi",
     "email": "amir.mohtasebi@gmail.com"
@@ -10,6 +10,10 @@
   "repository": "https://github.com/wizact/dotclaude",
   "license": "MIT",
   "keywords": [
+    "search",
+    "ast-grep",
+    "ripgrep",
+    "fd",
     "notifications",
     "macos",
     "utilities",
@@ -19,8 +23,8 @@
   "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Wizact Utilities",
-    "shortDescription": "macOS utility skills and hooks.",
-    "longDescription": "Desktop notification hooks, plugin version management, and utility search workflows for local development.",
+    "shortDescription": "macOS utility skills and hooks for developers.",
+    "longDescription": "Fast file search (fd), blazing code search (ripgrep), semantic AST search (ast-grep), desktop notification hooks, and plugin version management for productive local development.",
     "developerName": "Wizact",
     "category": "Productivity",
     "capabilities": [
@@ -30,10 +34,18 @@
     "websiteURL": "https://github.com/wizact/dotclaude",
     "logo": "./assets/logo.png",
     "defaultPrompt": [
-      "Bump the plugin version.",
       "Find files quickly with fd.",
-      "Search code quickly with ripgrep."
+      "Search code with ripgrep.",
+      "Search code structure with ast-grep.",
+      "Bump the plugin version."
     ],
     "brandColor": "#059669"
+  },
+  "optionalDependencies": {
+    "ast-grep": "For ast-grep-search skill: brew install ast-grep, npm install -g @ast-grep/cli, or pip install ast-grep-cli",
+    "fd": "For fd-search skill: brew install fd-find",
+    "ripgrep": "For ripgrep-search skill: brew install ripgrep",
+    "growlrrr": "For notification hooks (recommended): brew tap moltenbits/tap && brew install growlrrr",
+    "terminal-notifier": "For notification hooks (alternative): brew install terminal-notifier"
   }
 }

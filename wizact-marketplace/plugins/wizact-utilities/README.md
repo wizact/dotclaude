@@ -1,8 +1,13 @@
 # wizact-utilities
 
-Utility tools and hooks for Claude Code and Codex on macOS.
+Essential developer utilities: fast file/code search, desktop notifications, and version management for Claude Code and Codex on macOS.
 
 ## Features
+
+### 🔍 Fast Search Skills
+- **fd-search**: Ultra-fast file finding (10-100x faster than `find`)
+- **ripgrep-search**: Blazing fast code/text search (10-100x faster than `grep`)
+- **ast-grep-search**: Semantic code search by AST structure - NEW! ⭐
 
 ### 🔔 Notification Hooks
 - Desktop notifications when Claude waits for input (60s+ idle)
@@ -67,9 +72,90 @@ Note: `terminal-notifier`'s `-execute` and `-activate` flags are broken on macOS
 If neither tool is installed, notifications are sent via `osascript display notification`. Session names are included in the title, but there is no click action support.
 
 ## Requirements
+
+### System
 - macOS 13.0+ (Ventura or later for growlrrr, earlier versions work with terminal-notifier/osascript)
 
+### Optional Dependencies
+
+**For ast-grep-search skill:**
+- `ast-grep` (install via `brew install ast-grep`, `npm install -g @ast-grep/cli`, or `pip install ast-grep-cli`)
+  - Required only if you want to use semantic AST-based code search
+  - The skill will check for installation and guide you through setup if not found
+
+**For fd-search skill:**
+- `fd` (install via `brew install fd-find`)
+  - Auto-invoked instead of bash `find` for faster file searches
+
+**For ripgrep-search skill:**
+- `ripgrep` (install via `brew install ripgrep`)
+  - Auto-invoked instead of bash `grep` for faster text searches
+
 ## Skills
+
+### `fd-search` (User-Invocable)
+Ultra-fast file search - REQUIRED instead of bash `find`.
+
+**Usage**: Automatically invoked for file searches. 10-100x faster than `find`, respects .gitignore, simple syntax.
+
+**Manual Invocation**:
+```bash
+/fd-search [pattern] [path]
+```
+
+### `ripgrep-search` (User-Invocable)  
+Blazing fast code/text search - REQUIRED instead of bash `grep`.
+
+**Usage**: Automatically invoked for text searches. 10-100x faster than grep, respects .gitignore, Unicode support.
+
+**Manual Invocation**:
+```bash
+/ripgrep-search [pattern] [path]
+```
+
+### `ast-grep-search` (User-Invocable) ⭐ NEW
+Semantic code search using AST pattern matching.
+
+**Requires**: `ast-grep` CLI tool
+
+**When to use**: Finding code by structure (error handlers, function calls, type definitions), refactoring with pattern rewrites, analyzing code semantics.
+
+**Key features**:
+- Matches AST structure, not text (format-independent)
+- Pattern rewrites preserve code structure
+- Multi-language: JS, TS, Python, Go, Rust, Java, C++, and more
+- Meta-variables: `$VAR` (single node), `$$$ARGS` (sequences)
+
+**Installation**:
+```bash
+# macOS
+brew install ast-grep
+
+# npm (cross-platform)
+npm install -g @ast-grep/cli
+
+# Python
+pip install ast-grep-cli
+```
+
+**Examples**:
+```bash
+# Find error handling
+ast-grep -p 'if err != nil { $$$ }' -l go .
+
+# Find and refactor
+ast-grep -p 'console.log($$$)' -r 'logger.debug($$$)' -i -l js .
+
+# Find functions
+ast-grep -p 'function $NAME($$$PARAMS) { $$$ }' -l javascript .
+```
+
+**Manual Invocation**:
+```bash
+/ast-grep-search
+```
+
+The skill will verify installation and provide setup instructions if ast-grep is not found.
 
 ### `bump-plugin-version` (User-Invocable)
 Automatically analyze changes and bump plugin version following semantic versioning.
