@@ -1,0 +1,20 @@
+{
+  "name": "wizact-health-fitness",
+  "version": "0.1.1",
+  "description": "Health and fitness workflows for Claude Code and Codex, starting with Strava activity imports.",
+  "author": {
+    "name": "Amir Mohtasebi",
+    "email": "amir.mohtasebi@gmail.com"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Wizact Health Fitness",
+    "shortDescription": "Import and interpret Strava activity exports.",
+    "longDescription": "Health and fitness workflows for Claude Code and Codex, currently focused on safe Strava activity imports into activities.sqlite.",
+    "developerName": "Wizact",
+    "category": "Health & Fitness",
+    "capabilities": [],
+    "websiteURL": "https://github.com/wizact/dotclaude",
+    "defaultPrompt": "Import this Strava activity into my activities.sqlite database."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "wizact-health-fitness",
+  "version": "0.1.1",
+  "description": "Health and fitness workflows for Claude Code and Codex, starting with Strava activity imports.",
+  "skills": "./skills/",
+  "keywords": [
+    "health",
+    "fitness",
+    "Strava",
+    "activities",
+    "training"
+  ]
+}

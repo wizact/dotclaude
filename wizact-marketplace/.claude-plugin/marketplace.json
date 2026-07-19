@@ -29,6 +29,15 @@
       "homepage": "https://github.com/wizact/dotclaude",
       "repository": "https://github.com/wizact/dotclaude",
       "version": "1.4.1"
+    },
+    {
+      "name": "wizact-health-fitness",
+      "source": "./plugins/wizact-health-fitness",
+      "description": "Health and fitness workflows, starting with Strava activity imports.",
+      "author": {"name": "Amir Mohtasebi", "url": "amir.mohtasebi@gmail.com"},
+      "homepage": "https://github.com/wizact/dotclaude",
+      "repository": "https://github.com/wizact/dotclaude",
+      "version": "0.1.1"
     }
   ]
 }

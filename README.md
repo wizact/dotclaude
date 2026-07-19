@@ -97,6 +97,7 @@ plugin:
 - `wizact-dev-essentials`
 - `wizact-utilities`
 - `speculator`
+- `wizact-health-fitness`
 
 See [wizact-dev-essentials/README.md](wizact-marketplace/plugins/wizact-dev-essentials/README.md) for detailed plugin documentation.
 
@@ -144,6 +145,13 @@ Comprehensive specification builder plugin providing:
 **Agents** (1):
 - `specbuilder` - ⚠️ DEPRECATED: Use individual skills instead
 
+#### wizact-health-fitness
+
+Health and fitness workflows providing:
+
+**Skills** (1):
+- `strava-activity-import` - Safely import one Strava activity into `activities.sqlite`
+
 
 ## Usage
 
@@ -183,6 +191,7 @@ See individual plugin documentation for detailed usage:
 - [wizact-dev-essentials](wizact-marketplace/plugins/wizact-dev-essentials/)
 - [wizact-utilities](wizact-marketplace/plugins/wizact-utilities/README.md)
 - [speculator](wizact-marketplace/plugins/speculator/)
+- [wizact-health-fitness](wizact-marketplace/plugins/wizact-health-fitness/)
 
 ## License
 
