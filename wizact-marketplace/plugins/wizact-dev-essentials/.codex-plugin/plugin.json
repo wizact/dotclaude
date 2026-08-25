@@ -1,6 +1,6 @@
 {
   "name": "wizact-dev-essentials",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Required dev tools with auto-invoked skills: fd-search, ripgrep-search, git helpers, and language-specific development guidance",
   "author": {
     "name": "wizact",

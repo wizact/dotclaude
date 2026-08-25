@@ -1,6 +1,6 @@
 {
   "name": "wizact-dev-essentials",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Required dev tools with auto-invoked skills: fd-search (replaces find), ripgrep-search (replaces grep), git helpers, language-specific agents (Go/Python developer)",
   "author": { "name": "wizact", "email": "amir.mohtasebi@gmail.com" },
   "repository": "https://github.com/wizact/dotclaude",
