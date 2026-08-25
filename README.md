@@ -114,7 +114,7 @@ Essential development tools plugin providing:
 - `go-developer` - Go development best practices and idiomatic patterns
 - `python-developer` - Python development best practices and Pythonic patterns
 - `test-driven-development` - TDD red-green-refactor discipline enforcement
-- `worktree` - Git worktree workflow automation
+- `git-workflow-skill` - Git branching and worktree workflow automation
 
 **Agents** (2):
 - `developer` - Multi-language dispatcher (Go, Python) with best practices
