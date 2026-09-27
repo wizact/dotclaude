@@ -19,11 +19,12 @@ Complete guide to production-ready Go development. All rules expanded with full 
 ## Table of Contents
 1. [Architecture (CRITICAL)](#architecture-critical)
 2. [Security (CRITICAL)](#security-critical)
-3. [Testing (HIGH)](#testing-high)
-4. [Error Handling (HIGH)](#error-handling-high)
-5. [Code Organization (MEDIUM)](#code-organization-medium)
-6. [Performance (MEDIUM)](#performance-medium)
-7. [Patterns (LOW)](#patterns-low)
+3. [Naming (IMPORTANT)](#naming-important)
+4. [Testing (HIGH)](#testing-high)
+5. [Error Handling (HIGH)](#error-handling-high)
+6. [Code Organization (MEDIUM)](#code-organization-medium)
+7. [Performance (MEDIUM)](#performance-medium)
+8. [Patterns (LOW)](#patterns-low)
 
 ---
 
@@ -64,6 +65,7 @@ compile_category() {
 # Compile each category
 compile_category "arch" "Architecture" "CRITICAL"
 compile_category "security" "Security" "CRITICAL"
+compile_category "naming" "Naming" "IMPORTANT"
 compile_category "test" "Testing" "HIGH"
 compile_category "error" "Error Handling" "HIGH"
 compile_category "org" "Code Organization" "MEDIUM"

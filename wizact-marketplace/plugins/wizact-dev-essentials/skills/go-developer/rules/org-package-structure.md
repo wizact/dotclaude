@@ -77,7 +77,7 @@ pkg/
     repository.go # Port
     service.go
   postgres/
-    task_repo.go  # Adapter
+    taskrepository.go  # Adapter
   http/
     handlers.go
 ```
@@ -92,8 +92,8 @@ internal/
     application/
       service.go
     adapters/
-      postgres_repo.go
-      http_controller.go
+      postgresrepository.go
+      httpcontroller.go
     ports/
       repository.go
   user/
@@ -102,8 +102,8 @@ internal/
     application/
       service.go
     adapters/
-      postgres_repo.go
-      http_controller.go
+      postgresrepository.go
+      httpcontroller.go
     ports/
       repository.go
 ```

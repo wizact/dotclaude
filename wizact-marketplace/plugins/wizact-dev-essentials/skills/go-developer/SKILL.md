@@ -1,12 +1,12 @@
 ---
 name: go-developer
-description: Go development best practices - clean architecture, testing, security, and idiomatic patterns for production-ready code
+description: Go development best practices - naming, clean architecture, testing, security, and idiomatic patterns for production-ready code
 user-invocable: true
 ---
 
 # Go Developer
 
-Production-ready Go development guidelines covering architecture, testing, security, and performance. Contains 26 rules across 7 categories, prioritized by impact.
+Production-ready Go development guidelines covering architecture, security, naming, testing, and performance. Contains 27 rules across 8 categories, prioritized by impact.
 
 ## When to Apply
 
@@ -24,11 +24,12 @@ Reference these guidelines when:
 |----------|----------|--------|--------|-------|
 | 1 | Architecture | CRITICAL | `arch-` | 5 |
 | 2 | Security | CRITICAL | `security-` | 4 |
-| 3 | Testing | HIGH | `test-` | 6 |
-| 4 | Error Handling | HIGH | `error-` | 3 |
-| 5 | Code Organization | MEDIUM | `org-` | 5 |
-| 6 | Performance | MEDIUM | `perf-` | 2 |
-| 7 | Patterns | LOW | `pattern-` | 1 |
+| 3 | Naming | IMPORTANT | `naming-` | 1 |
+| 4 | Testing | HIGH | `test-` | 6 |
+| 5 | Error Handling | HIGH | `error-` | 3 |
+| 6 | Code Organization | MEDIUM | `org-` | 5 |
+| 7 | Performance | MEDIUM | `perf-` | 2 |
+| 8 | Patterns | LOW | `pattern-` | 1 |
 
 ## Quick Reference
 
@@ -47,7 +48,11 @@ Reference these guidelines when:
 - `security-input-validation` - Validate at system boundaries (user input, external APIs)
 - `security-error-sanitization` - Never expose internal errors to users
 
-### 3. Testing (HIGH)
+### 3. Naming (IMPORTANT)
+
+- `naming-conventions` - Use lowercase delimiter-free file and directory names, MixedCaps identifiers, and role-based type names
+
+### 4. Testing (HIGH)
 
 - `test-table-driven` - Use table-driven tests with descriptive test case names
 - `test-fixtures` - Store test data in testdata/ directory
@@ -56,13 +61,13 @@ Reference these guidelines when:
 - `test-no-mock-netconn` - Never mock net.Conn; use real connections or higher abstractions
 - `test-config-defaults` - Avoid global state; use config structs with defaults
 
-### 4. Error Handling (HIGH)
+### 5. Error Handling (HIGH)
 
 - `error-wrapping` - Wrap errors with context using fmt.Errorf with %w
 - `error-sentinel` - Define package-level sentinel errors (var ErrNotFound = errors.New(...))
 - `error-context` - Add context explaining what failed, not just raw errors
 
-### 5. Code Organization (MEDIUM)
+### 6. Code Organization (MEDIUM)
 
 - `org-function-breakdown` - Break functions down judiciously (not too much, not too little)
 - `org-package-structure` - Organize packages by domain/concern, not by type
@@ -70,12 +75,12 @@ Reference these guidelines when:
 - `org-yagni` - Implement only what's needed now, not speculative features
 - `org-simplicity` - Three similar lines better than premature abstraction
 
-### 6. Performance (MEDIUM)
+### 7. Performance (MEDIUM)
 
 - `perf-concurrency` - Handle concurrent access with sync.Mutex/RWMutex when needed
 - `perf-edge-cases` - Handle nil checks, empty collections, boundary values
 
-### 7. Patterns (LOW)
+### 8. Patterns (LOW)
 
 - `pattern-config-defaults` - Configuration structs with sensible defaults (avoid globals)
 
@@ -101,7 +106,7 @@ pkg/
     repository.go # Port
     service.go
   postgres/
-    task_repo.go  # Adapter
+    taskrepository.go  # Adapter
   http/
     handlers.go
 ```
@@ -115,8 +120,8 @@ internal/
     application/
       service.go
     adapters/
-      postgres_repo.go
-      http_controller.go
+      postgresrepository.go
+      httpcontroller.go
     ports/
       repository.go
 ```
@@ -165,6 +170,9 @@ Reference individual rule files for detailed explanations and code examples:
 - [Password Hashing](rules/security-password-hashing.md)
 - [Input Validation](rules/security-input-validation.md)
 - [Error Sanitization](rules/security-error-sanitization.md)
+
+**Naming (IMPORTANT):**
+- [Go Naming Conventions](rules/naming-conventions.md)
 
 **Testing (HIGH):**
 - [Table-Driven Tests](rules/test-table-driven.md)
@@ -259,6 +267,11 @@ Before submitting Go code:
 - [ ] bcrypt for passwords (cost ≥12)
 - [ ] Input validation at boundaries
 - [ ] Sanitized error messages for users
+
+**Naming**:
+- [ ] Project-owned file and directory names are lowercase and delimiter-free, except for `_test.go`
+- [ ] Identifiers use MixedCaps with correct exportedness and initialism capitalization
+- [ ] Types, interfaces, functions, methods, constants, and errors follow their naming conventions
 
 **Testing**:
 - [ ] Table-driven tests with descriptive names

@@ -7,11 +7,12 @@ Complete guide to production-ready Go development. All rules expanded with full 
 ## Table of Contents
 1. [Architecture (CRITICAL)](#architecture-critical)
 2. [Security (CRITICAL)](#security-critical)
-3. [Testing (HIGH)](#testing-high)
-4. [Error Handling (HIGH)](#error-handling-high)
-5. [Code Organization (MEDIUM)](#code-organization-medium)
-6. [Performance (MEDIUM)](#performance-medium)
-7. [Patterns (LOW)](#patterns-low)
+3. [Naming (IMPORTANT)](#naming-important)
+4. [Testing (HIGH)](#testing-high)
+5. [Error Handling (HIGH)](#error-handling-high)
+6. [Code Organization (MEDIUM)](#code-organization-medium)
+7. [Performance (MEDIUM)](#performance-medium)
+8. [Patterns (LOW)](#patterns-low)
 
 ---
 
@@ -926,6 +927,118 @@ func FindTasksByIDs(db *sql.DB, ids []string) ([]Task, error) {
 ---
 
 
+## Naming (IMPORTANT)
+
+### naming-conventions: Go Naming Conventions
+
+
+## Go Naming Conventions
+
+Use consistent names across the application. Capitalization communicates whether a Go identifier is exported, while concise names and predictable file placement make code easier to navigate.
+
+### Files and directories
+
+Project-owned file and directory names must use only lowercase letters and numbers. Join multiple words without delimiters: do not use hyphens or underscores.
+
+The only filename delimiter exception is the required `_test.go` suffix for Go test files.
+
+| Good | Bad |
+|------|-----|
+| `actorevent.go` | `actor_event.go` |
+| `actorevent.go` | `actor-event.go` |
+| `actorevent_test.go` | `actor_event_test.go` |
+| `actorevent/` | `actor_event/` |
+| `oauth2/` | `oauth-2/` |
+
+Keep package names aligned with their directories: concise, lowercase, and unbroken. Prefer a meaningful domain name such as `actorevent` over generic names such as `util`, `common`, or `helpers`.
+
+External test packages may use Go's required `_test` package suffix, for example `package actorevent_test`.
+
+### Identifiers
+
+Use `MixedCaps` or `mixedCaps` for multiword Go identifiers. Do not use snake case or hyphens.
+
+- Exported identifiers start with an uppercase letter: `ActorEvent`, `NewActorEvent`, `MaxRetryCount`.
+- Unexported identifiers and local variables start with a lowercase letter: `actorEvent`, `newActorEvent`, `maxRetryCount`.
+- Preserve common initialisms: `ID`, `HTTP`, `URL`, and `JSON`; use `actorID`, `httpClient`, and `jsonData`, not `actorId`, `httpclient`, or `json_data`.
+- Prefer whole words; use abbreviations only when they are established and unambiguous.
+- Choose variable-name length according to scope. Short idiomatic names such as `ctx`, `db`, `i`, and `err` are appropriate when their meaning is clear.
+- Keep receiver names to one or two lowercase letters derived from the type, and use the same receiver name for every method on that type: `func (e *Event) Save()`.
+
+Test, benchmark, and example function names may use underscores to separate the subject, method, and scenario, for example `TestActorEvent_Create`.
+
+### Constants
+
+Name constants by their role and use the same MixedCaps rules as other identifiers.
+
+```go
+const MaxRetryCount = 3
+const defaultTimeout = 30 * time.Second
+```
+
+Do not use screaming snake case or a `K` prefix:
+
+```go
+// Bad
+const MAX_RETRY_COUNT = 3
+const kDefaultTimeout = 30 * time.Second
+```
+
+### Structs and other types
+
+Use concise noun or role names. Apply normal exportedness rules and avoid repeating context already supplied by the package.
+
+```go
+package actorevent
+
+type Event struct {
+    ActorID string
+}
+
+type validationError struct {
+    Field string
+}
+```
+
+Prefer `actorevent.Event` over `actorevent.ActorEvent`, and do not add suffixes such as `Struct` or `Type` merely to describe the declaration kind.
+
+### Interfaces
+
+Name interfaces for the behavior or role they describe. Do not add an `I` prefix or an `Interface` suffix.
+
+- Name a one-method interface after its method with an `-er` form when it reads naturally: `Reader`, `Writer`, `Validator`.
+- Name a focused multi-method interface for its role: `TaskRepository`.
+- Keep internal-only interfaces unexported: `validator`.
+
+### Functions and methods
+
+Use noun-like names for functions that return a value and verb-like names for actions. Avoid redundant package, receiver, parameter, and return-type words.
+
+- Prefer `Name()` over `GetName()`.
+- Use `Fetch` or `Compute` when a call may block, fail, or perform substantial work.
+- Use conventional constructor and option names such as `New`, `NewServer`, `DefaultConfig`, and `WithTimeout`.
+- Prefer `actorevent.New()` over `actorevent.NewActorEvent()` when the package already supplies the missing context.
+
+### Errors and tests
+
+- Prefix exported sentinel errors with `Err`: `ErrActorNotFound`.
+- Suffix concrete error types with `Error`: `ValidationError`.
+- Use `err` for ordinary local errors and descriptive MixedCaps names such as `wantErr` when multiple error values are in scope.
+- Give table-driven test cases descriptive, readable names rather than numeric indexes.
+
+## Checklist
+
+- [ ] Project-owned file and directory names are lowercase and delimiter-free, except for `_test.go`
+- [ ] Package names are concise, lowercase, and aligned with their directories
+- [ ] Exported identifiers use `MixedCaps`; unexported identifiers use `mixedCaps`
+- [ ] Initialisms retain their standard capitalization
+- [ ] Constants use MixedCaps rather than screaming snake case
+- [ ] Struct, interface, function, and method names describe their role without redundant context
+- [ ] Sentinel errors use `Err...`, and concrete error types use `...Error`
+
+---
+
+
 ## Testing (HIGH)
 
 ### test-config-defaults: Configuration with Defaults (No Global State)
@@ -1166,16 +1279,16 @@ mypackage/
 ├── config.go
 ├── config_test.go
 └── testdata/
-    ├── valid_config.json
-    ├── invalid_config.json
-    ├── minimal_config.yaml
-    └── sample_data.csv
+    ├── validconfig.json
+    ├── invalidconfig.json
+    ├── minimalconfig.yaml
+    └── sampledata.csv
 ```
 
 ```go
 func TestParseConfig(t *testing.T) {
     // Load from testdata
-    data, err := os.ReadFile("testdata/valid_config.json")
+    data, err := os.ReadFile("testdata/validconfig.json")
     if err != nil {
         t.Fatalf("failed to read fixture: %v", err)
     }
@@ -1195,7 +1308,7 @@ func TestParseConfig_MultipleFixtures(t *testing.T) {
     }{
         {
             name:    "valid config",
-            fixture: "testdata/valid_config.json",
+            fixture: "testdata/validconfig.json",
             wantErr: false,
             validate: func(t *testing.T, cfg Config) {
                 assert.Equal(t, 8080, cfg.Port)
@@ -1204,12 +1317,12 @@ func TestParseConfig_MultipleFixtures(t *testing.T) {
         },
         {
             name:    "invalid JSON",
-            fixture: "testdata/invalid_config.json",
+            fixture: "testdata/invalidconfig.json",
             wantErr: true,
         },
         {
             name:    "minimal config with defaults",
-            fixture: "testdata/minimal_config.yaml",
+            fixture: "testdata/minimalconfig.yaml",
             wantErr: false,
             validate: func(t *testing.T, cfg Config) {
                 assert.Equal(t, 8080, cfg.Port) // default
@@ -1262,15 +1375,15 @@ func TestParseJSON(t *testing.T) {
 
 ```
 testdata/
-├── valid_user.json          # Valid input
-├── invalid_email.json       # Invalid input test
-├── empty_fields.json        # Edge case
-├── large_dataset.csv        # Performance test
-├── unicode_names.txt        # Unicode handling
-└── api_responses/
+├── validuser.json          # Valid input
+├── invalidemail.json       # Invalid input test
+├── emptyfields.json        # Edge case
+├── largedataset.csv        # Performance test
+├── unicodenames.txt        # Unicode handling
+└── apiresponses/
     ├── success.json
-    ├── error_404.json
-    └── error_500.json
+    ├── error404.json
+    └── error500.json
 ```
 
 **Benefits:**
@@ -1299,7 +1412,7 @@ Use gomock for generating type-safe mocks of interfaces. Provides compile-time s
 go install github.com/golang/mock/mockgen@latest
 
 # Generate mocks
-mockgen -source=repository.go -destination=mocks/mock_repository.go -package=mocks
+mockgen -source=repository.go -destination=mocks/mockrepository.go -package=mocks
 ```
 
 **Interface to mock:**
@@ -2750,7 +2863,7 @@ pkg/
     repository.go # Port
     service.go
   postgres/
-    task_repo.go  # Adapter
+    taskrepository.go  # Adapter
   http/
     handlers.go
 ```
@@ -2765,8 +2878,8 @@ internal/
     application/
       service.go
     adapters/
-      postgres_repo.go
-      http_controller.go
+      postgresrepository.go
+      httpcontroller.go
     ports/
       repository.go
   user/
@@ -2775,8 +2888,8 @@ internal/
     application/
       service.go
     adapters/
-      postgres_repo.go
-      http_controller.go
+      postgresrepository.go
+      httpcontroller.go
     ports/
       repository.go
 ```

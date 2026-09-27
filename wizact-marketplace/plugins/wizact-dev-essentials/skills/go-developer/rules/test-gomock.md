@@ -16,7 +16,7 @@ Use gomock for generating type-safe mocks of interfaces. Provides compile-time s
 go install github.com/golang/mock/mockgen@latest
 
 # Generate mocks
-mockgen -source=repository.go -destination=mocks/mock_repository.go -package=mocks
+mockgen -source=repository.go -destination=mocks/mockrepository.go -package=mocks
 ```
 
 **Interface to mock:**

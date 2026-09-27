@@ -39,16 +39,16 @@ mypackage/
 ├── config.go
 ├── config_test.go
 └── testdata/
-    ├── valid_config.json
-    ├── invalid_config.json
-    ├── minimal_config.yaml
-    └── sample_data.csv
+    ├── validconfig.json
+    ├── invalidconfig.json
+    ├── minimalconfig.yaml
+    └── sampledata.csv
 ```
 
 ```go
 func TestParseConfig(t *testing.T) {
     // Load from testdata
-    data, err := os.ReadFile("testdata/valid_config.json")
+    data, err := os.ReadFile("testdata/validconfig.json")
     if err != nil {
         t.Fatalf("failed to read fixture: %v", err)
     }
@@ -68,7 +68,7 @@ func TestParseConfig_MultipleFixtures(t *testing.T) {
     }{
         {
             name:    "valid config",
-            fixture: "testdata/valid_config.json",
+            fixture: "testdata/validconfig.json",
             wantErr: false,
             validate: func(t *testing.T, cfg Config) {
                 assert.Equal(t, 8080, cfg.Port)
@@ -77,12 +77,12 @@ func TestParseConfig_MultipleFixtures(t *testing.T) {
         },
         {
             name:    "invalid JSON",
-            fixture: "testdata/invalid_config.json",
+            fixture: "testdata/invalidconfig.json",
             wantErr: true,
         },
         {
             name:    "minimal config with defaults",
-            fixture: "testdata/minimal_config.yaml",
+            fixture: "testdata/minimalconfig.yaml",
             wantErr: false,
             validate: func(t *testing.T, cfg Config) {
                 assert.Equal(t, 8080, cfg.Port) // default
@@ -135,15 +135,15 @@ func TestParseJSON(t *testing.T) {
 
 ```
 testdata/
-├── valid_user.json          # Valid input
-├── invalid_email.json       # Invalid input test
-├── empty_fields.json        # Edge case
-├── large_dataset.csv        # Performance test
-├── unicode_names.txt        # Unicode handling
-└── api_responses/
+├── validuser.json          # Valid input
+├── invalidemail.json       # Invalid input test
+├── emptyfields.json        # Edge case
+├── largedataset.csv        # Performance test
+├── unicodenames.txt        # Unicode handling
+└── apiresponses/
     ├── success.json
-    ├── error_404.json
-    └── error_500.json
+    ├── error404.json
+    └── error500.json
 ```
 
 **Benefits:**
