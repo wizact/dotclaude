@@ -1,6 +1,6 @@
 ---
 name: git-workflow-skill
-description: Apply the repository's Git workflow when creating branches, isolating work with worktrees, preparing commits, or recovering from worktree state. Detect worktree-based and regular repositories before choosing a branching strategy.
+description: Apply the repository's Git workflow for branches, worktrees, commits, and GitHub stacked pull requests. Use when isolating work, preparing delivery, recovering worktree state, or working with dependent PRs, branch layers, or gh stack. Detect repository topology and stack mode before choosing a branching strategy.
 user-invokable: true
 ---
 
@@ -9,6 +9,12 @@ user-invokable: true
 Apply the highest relevant practice level. Level 1 always applies. Add Level 2 when changing or committing code. Use Level 3 only for exceptional state or explicitly requested cleanup.
 
 ## Level 1: Required Invariants
+
+### Select the workflow mode
+
+Use GitHub Stacks mode when the user mentions stacked or dependent pull requests, branch layers, or `gh stack`, or when `gh stack view --json` confirms that the current branch belongs to a stack. Read [GitHub Stacks](references/github-stacks.md) before acting.
+
+Stack mode replaces the ordinary branch-creation and navigation commands below. The shared status, preservation, validation, signing, and authorization requirements still apply.
 
 ### Detect repository topology before branch operations
 
@@ -100,6 +106,7 @@ Before removing a worktree, verify its exact path, branch, status, and whether i
 
 ## References
 
+- [GitHub Stacks](references/github-stacks.md)
 - [Git worktree documentation](https://git-scm.com/docs/git-worktree)
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Signing commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)

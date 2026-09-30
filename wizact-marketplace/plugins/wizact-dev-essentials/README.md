@@ -22,6 +22,7 @@ Spec builder skills moved to `speculator` plugin.
 
 ### 📝 Git Workflow
 - **generate-commit-message**: Generate Conventional Commits formatted messages (skill)
+- **git-workflow-skill**: Apply topology-aware branch, worktree, signed commit, and GitHub stacked pull request workflows
 
 ### 🛠️ Go Development
 - **developer**: Language-aware dispatcher agent (auto-detects Go projects)
@@ -46,6 +47,15 @@ apt install fd-find ripgrep
 # Linux (Fedora)
 dnf install fd-find ripgrep
 ```
+
+GitHub stacked pull request workflows additionally require GitHub CLI and its
+official stack extension:
+
+```bash
+gh extension install github/gh-stack
+```
+
+The Git workflow skill checks for the extension and asks before installing it.
 
 ### Plugin Installation
 
@@ -150,6 +160,14 @@ Generate Conventional Commits formatted messages. See [skills/generate-commit-me
 # Interactive builder
 @wizact-dev-essentials/skills/generate-commit-message/scripts/commit-interactive.sh
 ```
+
+#### `git-workflow-skill` (Agent Auto-Invoked + User-Invocable)
+Apply repository-aware Git workflows for ordinary branches, dedicated
+worktrees, signed commits, and GitHub stacked pull requests. The skill preserves
+one branch per worktree and uses GitHub's link-only stack mode when dependent
+branches live in separate worktrees. See
+[skills/git-workflow-skill/SKILL.md](skills/git-workflow-skill/SKILL.md) for
+details.
 
 ### Agents
 
