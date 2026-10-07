@@ -50,7 +50,7 @@ Reference these guidelines when:
 
 ### 3. Naming (IMPORTANT)
 
-- `naming-conventions` - Use lowercase delimiter-free file and directory names, MixedCaps identifiers, and role-based type names
+- `naming-conventions` - Use lowercase delimiter-free base names, Go-recognized build suffixes, MixedCaps identifiers, and role-based type names
 
 ### 4. Testing (HIGH)
 
@@ -269,7 +269,9 @@ Before submitting Go code:
 - [ ] Sanitized error messages for users
 
 **Naming**:
-- [ ] Project-owned file and directory names are lowercase and delimiter-free, except for `_test.go`
+- [ ] Project-owned file and directory base names are lowercase and delimiter-free
+- [ ] Filename underscores are limited to Go-recognized OS, architecture, and test suffixes
+- [ ] Runtime implementation variants use concatenated names or separate implementation packages
 - [ ] Identifiers use MixedCaps with correct exportedness and initialism capitalization
 - [ ] Types, interfaces, functions, methods, constants, and errors follow their naming conventions
 
